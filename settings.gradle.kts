@@ -1,5 +1,5 @@
 rootProject.name = "gappangzip-backend"
-include("gappangzip-api")
-include("gappangzip-common")
-include("gappangzip-external")
-include("gappangzip-domain")
+include("pic-api")
+include("pic-common")
+include("pic-external")
+include("pic-domain")

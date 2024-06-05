@@ -1,5 +1,5 @@
 dependencies {
-    implementation(project(":gappangzip-common"))
+    implementation(project(":pic-common"))
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

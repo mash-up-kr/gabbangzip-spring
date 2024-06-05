@@ -1,11 +1,11 @@
-package com.mashup.gappangzip
+package com.mashup.pic
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class GappangzipApplication
+class PicApplication
 
 fun main(args: Array<String>) {
-    runApplication<GappangzipApplication>(*args)
+    runApplication<PicApplication>(*args)
 }

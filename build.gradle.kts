@@ -5,7 +5,7 @@ plugins {
     kotlin("plugin.spring") version "1.9.24"
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_21
 
 allprojects {
     group = "com.mashup.ppangzip"
@@ -39,7 +39,7 @@ subprojects {
     tasks.compileKotlin {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "17"
+            jvmTarget = "21"
         }
     }
 

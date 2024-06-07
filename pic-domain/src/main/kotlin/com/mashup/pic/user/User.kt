@@ -14,8 +14,8 @@ class User(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = 0,
 
-        @Column(name = "oauthId")
-        val oauthId: Long = 0,
+        @Column(name = "oauth_id")
+        val oAuthId: Long = 0,
 
         @Column(name = "nickname")
         val nickname: String = "",

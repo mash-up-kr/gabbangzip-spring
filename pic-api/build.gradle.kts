@@ -13,6 +13,9 @@ dependencies {
     implementation(project(":pic-domain"))
     implementation(project(":pic-external"))
 
+    // security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
     // jwt
     implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:$jjwtVersion")

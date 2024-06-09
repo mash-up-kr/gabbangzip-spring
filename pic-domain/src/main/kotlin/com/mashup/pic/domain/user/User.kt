@@ -1,4 +1,4 @@
-package com.mashup.pic.user
+package com.mashup.pic.domain.user
 
 import jakarta.persistence.*
 import org.hibernate.annotations.SQLDelete

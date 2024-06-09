@@ -1,4 +1,4 @@
-val mysqlConnectorVersion = "8.0.32"
+val mysqlConnectorVersion = "8.0.33"
 
 dependencies {
     implementation(project(":pic-common"))

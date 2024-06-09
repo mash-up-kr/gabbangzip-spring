@@ -1,4 +1,4 @@
-package com.mashup.pic.user
+package com.mashup.pic.domain.user
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository

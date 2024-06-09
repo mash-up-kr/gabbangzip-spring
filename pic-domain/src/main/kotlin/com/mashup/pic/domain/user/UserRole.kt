@@ -1,4 +1,4 @@
-package com.mashup.pic.user
+package com.mashup.pic.domain.user
 
 enum class UserRole(
         val role: String

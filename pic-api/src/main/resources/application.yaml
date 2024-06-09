@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: pic-api
+  config:
+    import:
+      - classpath:/application-domain.yaml
+
+jwt.secret-key: ${SECRET_KEY}

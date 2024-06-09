@@ -1,10 +1,12 @@
 package com.mashup.pic.external.kakao.response
 
+import com.fasterxml.jackson.annotation.JsonProperty
+
 data class KakaoUserInfoResponse(
         val id: Long,
-        val connectedAt: String,
+        @JsonProperty("connected_at") val connectedAt: String,
         val properties: UserProperties,
-        val kakaoAccount: KakaoAccount
+        @JsonProperty("kakao_account") val kakaoAccount: KakaoAccount
 )
 
 data class UserProperties(
@@ -12,11 +14,11 @@ data class UserProperties(
 )
 
 data class KakaoAccount(
-        val profileNicknameNeedsAgreement: Boolean,
+        @JsonProperty("profile_nickname_needs_agreement") val profileNicknameNeedsAgreement: Boolean,
         val profile: KakaoProfile
 )
 
 data class KakaoProfile(
         val nickname: String,
-        val isDefaultNickname: Boolean
+        @JsonProperty("is_default_nickname") val isDefaultNickname: Boolean
 )

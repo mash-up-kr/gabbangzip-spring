@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface UserRepository : JpaRepository<User, Long> {
-    fun existsByOAuthId(oauthId: Long): Boolean
+    fun findByOAuthId(oauthId: Long): User?
 }

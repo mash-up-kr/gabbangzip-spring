@@ -1,0 +1,16 @@
+docs:
+  - changed-files:
+      - any-glob-to-any-file: ['docs/**', '**/*.md', '**/*.pdf']
+  - head-branch: ['^docs', 'docs']
+
+feature:
+  - head-branch: ['^feat', 'feat', '^feature', 'feature']
+
+refactor:
+  - head-branch: ['^refactor', 'refactor']
+
+fix:
+  - head-branch: ['^fix', 'fix']
+
+chore:
+  - head-branch: ['^chore', 'chore']

@@ -1,6 +1,7 @@
 package com.mashup.pic.auth.controller.dto
 
-import com.mashup.pic.auth.applicationService.dto.LoginServiceResponse
+import com.mashup.pic.domain.user.User
+import com.mashup.pic.security.authentication.AuthToken
 
 
 data class LoginResponse(
@@ -10,12 +11,12 @@ data class LoginResponse(
         val refreshToken: String
 ) {
     companion object {
-        fun from(loginServiceResponse: LoginServiceResponse): LoginResponse {
+        fun from(user: User, authToken: AuthToken): LoginResponse {
             return LoginResponse(
-                    userId = loginServiceResponse.userId,
-                    nickname = loginServiceResponse.nickname,
-                    accessToken = loginServiceResponse.accessToken,
-                    refreshToken = loginServiceResponse.refreshToken
+                    userId = user.id,
+                    nickname = user.nickname,
+                    accessToken = authToken.accessToken,
+                    refreshToken = authToken.refreshToken
             )
         }
     }

@@ -16,23 +16,21 @@ class JwtTokenFilter(
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
-        val authorizationHeader = extractAuthorizationHeader(request)
-
-        authorizationHeader?.let {
-            runCatching {
-                val token = extractToken(it)
-                setAuthentication(token)
-            }.onSuccess {
-                filterChain.doFilter(request, response)
-            }.onFailure { exception ->
-                SecurityContextHolder.clearContext()
-                response.status = HttpServletResponse.SC_UNAUTHORIZED
-                response.contentType = "application/json"
-                response.characterEncoding = "UTF-8"
-                response.writer.write("{\"error\": \"Unauthorized: ${exception.message}\"}")
-            }
-        } ?: run {
+        val authorizationHeader = extractAuthorizationHeader(request) ?: run {
             filterChain.doFilter(request, response)
+            return
+        }
+
+        runCatching {
+            val token = extractToken(authorizationHeader)
+            setAuthentication(token)
+            filterChain.doFilter(request, response)
+        }.onFailure { exception ->
+            SecurityContextHolder.clearContext()
+            response.status = HttpServletResponse.SC_UNAUTHORIZED
+            response.contentType = "application/json"
+            response.characterEncoding = "UTF-8"
+            response.writer.write("{\"error\": \"Unauthorized: ${exception.message}\"}")
         }
     }
 

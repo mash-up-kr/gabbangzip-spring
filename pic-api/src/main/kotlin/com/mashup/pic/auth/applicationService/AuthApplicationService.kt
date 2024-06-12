@@ -2,7 +2,7 @@ package com.mashup.pic.auth.applicationService
 
 import com.mashup.pic.external.kakao.KakaoClient
 import com.mashup.pic.auth.applicationService.dto.LoginServiceRequest
-import com.mashup.pic.auth.applicationService.dto.LoginServiceResponse
+import com.mashup.pic.auth.controller.dto.LoginResponse
 import com.mashup.pic.domain.user.User
 import com.mashup.pic.security.jwt.JwtTokenUtil
 import com.mashup.pic.domain.user.UserService
@@ -19,27 +19,28 @@ class AuthApplicationService(
 ) {
 
     @Transactional
-    fun login(request: LoginServiceRequest): LoginServiceResponse {
-        val oAuthId = kakaoClient.getAccessTokenPayload(request.kakaoAccessToken)
-        val user = userService.findUserByOAuthId(oAuthId)?: createUser(request.kakaoAccessToken)
+    fun login(request: LoginServiceRequest): LoginResponse {
+        val oAuthId = kakaoClient.getAccessTokenPayload(request.token)
+        val user = userService.findUserByOAuthIdOrNull(oAuthId)?: createUser(request.token)
 
-        val authToken = jwtTokenUtil.generateAuthToken(convertToUserInfo(user))
-        return LoginServiceResponse.from(user, authToken)
+        val authToken = jwtTokenUtil.generateAuthToken(user.toUserInfo())
+        return LoginResponse.from(user, authToken)
     }
 
-    private fun createUser(accessToken: String) : User {
-        val userInfo = kakaoClient.getUserInfo(accessToken)
+    private fun createUser(token: String) : User {
+        val userInfo = kakaoClient.getUserInfo(token)
         return userService.create(
                 oAuthId = userInfo.id,
                 nickname = userInfo.properties.nickname
         )
     }
 
-    private fun convertToUserInfo(user: User): UserInfo {
+    fun User.toUserInfo(): UserInfo {
         return UserInfo(
-                id = user.id,
-                nickname = user.nickname,
-                roles = user.roles
+                id = this.id,
+                nickname = this.nickname,
+                roles = this.roles
         )
     }
+
 }

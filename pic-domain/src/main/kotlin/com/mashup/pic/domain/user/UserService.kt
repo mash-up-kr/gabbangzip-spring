@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional
 class UserService(
         private val userRepository: UserRepository
 ) {
-    fun findUserByOAuthId(oAuthId: Long): User? {
+    fun findUserByOAuthIdOrNull(oAuthId: Long): User? {
         return userRepository.findByOAuthId(oAuthId)
     }
 

@@ -14,10 +14,10 @@ class User(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = 0,
 
-        @Column(name = "oauth_id")
+        @Column(name = "oauth_id", nullable = false)
         val oAuthId: Long = 0,
 
-        @Column(name = "nickname")
+        @Column(name = "nickname", nullable = false)
         val nickname: String = "",
 
         @ElementCollection(targetClass = UserRole::class, fetch = FetchType.EAGER)

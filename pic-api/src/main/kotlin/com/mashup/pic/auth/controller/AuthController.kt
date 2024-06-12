@@ -8,7 +8,9 @@ import com.mashup.pic.auth.applicationService.AuthApplicationService
 import com.mashup.pic.auth.applicationService.dto.LoginServiceRequest
 import com.mashup.pic.auth.controller.dto.LoginRequest
 import com.mashup.pic.auth.controller.dto.LoginResponse
+import com.mashup.pic.domain.user.User
 import com.mashup.pic.security.authentication.UserInfo
+import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 
@@ -21,9 +23,9 @@ class AuthController(
 
     @PostMapping("/login")
     fun login(
-            @RequestBody loginRequest: LoginRequest
+            @Valid @RequestBody loginRequest: LoginRequest
     ): ResponseEntity<LoginResponse> {
-        val serviceRequest: LoginServiceRequest = loginRequest.toServiceRequest()
-        return ResponseEntity.ok(LoginResponse.from(authApplicationService.login(serviceRequest)))
+        return ResponseEntity.ok(authApplicationService.login(loginRequest.toServiceRequest()))
     }
+
 }

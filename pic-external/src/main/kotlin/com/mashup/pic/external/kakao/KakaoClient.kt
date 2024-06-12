@@ -13,10 +13,13 @@ class KakaoClient(
         private val restClient: RestClient
 ) {
 
+    private val accessTokenInfoUri: String = "https://kapi.kakao.com/v1/user/access_token_info"
+    private val userInfoUri: String = "https://kapi.kakao.com/v2/user/me"
+
     fun getAccessTokenPayload(accessToken: String): Long {
         return restClient.get()
-                .uri(ACCESS_TOKEN_INFO_URI)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer $accessToken")
+                .uri(accessTokenInfoUri)
+                .header(HttpHeaders.AUTHORIZATION, "$BEARER_PREFIX$accessToken")
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError) { _, response ->
                     // TODO: throw Pic custom runtime exception
@@ -26,8 +29,8 @@ class KakaoClient(
 
     fun getUserInfo(accessToken: String): KakaoUserInfoResponse {
         return restClient.get()
-                .uri(USER_INFO_URI)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer $accessToken")
+                .uri(userInfoUri)
+                .header(HttpHeaders.AUTHORIZATION, "$BEARER_PREFIX$accessToken")
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError) { _, response ->
                     // TODO: throw Pic custom runtime exception
@@ -36,7 +39,6 @@ class KakaoClient(
     }
 
     companion object {
-        private const val ACCESS_TOKEN_INFO_URI = "https://kapi.kakao.com/v1/user/access_token_info"
-        private const val USER_INFO_URI = "https://kapi.kakao.com/v2/user/me"
+        private const val BEARER_PREFIX = "Bearer "
     }
 }

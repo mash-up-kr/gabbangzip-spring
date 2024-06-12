@@ -12,8 +12,8 @@ class JwtAuthentication(private val userInfo: UserInfo) : Authentication {
         return userInfo.nickname
     }
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return userInfo.roles.map(this::convertUserRoleToGrantedAuthority).toMutableList()
+    override fun getAuthorities(): Collection<GrantedAuthority> {
+        return userInfo.roles.map(this::convertUserRoleToGrantedAuthority)
     }
 
     override fun getCredentials(): Any {

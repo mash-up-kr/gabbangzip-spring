@@ -6,12 +6,15 @@ tasks.jar {
     enabled = false
 }
 
-val jjwtVersion = "0.11.5"
+val jjwtVersion: String by project.extra
 
 dependencies {
     implementation(project(":pic-common"))
     implementation(project(":pic-domain"))
     implementation(project(":pic-external"))
+
+    // validation
+    implementation("org.springframework.boot:spring-boot-starter-validation")
 
     // security
     implementation("org.springframework.boot:spring-boot-starter-security")

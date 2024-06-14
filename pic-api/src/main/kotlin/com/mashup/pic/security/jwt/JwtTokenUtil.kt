@@ -1,6 +1,8 @@
 package com.mashup.pic.security.jwt
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.mashup.pic.common.exception.PicException
+import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.security.authentication.AuthToken
 import com.mashup.pic.security.authentication.UserInfo
 import io.jsonwebtoken.Jwts
@@ -31,7 +33,7 @@ class JwtTokenUtil(
     fun extractUserInfo(accessToken: String): UserInfo {
         return jwtParser.parseClaimsJws(accessToken).body?.let { claims ->
             objectMapper.convertValue(claims[CLAIM_USER_INFO_KEY], UserInfo::class.java)
-        } ?: throw Exception() // TODO: replace to Pic Custom Exception
+        } ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID)
     }
 
     private fun generateAccessToken(userInfo: UserInfo): String {

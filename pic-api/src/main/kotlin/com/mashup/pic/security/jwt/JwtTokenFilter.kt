@@ -1,6 +1,8 @@
 package com.mashup.pic.security.jwt
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.mashup.pic.common.ApiResponse
+import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.security.authentication.JwtAuthentication
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -27,10 +29,11 @@ class JwtTokenFilter(
             filterChain.doFilter(request, response)
         }.onFailure { exception ->
             SecurityContextHolder.clearContext()
+
             response.status = HttpServletResponse.SC_UNAUTHORIZED
             response.contentType = "application/json"
             response.characterEncoding = "UTF-8"
-            response.writer.write("{\"error\": \"Unauthorized: ${exception.message}\"}")
+            response.writer.write(objectMapper.writeValueAsString(ApiResponse.fail(PicExceptionType.AUTH_ERROR)))
         }
     }
 

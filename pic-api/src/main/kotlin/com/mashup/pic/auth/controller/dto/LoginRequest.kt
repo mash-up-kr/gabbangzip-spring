@@ -4,10 +4,17 @@ import com.mashup.pic.auth.applicationService.dto.LoginServiceRequest
 import jakarta.validation.constraints.NotBlank
 
 data class LoginRequest(
-        @field:NotBlank val token: String,
-        @field:NotBlank val provider: String
+        @NotBlank val idToken: String,
+        @NotBlank val provider: String,
+        @NotBlank val nickname: String,
+        @NotBlank val profileImage: String
 ) {
     fun toServiceRequest(): LoginServiceRequest {
-        return LoginServiceRequest(token, provider)
+        return LoginServiceRequest(
+                idToken = idToken,
+                provider = provider,
+                nickname = nickname,
+                profileImage = profileImage
+        )
     }
 }

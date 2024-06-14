@@ -13,10 +13,11 @@ class UserService(
     }
 
     @Transactional
-    fun create(oAuthId: Long, nickname: String): User {
+    fun create(oAuthId: Long, nickname: String, profileImage: String): User {
         return userRepository.save(User(
                 oAuthId = oAuthId,
-                nickname = nickname
+                nickname = nickname,
+                profileImage = profileImage
         ))
     }
 }

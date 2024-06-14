@@ -18,6 +18,9 @@ class User(
         @Column(name = "nickname", nullable = false)
         val nickname: String = "",
 
+        @Column(name = "profileImage", nullable = false)
+        val profileImage: String = "",
+
         @ElementCollection(targetClass = UserRole::class, fetch = FetchType.EAGER)
         @CollectionTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")])
         @Enumerated(EnumType.STRING)

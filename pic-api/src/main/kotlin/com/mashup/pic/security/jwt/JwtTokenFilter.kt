@@ -40,7 +40,7 @@ class JwtTokenFilter(
 
     private fun extractToken(authorizationHeader: String): String {
         return authorizationHeader.takeIf { hasValidBearer(it) }?.substring(BEARER_PREFIX.length)
-                ?: throw BadCredentialsException("Wrong bearer prefix") // TODO: Replace Exception to Pic exception message
+                ?: throw BadCredentialsException("Wrong bearer prefix")
     }
 
     private fun setAuthentication(token: String) {

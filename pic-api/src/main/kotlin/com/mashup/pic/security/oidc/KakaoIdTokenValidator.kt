@@ -1,6 +1,8 @@
 package com.mashup.pic.security.oidc
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.mashup.pic.common.exception.PicException
+import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.external.common.response.JwkKey
 import com.mashup.pic.external.kakao.KakaoJwksClient
 import io.jsonwebtoken.Jwts
@@ -33,7 +35,7 @@ class KakaoIdTokenValidator(
 
     private fun extractSub(idToken: String): String {
         val payload = decodePayload(idToken)
-        return payload[SUB_KEY] as String? ?: throw Exception("SUB 없음")
+        return payload[SUB_KEY] as String? ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID,"Can't extract SUB")
     }
 
     private fun verifyPayload(idToken: String, nickname: String) {
@@ -54,7 +56,7 @@ class KakaoIdTokenValidator(
 
     private fun extractKid(idToken: String): String {
         val header = decodeHeader(idToken)
-        return header[KID_KEY] as String? ?: throw Exception("KID 없음")
+        return header[KID_KEY] as String? ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID,"Can't extract KID")
     }
 
     private fun getPublicKey(kid: String): Key {
@@ -68,7 +70,7 @@ class KakaoIdTokenValidator(
     private fun getJwkByKid(kid: String): JwkKey {
         return kakaoJwksClient.getJwks().getJwkKeyByKid(kid)
                 ?: kakaoJwksClient.refreshAndGetJwks().getJwkKeyByKid(kid)
-                ?: throw Exception("공개키를 가져올 수 없음")
+                ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID,"Can't find the Jwk matching the KID")
     }
 
     private fun decodePayload(idToken: String): Map<String, Any> {

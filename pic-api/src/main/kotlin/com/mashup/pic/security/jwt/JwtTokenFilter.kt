@@ -2,13 +2,13 @@ package com.mashup.pic.security.jwt
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.pic.common.ApiResponse
+import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.security.authentication.JwtAuthentication
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpHeaders
-import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 
@@ -18,7 +18,8 @@ class JwtTokenFilter(
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
-        val authorizationHeader = extractAuthorizationHeader(request) ?: run {
+        val authorizationHeader = extractAuthorizationHeader(request)
+        if (authorizationHeader == null) {
             filterChain.doFilter(request, response)
             return
         }
@@ -33,7 +34,14 @@ class JwtTokenFilter(
             response.status = HttpServletResponse.SC_UNAUTHORIZED
             response.contentType = "application/json"
             response.characterEncoding = "UTF-8"
-            response.writer.write(objectMapper.writeValueAsString(ApiResponse.fail(PicExceptionType.AUTH_ERROR)))
+            response.writer.write(
+                objectMapper.writeValueAsString(
+                    ApiResponse.fail(
+                        PicExceptionType.INVALID_TOKEN_BEARER,
+                        exception.message
+                    )
+                )
+            )
         }
     }
 
@@ -43,7 +51,7 @@ class JwtTokenFilter(
 
     private fun extractToken(authorizationHeader: String): String {
         return authorizationHeader.takeIf { hasValidBearer(it) }?.substring(BEARER_PREFIX.length)
-                ?: throw BadCredentialsException("Wrong bearer prefix")
+            ?: throw PicException.of(PicExceptionType.INVALID_TOKEN_BEARER)
     }
 
     private fun setAuthentication(token: String) {

@@ -41,10 +41,10 @@ class SecurityConfig(
     }
 
     companion object {
-        const val ADMIN_ENDPOINT_PATTERN = "/api/v1/admin/**"
-        const val ADMIN_ROLE = "ADMIN"
-        const val MEMBER_ROLE = "MEMBER"
-        val WHITELIST_ENDPOINTS = arrayOf(
+        private const val ADMIN_ENDPOINT_PATTERN = "/api/v1/admin/**"
+        private const val ADMIN_ROLE = "ADMIN"
+        private const val MEMBER_ROLE = "MEMBER"
+        private val WHITELIST_ENDPOINTS = arrayOf(
                 "/api/v1/auth/login",
                 "/api/v1/auth/token"
         )

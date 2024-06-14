@@ -9,6 +9,8 @@ enum class PicExceptionType(
     AUTH_ERROR("유저 프로세스에서 오류가 발생했습니다.", "U000_AUTH_ERROR", 500),
     EMPTY_AUTHORIZATION_HEADER("Not Exist Authorization Header", "U001_EMPTY_AUTHORIZATION_HEADER", 400),
     INVALID_USER_AUTH_TOKEN("Invalid JWT Token", "U002_INVALID_TOKEN", 400),
+    INVALID_TOKEN_BEARER("Invalid Token Bearer", "U003_INVALID_TOKEN", 400),
+
 
     // COMMON
     NOT_EXIST("존재하지 않습니다.", "C001_NOT_EXIST", 404),

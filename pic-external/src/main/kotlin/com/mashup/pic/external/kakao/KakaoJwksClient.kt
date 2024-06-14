@@ -14,8 +14,8 @@ import java.io.IOException
 
 @Component
 class KakaoJwksClient(
-        private val restClient: RestClient,
-        @Value("\${kakao.jwk-uri}") private val jwkUri: String
+    private val restClient: RestClient,
+    @Value("\${kakao.jwk-uri}") private val jwkUri: String
 ) : JwksClient {
 
     @Cacheable("kakao-jwks")
@@ -24,17 +24,17 @@ class KakaoJwksClient(
     }
 
     @CachePut("kakao-jwks")
-    override fun refreshAndGetJwks() : JwksResponse {
+    override fun refreshAndGetJwks(): JwksResponse {
         return requestJwks()
     }
 
     private fun requestJwks(): JwksResponse {
         return restClient.get()
-                .uri(jwkUri)
-                .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError) { _, response ->
-                    throw IOException("Error fetching JWKS: ${response.statusCode}")
-                }
-                .body<JwksResponse>()!!
+            .uri(jwkUri)
+            .retrieve()
+            .onStatus(HttpStatusCode::is4xxClientError) { _, response ->
+                throw IOException("Error fetching JWKS: ${response.statusCode}")
+            }
+            .body<JwksResponse>()!!
     }
 }

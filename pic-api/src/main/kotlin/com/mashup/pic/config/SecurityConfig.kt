@@ -3,8 +3,8 @@ package com.mashup.pic.config
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.pic.security.handler.HttpStatusAccessDeniedHandler
 import com.mashup.pic.security.handler.HttpStatusAuthenticationEntryPoint
-import com.mashup.pic.security.jwt.JwtTokenFilter
-import com.mashup.pic.security.jwt.JwtTokenUtil
+import com.mashup.pic.security.jwt.JwtFilter
+import com.mashup.pic.security.jwt.JwtManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -15,8 +15,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-        private val jwtTokenUtil: JwtTokenUtil,
-        private val objectMapper: ObjectMapper,
+    private val jwtTokenUtil: JwtManager,
+    private val objectMapper: ObjectMapper,
 ) {
 
     @Bean
@@ -32,7 +32,7 @@ class SecurityConfig(
                             .requestMatchers(ADMIN_ENDPOINT_PATTERN).hasRole(ADMIN_ROLE)
                             .anyRequest().hasRole(MEMBER_ROLE)
                 }
-                .addFilterBefore(JwtTokenFilter(jwtTokenUtil, objectMapper), UsernamePasswordAuthenticationFilter::class.java)
+                .addFilterBefore(JwtFilter(jwtTokenUtil, objectMapper), UsernamePasswordAuthenticationFilter::class.java)
                 .exceptionHandling {
                     it.authenticationEntryPoint(HttpStatusAuthenticationEntryPoint())
                     it.accessDeniedHandler(HttpStatusAccessDeniedHandler())

@@ -56,7 +56,7 @@ class KakaoIdTokenValidator(
 
     private fun extractKid(idToken: String): String {
         val header = decodeHeader(idToken)
-        return header[KID_KEY] as String? ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID,"Can't extract KID")
+        return header[KID_KEY] as? String ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID,"Can't extract KID")
     }
 
     private fun getPublicKey(kid: String): Key {
@@ -70,7 +70,7 @@ class KakaoIdTokenValidator(
     private fun getJwkByKid(kid: String): JwkKey {
         return kakaoJwksClient.getJwks().getJwkKeyByKid(kid)
                 ?: kakaoJwksClient.refreshAndGetJwks().getJwkKeyByKid(kid)
-                ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID,"Can't find the Jwk matching the KID")
+                ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "Can't find the Jwk matching the KID")
     }
 
     private fun decodePayload(idToken: String): Map<String, Any> {

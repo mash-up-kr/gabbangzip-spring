@@ -1,5 +1,9 @@
 val mysqlConnectorVersion: String by project.extra
 
+plugins {
+    id("kotlin-jpa")
+}
+
 dependencies {
     implementation(project(":pic-common"))
 

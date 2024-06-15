@@ -11,7 +11,6 @@ enum class PicExceptionType(
     INVALID_USER_AUTH_TOKEN("Invalid JWT Token", "U002_INVALID_TOKEN", 400),
     INVALID_TOKEN_BEARER("Invalid Token Bearer", "U003_INVALID_TOKEN", 400),
 
-
     // COMMON
     NOT_EXIST("존재하지 않습니다.", "C001_NOT_EXIST", 404),
     INVALID_ACCESS("Invalid Access", "C003_INVALID_ACCESS", 403),
@@ -22,5 +21,10 @@ enum class PicExceptionType(
     AUTHENTICATION_FAILURE("Authentication failed. Check login.", "C008_AUTHENTICATION_FAILURE", 401),
     ARGUMENT_NOT_VALID("Method Argument Not Valid. Check argument validation.", "C009_ARGUMENT_NOT_VALID", 400),
     SYSTEM_FAIL("Internal Server Error.", "C002_SYSTEM_FAIL", 500),
+
+    // EXTERNAL COMMUNICATION
+    EXTERNAL_COMMUNICATION_FAILURE("External communication failed.", "E001_EXTERNAL_COMMUNICATION_FAILURE", 500),
+    EXTERNAL_SERVICE_UNAVAILABLE("External service is unavailable.", "E002_EXTERNAL_SERVICE_UNAVAILABLE", 503),
+    EXTERNAL_SERVICE_TIMEOUT("External service call timed out.", "E003_EXTERNAL_SERVICE_TIMEOUT", 504),
     ;
 }

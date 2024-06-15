@@ -15,7 +15,7 @@ import java.security.Key
 import java.util.Date
 
 @Component
-class JwtTokenUtil(
+class JwtManager(
         @Value("\${jwt.secret-key}") private val secretKey: String,
         private val objectMapper: ObjectMapper
 ) {

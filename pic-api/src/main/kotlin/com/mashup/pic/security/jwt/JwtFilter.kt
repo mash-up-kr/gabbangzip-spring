@@ -12,9 +12,9 @@ import org.springframework.http.HttpHeaders
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 
-class JwtTokenFilter(
-        private val jwtTokenUtil: JwtTokenUtil,
-        private val objectMapper: ObjectMapper
+class JwtFilter(
+    private val jwtTokenUtil: JwtManager,
+    private val objectMapper: ObjectMapper
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {

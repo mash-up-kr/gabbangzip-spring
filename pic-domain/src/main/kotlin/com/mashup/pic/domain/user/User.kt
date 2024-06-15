@@ -12,18 +12,19 @@ import org.hibernate.annotations.SQLRestriction
 class User(
 
     @Column(name = "oauth_id", nullable = false)
-    val oAuthId: Long = 0,
+    val oAuthId: Long,
 
     @Column(name = "nickname", nullable = false)
-    val nickname: String = "",
+    val nickname: String,
 
     @Column(name = "profileImage", nullable = false)
-    val profileImage: String = "",
+    val profileImage: String,
 
     @ElementCollection(targetClass = UserRole::class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")])
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
     val roles: Set<UserRole> = setOf(UserRole.MEMBER)
 
 ) : BaseEntity()
+

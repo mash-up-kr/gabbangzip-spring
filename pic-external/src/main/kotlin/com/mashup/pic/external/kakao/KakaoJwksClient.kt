@@ -1,5 +1,7 @@
 package com.mashup.pic.external.kakao
 
+import com.mashup.pic.common.exception.PicException
+import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.external.common.JwksClient
 import com.mashup.pic.external.common.response.JwksResponse
 import org.springframework.beans.factory.annotation.Value
@@ -9,7 +11,6 @@ import org.springframework.http.HttpStatusCode
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.body
-import java.io.IOException
 
 
 @Component
@@ -33,7 +34,7 @@ class KakaoJwksClient(
             .uri(jwkUri)
             .retrieve()
             .onStatus(HttpStatusCode::is4xxClientError) { _, response ->
-                throw IOException("Error fetching JWKS: ${response.statusCode}")
+                throw PicException.of(PicExceptionType.EXTERNAL_COMMUNICATION_FAILURE, "Error fetching JWKS: ${response.statusCode}")
             }
             .body<JwksResponse>()!!
     }

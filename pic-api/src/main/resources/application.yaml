@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: pic-api
+  config:
+    import:
+      - classpath:/application-domain.yaml
+jwt:
+  secret-key: ${SECRET_KEY}
+kakao:
+  issuer: https://kauth.kakao.com
+  audience:
+    rest: ${KAKAO_REST_KEY}
+    native: ${KAKAO_NATIVE_KEY}
+  jwk-uri: https://kauth.kakao.com/.well-known/jwks.json

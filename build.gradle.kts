@@ -1,9 +1,10 @@
 plugins {
     kotlin("jvm") version "1.9.24"
-    kotlin("plugin.spring") version "1.9.24"
-    kotlin("plugin.jpa") version "1.9.24"
-    id("org.springframework.boot") version "3.3.0"
-    id("io.spring.dependency-management") version "1.1.5"
+    kotlin("plugin.spring") version "1.9.24" apply false
+    kotlin("plugin.jpa") version "1.9.24" apply false
+    id("org.springframework.boot") version "3.3.0" apply false
+    id("io.spring.dependency-management") version "1.1.5" apply false
+    id("com.google.cloud.tools.jib") version "3.4.3" apply false
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_21
@@ -41,15 +42,11 @@ subprojects {
         }
     }
 
-    tasks.bootJar {
+    tasks.getByName("bootJar") {
         enabled = false
     }
 
-    tasks.jar {
+    tasks.getByName("jar") {
         enabled = true
     }
-}
-
-tasks.bootJar {
-    enabled = false
 }

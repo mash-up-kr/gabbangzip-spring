@@ -18,15 +18,15 @@ import org.springframework.transaction.annotation.Transactional
 class AuthApplicationService(
     private val userService: UserService,
     private val refreshTokenService: RefreshTokenService,
-    private val jwtTokenUtil: JwtManager,
-    private val idTokenValidator: KakaoIdTokenValidator,
+    private val jwtManager: JwtManager,
+    private val idTokenValidator: KakaoIdTokenValidator
 ) {
     @Transactional
     fun login(request: LoginServiceRequest): LoginResponse {
         val oAuthId = idTokenValidator.validateAndGetId(request.idToken, request.nickname)
         val user = userService.findUserByOAuthIdOrNull(oAuthId) ?: createUser(oAuthId, request)
 
-        val authToken = jwtTokenUtil.generateAuthToken(user.toUserInfo())
+        val authToken = jwtManager.generateAuthToken(user.toUserInfo())
         refreshTokenService.saveToken(user.id, authToken.refreshToken)
         return LoginResponse.from(user, authToken)
     }
@@ -36,7 +36,7 @@ class AuthApplicationService(
         val userId = refreshTokenService.validateAndGetUserId(request.refreshToken)
         val user = userService.findUserByUserId(userId)
 
-        val authToken = jwtTokenUtil.generateAuthToken(user.toUserInfo())
+        val authToken = jwtManager.generateAuthToken(user.toUserInfo())
         refreshTokenService.updateToken(
             userId = userId,
             originToken = request.refreshToken,

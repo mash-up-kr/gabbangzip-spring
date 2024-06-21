@@ -1,5 +1,7 @@
 package com.mashup.pic.domain.user
 
+import com.mashup.pic.common.exception.PicException
+import com.mashup.pic.common.exception.PicExceptionType
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -10,6 +12,10 @@ class UserService(
 ) {
     fun findUserByOAuthIdOrNull(oAuthId: Long): User? {
         return userRepository.findByOAuthId(oAuthId)
+    }
+
+    fun findUserByUserId(userId: Long): User {
+        return userRepository.findByIdOrNull(userId)?: throw PicException.of(PicExceptionType.AUTH_ERROR)
     }
 
     @Transactional

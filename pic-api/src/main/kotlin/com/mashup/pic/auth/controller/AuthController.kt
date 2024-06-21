@@ -3,6 +3,8 @@ package com.mashup.pic.auth.controller
 import com.mashup.pic.auth.applicationService.AuthApplicationService
 import com.mashup.pic.auth.controller.dto.LoginRequest
 import com.mashup.pic.auth.controller.dto.LoginResponse
+import com.mashup.pic.auth.controller.dto.ReissueRequest
+import com.mashup.pic.auth.controller.dto.ReissueResponse
 import com.mashup.pic.common.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -24,5 +26,13 @@ class AuthController(
         @Valid @RequestBody loginRequest: LoginRequest,
     ): ApiResponse<LoginResponse> {
         return ApiResponse.success(authApplicationService.login(loginRequest.toServiceRequest()))
+    }
+
+    @Operation(summary = "토큰 재발급")
+    @PostMapping("/token")
+    fun reissue(
+        @Valid @RequestBody reissueRequest: ReissueRequest
+    ): ApiResponse<ReissueResponse> {
+        return ApiResponse.success(authApplicationService.reissueToken(reissueRequest.toServiceRequest()))
     }
 }

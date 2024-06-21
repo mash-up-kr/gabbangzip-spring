@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface UserRepository : JpaRepository<User, Long> {
     fun findByOAuthId(oauthId: Long): User?
+
+    fun findByIdOrNull(id: Long): User?
 }

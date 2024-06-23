@@ -5,10 +5,10 @@ spring:
     import:
       - classpath:/application-domain.yaml
 jwt:
-  secret-key: ${SECRET_KEY}
+  secret-key: ENC(NtDCxHj5jr9w2VZJ8ePLbjYrgB5mcL68ysQhvGgnj53mqiHnML6eWOi3X0sL4CRUnvqZMEKx9af16oM02kKDj91w76d72ljnLVhT49M1lhc=)
 kakao:
   issuer: https://kauth.kakao.com
   audience:
-    rest: ${KAKAO_REST_KEY}
-    native: ${KAKAO_NATIVE_KEY}
+    rest: ENC(fEnBOJApIyZToWk4lc77g7xYnG20FhdIFwAJkolwbrEWZ5S+Gm/gJWUbMFciWL99oSEVLhTJxUOzxZWjr4Z+8A==)
+    native: ENC(/vP+mCyAS0JwUoWO207Sp4OwXLiiYdF//59zusyXxoEB8MJg0q8AYVEzubY5EGdhM/rioCqlhAQyqDgZuwxws2pwdONcc1qG7SDksRymywQ=)
   jwk-uri: https://kauth.kakao.com/.well-known/jwks.json

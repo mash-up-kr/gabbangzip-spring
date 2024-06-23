@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${MYSQL_URL}
-    username: ${MYSQL_USERNAME}
-    password: ${MYSQL_PASSWORD}
+    url: ENC(Ay1RamiVb1M/bs+asVmYBsfpJKWCV/GlfYiAJTiO5nW7l9HAeGWVDneMntFvqS+myIfeypom11iMvX0KAXkBKnRd408MJWVuepy8uMU6tR+NqmwTJBOdSd9flGdOvSlnyG7l/YqwK46KtSC513pNwsV8UlIypgEDVn+Of3q/N2biF/oUXcJRsmGxn5XzY7v8InR+CBoakJJmCzHaaYPxMRQFEd/l3a9bsTfyNSUcbYg=)
+    username: ENC(MeGy+GMnB7qvepqgo1UWRTBadVuqO/NYMlQmif0WItNsbzShuX2U5Dl4iVKrznuz)
+    password: ENC(9hUR9OvMkz9IEOgjKsf7uXbUaLUaT1RXGR9AjOU2vDYEhVuTwFtu+vyU9IPv6HzHfmK16liLpmKXdBsf2OkZyg==)
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:

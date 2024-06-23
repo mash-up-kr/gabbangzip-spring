@@ -18,39 +18,39 @@ class SecurityConfig(
     private val jwtTokenUtil: JwtManager,
     private val objectMapper: ObjectMapper,
 ) {
-
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         return http
-                .cors { it.disable() }
-                .csrf { it.disable() }
-                .httpBasic { it.disable() }
-                .formLogin { it.disable() }
-                .authorizeHttpRequests { authorization ->
-                    authorization
-                            .requestMatchers(*WHITELIST_ENDPOINTS).permitAll()
-                            .requestMatchers(ADMIN_ENDPOINT_PATTERN).hasRole(ADMIN_ROLE)
-                            .anyRequest().hasRole(MEMBER_ROLE)
-                }
-                .addFilterBefore(JwtFilter(jwtTokenUtil, objectMapper), UsernamePasswordAuthenticationFilter::class.java)
-                .exceptionHandling {
-                    it.authenticationEntryPoint(HttpStatusAuthenticationEntryPoint())
-                    it.accessDeniedHandler(HttpStatusAccessDeniedHandler())
-                }
-                .build()
+            .cors { it.disable() }
+            .csrf { it.disable() }
+            .httpBasic { it.disable() }
+            .formLogin { it.disable() }
+            .authorizeHttpRequests { authorization ->
+                authorization
+                    .requestMatchers(*WHITELIST_ENDPOINTS).permitAll()
+                    .requestMatchers(ADMIN_ENDPOINT_PATTERN).hasRole(ADMIN_ROLE)
+                    .anyRequest().hasRole(MEMBER_ROLE)
+            }
+            .addFilterBefore(JwtFilter(jwtTokenUtil, objectMapper), UsernamePasswordAuthenticationFilter::class.java)
+            .exceptionHandling {
+                it.authenticationEntryPoint(HttpStatusAuthenticationEntryPoint())
+                it.accessDeniedHandler(HttpStatusAccessDeniedHandler())
+            }
+            .build()
     }
 
     companion object {
         private const val ADMIN_ENDPOINT_PATTERN = "/api/v1/admin/**"
         private const val ADMIN_ROLE = "ADMIN"
         private const val MEMBER_ROLE = "MEMBER"
-        private val WHITELIST_ENDPOINTS = arrayOf(
+        private val WHITELIST_ENDPOINTS =
+            arrayOf(
                 "/api/v1/auth/login",
+                "/api/v1/auth/token",
                 "/api/v1/auth/token",
                 "/health",
                 "/swagger-ui/**",
                 "/v3/api-docs/**"
         )
     }
-
 }

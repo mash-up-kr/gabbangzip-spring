@@ -8,9 +8,9 @@ import org.springframework.security.web.AuthenticationEntryPoint
 
 class HttpStatusAuthenticationEntryPoint : AuthenticationEntryPoint {
     override fun commence(
-            request: HttpServletRequest,
-            response: HttpServletResponse,
-            authException: AuthenticationException
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        authException: AuthenticationException,
     ) {
         response.status = HttpStatus.UNAUTHORIZED.value()
     }

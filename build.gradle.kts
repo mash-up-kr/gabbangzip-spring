@@ -1,3 +1,4 @@
+
 plugins {
     kotlin("jvm") version "1.9.24"
     kotlin("plugin.spring") version "1.9.24" apply false
@@ -5,6 +6,7 @@ plugins {
     id("org.springframework.boot") version "3.3.0" apply false
     id("io.spring.dependency-management") version "1.1.5" apply false
     id("com.google.cloud.tools.jib") version "3.4.3" apply false
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.1" apply false
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_21
@@ -23,6 +25,7 @@ subprojects {
     apply(plugin = "org.jetbrains.kotlin.plugin.spring")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter")

@@ -5,8 +5,8 @@ import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.security.authentication.AuthToken
 import com.mashup.pic.security.authentication.UserInfo
-import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.JwtParser
+import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
@@ -16,17 +16,16 @@ import java.util.Date
 
 @Component
 class JwtManager(
-        @Value("\${jwt.secret-key}") private val secretKey: String,
-        private val objectMapper: ObjectMapper
+    @Value("\${jwt.secret-key}") private val secretKey: String,
+    private val objectMapper: ObjectMapper,
 ) {
-
     private val signKey: Key = Keys.hmacShaKeyFor(secretKey.toByteArray())
     private val jwtParser: JwtParser = Jwts.parserBuilder().setSigningKey(signKey).build()
 
     fun generateAuthToken(userInfo: UserInfo): AuthToken {
         return AuthToken(
-                accessToken = generateAccessToken(userInfo),
-                refreshToken = generateRefreshToken()
+            accessToken = generateAccessToken(userInfo),
+            refreshToken = generateRefreshToken(),
         )
     }
 
@@ -41,12 +40,12 @@ class JwtManager(
         val expiration = Date(now.time + ACCESS_TOKEN_EXPIRATION)
 
         return Jwts.builder()
-                .setSubject(userInfo.id.toString())
-                .claim(CLAIM_USER_INFO_KEY, userInfo)
-                .setIssuedAt(now)
-                .setExpiration(expiration)
-                .signWith(signKey, SignatureAlgorithm.HS256)
-                .compact()
+            .setSubject(userInfo.id.toString())
+            .claim(CLAIM_USER_INFO_KEY, userInfo)
+            .setIssuedAt(now)
+            .setExpiration(expiration)
+            .signWith(signKey, SignatureAlgorithm.HS256)
+            .compact()
     }
 
     private fun generateRefreshToken(): String {
@@ -54,10 +53,10 @@ class JwtManager(
         val expiration = Date(now.time + REFRESH_TOKEN_EXPIRATION)
 
         return Jwts.builder()
-                .setIssuedAt(now)
-                .setExpiration(expiration)
-                .signWith(signKey, SignatureAlgorithm.HS256)
-                .compact()
+            .setIssuedAt(now)
+            .setExpiration(expiration)
+            .signWith(signKey, SignatureAlgorithm.HS256)
+            .compact()
     }
 
     companion object {

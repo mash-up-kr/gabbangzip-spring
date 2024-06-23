@@ -12,13 +12,11 @@ import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.body
 
-
 @Component
 class KakaoJwksClient(
     private val restClient: RestClient,
-    @Value("\${kakao.jwk-uri}") private val jwkUri: String
+    @Value("\${kakao.jwk-uri}") private val jwkUri: String,
 ) : JwksClient {
-
     @Cacheable("kakao-jwks")
     override fun getJwks(): JwksResponse {
         return requestJwks()

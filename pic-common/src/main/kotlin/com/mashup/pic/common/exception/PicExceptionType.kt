@@ -26,5 +26,4 @@ enum class PicExceptionType(
     EXTERNAL_COMMUNICATION_FAILURE("External communication failed.", "E001_EXTERNAL_COMMUNICATION_FAILURE", 500),
     EXTERNAL_SERVICE_UNAVAILABLE("External service is unavailable.", "E002_EXTERNAL_SERVICE_UNAVAILABLE", 503),
     EXTERNAL_SERVICE_TIMEOUT("External service call timed out.", "E003_EXTERNAL_SERVICE_TIMEOUT", 504),
-    ;
 }

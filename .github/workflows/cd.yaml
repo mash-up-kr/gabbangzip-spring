@@ -44,4 +44,5 @@ jobs:
           environment_name: pic-backend-eb-env
           version_label: pic-deploy-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
+          wait_for_environment_recovery: 180
           deployment_package: ./deploy/Dockerrun.aws.json

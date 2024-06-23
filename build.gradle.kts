@@ -9,6 +9,8 @@ plugins {
 
 java.sourceCompatibility = JavaVersion.VERSION_21
 
+val jasyptVersion: String by project.extra
+
 allprojects {
     group = "com.mashup.ppangzip"
     version = "0.0.1-SNAPSHOT"
@@ -27,7 +29,9 @@ subprojects {
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
+        implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:${jasyptVersion}")
 
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
         testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     }
 

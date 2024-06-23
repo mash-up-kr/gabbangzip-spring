@@ -50,7 +50,7 @@ class SecurityConfig(
                 "/api/v1/auth/token",
                 "/health",
                 "/swagger-ui/**",
-                "/v3/api-docs/**"
-        )
+                "/v3/api-docs/**",
+            )
     }
 }

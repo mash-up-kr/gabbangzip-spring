@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController
 class AuthController(
     private val authApplicationService: AuthApplicationService,
 ) {
-
     @Operation(summary = "로그인")
     @PostMapping("/login")
     fun login(

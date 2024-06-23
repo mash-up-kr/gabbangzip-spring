@@ -27,5 +27,8 @@ jobs:
           format: YYYY-MM-DDTHH-mm-ss
           utcOffset: "+09:00"
 
+      - name: Run ktlintFormat
+        run: chmod +x gradlew && ./gradlew ktlintFormat
+
       - name: build test
-        run: chmod +x gradlew && ./gradlew build
+        run: ./gradlew build

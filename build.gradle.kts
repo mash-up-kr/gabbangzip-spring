@@ -27,7 +27,9 @@ subprojects {
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
+        implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
 
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
         testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     }
 

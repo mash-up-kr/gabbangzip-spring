@@ -5,6 +5,9 @@ on:
       - main
       - develop
 
+env:
+  JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
+
 jobs:
   build:
     runs-on: ubuntu-latest

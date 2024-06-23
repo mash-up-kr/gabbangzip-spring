@@ -57,24 +57,26 @@ configure<JibExtension> {
 
     container {
         // TODO: 서버 스펙에 따라 Xmx/Xms, Initial/Min/MaxRAMFraction 설정
-        jvmFlags = listOf(
-            "-server",
-            "-XX:+UseContainerSupport",
-            "-XX:+UseStringDeduplication",
-            "-Dserver.port=8080",
-            "-Dfile.encoding=UTF-8",
-            "-Djava.awt.headless=true",
-            "-Dspring.profiles.active=${activeProfile}"
-        )
+        jvmFlags =
+            listOf(
+                "-server",
+                "-XX:+UseContainerSupport",
+                "-XX:+UseStringDeduplication",
+                "-Dserver.port=8080",
+                "-Dfile.encoding=UTF-8",
+                "-Djava.awt.headless=true",
+                "-Dspring.profiles.active=$activeProfile",
+            )
         ports = listOf("8080")
-        environment = mapOf(
-            "TZ" to "Asia/Seoul"
-        )
+        environment =
+            mapOf(
+                "TZ" to "Asia/Seoul",
+            )
     }
 }
 
 fun getProfileAndImageName(registryUsername: String?): Array<String> {
-    val containerImageName = "${registryUsername}/${project.name}"
+    val containerImageName = "$registryUsername/${project.name}"
     if (project.hasProperty("release")) {
         return arrayOf("release", containerImageName)
     }

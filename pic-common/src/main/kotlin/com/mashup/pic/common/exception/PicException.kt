@@ -14,7 +14,10 @@ class PicException(
             )
         }
 
-        fun of(type: PicExceptionType, message: String): PicException {
+        fun of(
+            type: PicExceptionType,
+            message: String,
+        ): PicException {
             return PicException(
                 errorCode = type.errorCode,
                 httpStatusCode = type.httpStatusCode,

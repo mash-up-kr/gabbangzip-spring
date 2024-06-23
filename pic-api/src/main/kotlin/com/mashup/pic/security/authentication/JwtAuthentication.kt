@@ -5,7 +5,6 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 
 class JwtAuthentication(private val userInfo: UserInfo) : Authentication {
-
     private var authenticated: Boolean = false
 
     override fun getName(): String {

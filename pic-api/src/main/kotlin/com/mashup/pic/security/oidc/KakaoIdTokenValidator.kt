@@ -12,22 +12,23 @@ import java.math.BigInteger
 import java.security.Key
 import java.security.KeyFactory
 import java.security.spec.RSAPublicKeySpec
-import java.util.*
-
+import java.util.Base64
 
 @Component
 class KakaoIdTokenValidator(
-        private val kakaoJwksClient: KakaoJwksClient,
-        private val objectMapper: ObjectMapper,
-        @Value("\${kakao.issuer}") private val issuer: String,
-        @Value("\${kakao.audience.rest}") private val restAudience: String,
-        @Value("\${kakao.audience.native}") private val nativeAudience: String
+    private val kakaoJwksClient: KakaoJwksClient,
+    private val objectMapper: ObjectMapper,
+    @Value("\${kakao.issuer}") private val issuer: String,
+    @Value("\${kakao.audience.rest}") private val restAudience: String,
+    @Value("\${kakao.audience.native}") private val nativeAudience: String,
 ) : IdTokenValidator {
-
     private val decoder = Base64.getUrlDecoder()
     private val keyFactory = KeyFactory.getInstance(SIGNING_ALGORITHM)
 
-    override fun validateAndGetId(idToken: String, nickname: String): Long {
+    override fun validateAndGetId(
+        idToken: String,
+        nickname: String,
+    ): Long {
         verifyPayload(idToken, nickname)
         verifySignature(idToken)
         return extractSub(idToken).toLong()
@@ -35,10 +36,13 @@ class KakaoIdTokenValidator(
 
     private fun extractSub(idToken: String): String {
         val payload = decodePayload(idToken)
-        return payload[SUB_KEY] as String? ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID,"Can't extract SUB")
+        return payload[SUB_KEY] as String? ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "Can't extract SUB")
     }
 
-    private fun verifyPayload(idToken: String, nickname: String) {
+    private fun verifyPayload(
+        idToken: String,
+        nickname: String,
+    ) {
         val payload = decodePayload(idToken)
         require(payload[ISSUER_KEY] == issuer) { "Invalid issuer" }
         require(payload[AUDIENCE_KEY] == restAudience || payload[AUDIENCE_KEY] == nativeAudience) { "Invalid audience" }
@@ -49,14 +53,14 @@ class KakaoIdTokenValidator(
         val kid = extractKid(idToken)
         val publicKey = getPublicKey(kid)
         Jwts.parserBuilder()
-                .setSigningKey(publicKey)
-                .build()
-                .parseClaimsJws(idToken)
+            .setSigningKey(publicKey)
+            .build()
+            .parseClaimsJws(idToken)
     }
 
     private fun extractKid(idToken: String): String {
         val header = decodeHeader(idToken)
-        return header[KID_KEY] as? String ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID,"Can't extract KID")
+        return header[KID_KEY] as? String ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "Can't extract KID")
     }
 
     private fun getPublicKey(kid: String): Key {
@@ -69,8 +73,8 @@ class KakaoIdTokenValidator(
 
     private fun getJwkByKid(kid: String): JwkKey {
         return kakaoJwksClient.getJwks().getJwkKeyByKid(kid)
-                ?: kakaoJwksClient.refreshAndGetJwks().getJwkKeyByKid(kid)
-                ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "Can't find the Jwk matching the KID")
+            ?: kakaoJwksClient.refreshAndGetJwks().getJwkKeyByKid(kid)
+            ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "Can't find the Jwk matching the KID")
     }
 
     private fun decodePayload(idToken: String): Map<String, Any> {

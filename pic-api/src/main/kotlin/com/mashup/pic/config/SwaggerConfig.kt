@@ -15,32 +15,34 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @OpenAPIDefinition(
-    info = Info(
-        title = "pic API",
-        description = "pic API api documents",
-        version = "v0"
-    )
+    info =
+        Info(
+            title = "pic API",
+            description = "pic API api documents",
+            version = "v0",
+        ),
 )
 class SwaggerConfig(
     @Value("\${swagger.host.url:http://localhost:8080}")
-    val serverHostUrl: String
+    val serverHostUrl: String,
 ) {
-
     @Bean
     fun openApi(): OpenAPI {
         val schemeName = "Authorization"
-        val securityRequirement = SecurityRequirement()
-            .addList(schemeName)
-        val components = Components()
-            .addSecuritySchemes(
-                schemeName,
-                SecurityScheme()
-                    .name(schemeName)
-                    .type(SecurityScheme.Type.HTTP)
-                    .`in`(SecurityScheme.In.HEADER)
-                    .scheme("bearer")
-                    .bearerFormat("JWT")
-            )
+        val securityRequirement =
+            SecurityRequirement()
+                .addList(schemeName)
+        val components =
+            Components()
+                .addSecuritySchemes(
+                    schemeName,
+                    SecurityScheme()
+                        .name(schemeName)
+                        .type(SecurityScheme.Type.HTTP)
+                        .`in`(SecurityScheme.In.HEADER)
+                        .scheme("bearer")
+                        .bearerFormat("JWT"),
+                )
 
         return OpenAPI()
             .addServersItem(Server().url(serverHostUrl))

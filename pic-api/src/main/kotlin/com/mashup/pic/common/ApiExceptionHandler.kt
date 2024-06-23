@@ -16,26 +16,21 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 @RestControllerAdvice
 class ApiExceptionHandler {
-
     private val log: Logger = LoggerFactory.getLogger(ApiExceptionHandler::class.java)
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentTypeMismatchException::class)
-    private fun handlerMethodArgumentNotValidException(
-        exception: MethodArgumentTypeMismatchException
-    ): ApiResponse<Any> {
+    private fun handlerMethodArgumentNotValidException(exception: MethodArgumentTypeMismatchException): ApiResponse<Any> {
         log.error("MethodArgumentTypeMismatchException handler", exception)
         return ApiResponse.fail(
             exceptionType = PicExceptionType.METHOD_ARGUMENT_TYPE_MISMATCH_VALUE,
-            message = exception.message
+            message = exception.message,
         )
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException::class)
-    private fun handleMethodArgumentNotValidException(
-        exception: MethodArgumentNotValidException
-    ): ApiResponse<Any> {
+    private fun handleMethodArgumentNotValidException(exception: MethodArgumentNotValidException): ApiResponse<Any> {
         log.error("MethodArgumentNotValidException handler", exception)
         val errorMessage = exception.allErrors.joinToString(" ,")
         return ApiResponse.fail(PicExceptionType.ARGUMENT_NOT_VALID, errorMessage)
@@ -43,25 +38,21 @@ class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MissingServletRequestParameterException::class)
-    private fun handleMissingServletRequestParameterException(
-        exception: MissingServletRequestParameterException,
-    ): ApiResponse<Any> {
+    private fun handleMissingServletRequestParameterException(exception: MissingServletRequestParameterException): ApiResponse<Any> {
         log.error("MissingServletRequestParameterException handler", exception)
         return ApiResponse.fail(
             exceptionType = PicExceptionType.INVALID_INPUT,
-            message = exception.message
+            message = exception.message,
         )
     }
 
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
-    private fun httpRequestMethodNotSupportedException(
-        exception: HttpRequestMethodNotSupportedException
-    ): ApiResponse<Any> {
+    private fun httpRequestMethodNotSupportedException(exception: HttpRequestMethodNotSupportedException): ApiResponse<Any> {
         log.error("MethodNotSupportedException handler", exception)
         return ApiResponse.fail(
             exceptionType = PicExceptionType.HTTP_REQUEST_METHOD_NOT_SUPPORTED,
-            message = exception.message
+            message = exception.message,
         )
     }
 
@@ -71,7 +62,7 @@ class ApiExceptionHandler {
         log.error("AccessDeniedException handler", exception)
         return ApiResponse.fail(
             exceptionType = PicExceptionType.ACCESS_DENIED,
-            message = exception.message
+            message = exception.message,
         )
     }
 
@@ -89,12 +80,13 @@ class ApiExceptionHandler {
         log.error("Exception handler", exception)
         return ApiResponse.fail(
             exceptionType = PicExceptionType.SYSTEM_FAIL,
-            message = exception.message
+            message = exception.message,
         )
     }
 
-    private fun PicException.toErrorResponse(): ErrorResponse = ErrorResponse(
-        code = errorCode,
-        message = message
-    )
+    private fun PicException.toErrorResponse(): ErrorResponse =
+        ErrorResponse(
+            code = errorCode,
+            message = message,
+        )
 }

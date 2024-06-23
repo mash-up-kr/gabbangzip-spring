@@ -11,6 +11,7 @@ tasks.jar {
 apply(plugin = "com.google.cloud.tools.jib")
 
 val jjwtVersion: String by project.extra
+val springDocOpenApiVersion: String by project.extra
 
 dependencies {
     implementation(project(":pic-common"))
@@ -32,6 +33,9 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    // swagger
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocOpenApiVersion")
 }
 
 configure<JibExtension> {

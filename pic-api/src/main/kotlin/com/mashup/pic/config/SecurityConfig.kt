@@ -46,7 +46,10 @@ class SecurityConfig(
         private const val MEMBER_ROLE = "MEMBER"
         private val WHITELIST_ENDPOINTS = arrayOf(
                 "/api/v1/auth/login",
-                "/api/v1/auth/token"
+                "/api/v1/auth/token",
+                "/health",
+                "/swagger-ui/**",
+                "/v3/api-docs/**"
         )
     }
 

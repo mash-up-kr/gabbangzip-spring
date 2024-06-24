@@ -12,3 +12,8 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
+
+redis:
+    data:
+      host: ENC(kiaq4/zTmL2SPJ8mpqCxmBooPmCsfUs7YkZCyZ5usEAkpYS64lyFfAH1eJOkI+nk6YNBuVGofBRDgLOwCp+dH641tmb6FxtSL6e9FePACyHyvu3J9TjTPq+oBUwD2CK6)
+      port: ENC(5PPNFYq6MXLiysCHoUWT37zoHPcClkr2bSngDL4vhyD3ZIorgKVsSHGCoMlyAUkW)

@@ -12,7 +12,7 @@ import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.security.Key
-import java.util.Date
+import java.util.*
 
 @Component
 class JwtManager(
@@ -61,7 +61,9 @@ class JwtManager(
 
     companion object {
         private const val CLAIM_USER_INFO_KEY = "user-info"
-//        private const val ACCESS_TOKEN_EXPIRATION = 12 * 60 * 60 * 1000 // 12 hours
+
+        // TODO: Change access token expiration after refactoring
+        // private const val ACCESS_TOKEN_EXPIRATION = 12 * 60 * 60 * 1000 // 12 hours
         private const val ACCESS_TOKEN_EXPIRATION = 30L * 24 * 60 * 60 * 1000 // 30 days
         private const val REFRESH_TOKEN_EXPIRATION = 30L * 24 * 60 * 60 * 1000 // 30 days
     }

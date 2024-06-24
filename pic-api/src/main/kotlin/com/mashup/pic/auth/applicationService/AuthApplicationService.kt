@@ -19,7 +19,7 @@ class AuthApplicationService(
     private val userService: UserService,
     private val refreshTokenService: RefreshTokenService,
     private val jwtManager: JwtManager,
-    private val idTokenValidator: KakaoIdTokenValidator
+    private val idTokenValidator: KakaoIdTokenValidator,
 ) {
     @Transactional
     fun login(request: LoginServiceRequest): LoginResponse {
@@ -40,12 +40,15 @@ class AuthApplicationService(
         refreshTokenService.updateToken(
             userId = userId,
             originToken = request.refreshToken,
-            newToken = authToken.refreshToken
+            newToken = authToken.refreshToken,
         )
         return ReissueResponse.from(authToken)
     }
 
-    private fun createUser(oAuthId: Long, request: LoginServiceRequest) : User {
+    private fun createUser(
+        oAuthId: Long,
+        request: LoginServiceRequest,
+    ): User {
         return userService.create(
             oAuthId = oAuthId,
             nickname = request.nickname,

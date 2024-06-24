@@ -31,7 +31,7 @@ class AuthController(
     @Operation(summary = "토큰 재발급")
     @PostMapping("/token")
     fun reissue(
-        @Valid @RequestBody reissueRequest: ReissueRequest
+        @Valid @RequestBody reissueRequest: ReissueRequest,
     ): ApiResponse<ReissueResponse> {
         return ApiResponse.success(authApplicationService.reissueToken(reissueRequest.toServiceRequest()))
     }

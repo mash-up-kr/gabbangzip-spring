@@ -12,20 +12,19 @@ import org.springframework.data.redis.serializer.RedisSerializationContext
 import org.springframework.data.redis.serializer.StringRedisSerializer
 import java.time.Duration
 
-
 @Configuration
 class RedisConfig(
     @Value("\${redis.data.host}") private val host: String,
     @Value("\${redis.data.port}") private val port: Int,
 ) {
-
     @Bean
     fun cacheManager(): CacheManager {
-        val configuration = RedisCacheConfiguration.defaultCacheConfig()
-            .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer()))
-            .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(GenericJackson2JsonRedisSerializer()))
-            .entryTtl(Duration.ofDays(DEFAULT_ENTRY_TTL_DAYS))
-            .disableCachingNullValues()
+        val configuration =
+            RedisCacheConfiguration.defaultCacheConfig()
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer()))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(GenericJackson2JsonRedisSerializer()))
+                .entryTtl(Duration.ofDays(DEFAULT_ENTRY_TTL_DAYS))
+                .disableCachingNullValues()
         return RedisCacheManager.RedisCacheManagerBuilder
             .fromConnectionFactory(lettuceConnectionFactory())
             .cacheDefaults(configuration)

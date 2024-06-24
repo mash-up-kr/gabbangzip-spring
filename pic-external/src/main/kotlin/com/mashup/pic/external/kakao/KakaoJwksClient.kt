@@ -34,7 +34,7 @@ class KakaoJwksClient(
             .onStatus(HttpStatusCode::is4xxClientError) { _, response ->
                 throw PicException.of(
                     PicExceptionType.EXTERNAL_COMMUNICATION_FAILURE,
-                    "Error fetching JWKS: ${response.statusCode}"
+                    "Error fetching JWKS: ${response.statusCode}",
                 )
             }
             .body<JwksResponse>()!!

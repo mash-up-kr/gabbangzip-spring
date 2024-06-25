@@ -1,6 +1,6 @@
 package com.mashup.pic.auth.controller.dto
 
-import com.mashup.pic.domain.user.User
+import com.mashup.pic.domain.user.UserDto
 import com.mashup.pic.security.authentication.AuthToken
 
 data class LoginResponse(
@@ -11,7 +11,7 @@ data class LoginResponse(
 ) {
     companion object {
         fun from(
-            user: User,
+            user: UserDto,
             authToken: AuthToken,
         ): LoginResponse {
             return LoginResponse(

@@ -17,7 +17,7 @@ class UserController {
     @Operation(summary = "회원탈퇴")
     @DeleteMapping
     fun withdraw(
-        @AuthenticationPrincipal user: UserInfo
+        @AuthenticationPrincipal user: UserInfo,
     ): ApiResponse<DeleteUserResponse> {
         return ApiResponse.success(DeleteUserResponse(user.id))
     }

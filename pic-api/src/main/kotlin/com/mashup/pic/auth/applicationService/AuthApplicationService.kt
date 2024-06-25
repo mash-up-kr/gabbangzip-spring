@@ -5,7 +5,7 @@ import com.mashup.pic.auth.applicationService.dto.ReissueServiceRequest
 import com.mashup.pic.auth.controller.dto.LoginResponse
 import com.mashup.pic.auth.controller.dto.ReissueResponse
 import com.mashup.pic.domain.auth.RefreshTokenService
-import com.mashup.pic.domain.user.User
+import com.mashup.pic.domain.user.UserDto
 import com.mashup.pic.domain.user.UserService
 import com.mashup.pic.security.authentication.UserInfo
 import com.mashup.pic.security.jwt.JwtManager
@@ -48,7 +48,7 @@ class AuthApplicationService(
     private fun createUser(
         oAuthId: Long,
         request: LoginServiceRequest,
-    ): User {
+    ): UserDto {
         return userService.create(
             oAuthId = oAuthId,
             nickname = request.nickname,
@@ -56,7 +56,7 @@ class AuthApplicationService(
         )
     }
 
-    fun User.toUserInfo(): UserInfo {
+    fun UserDto.toUserInfo(): UserInfo {
         return UserInfo(
             id = this.id,
             nickname = this.nickname,

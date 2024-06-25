@@ -13,17 +13,20 @@ enum class PicExceptionType(
 
     // COMMON
     NOT_EXIST("존재하지 않습니다.", "C001_NOT_EXIST", 404),
-    INVALID_ACCESS("Invalid Access", "C003_INVALID_ACCESS", 403),
+    INVALID_ACCESS("Invalid Access", "C03_INVALID_ACCESS", 403),
     INVALID_INPUT("Invalid Input", "C004_INVALID_INPUT", 400),
     METHOD_ARGUMENT_TYPE_MISMATCH_VALUE("Request method argument type mismatch", "C005_TYPE_MISMATCH_VALUE", 400),
     HTTP_REQUEST_METHOD_NOT_SUPPORTED("HTTP request method not supported", "C006_HTTP_METHOD_NOT_SUPPORTED", 400),
     ACCESS_DENIED("Access denied. Check authentication.", "C007_ACCESS_DENIED", 403),
     AUTHENTICATION_FAILURE("Authentication failed. Check login.", "C008_AUTHENTICATION_FAILURE", 401),
     ARGUMENT_NOT_VALID("Method Argument Not Valid. Check argument validation.", "C009_ARGUMENT_NOT_VALID", 400),
+    BAD_REQUEST("Bad request", "C010_BAD_REQUEST",400),
+    FORBIDDEN("Forbidden","C011_FORBIDDEN",403),
+    METHOD_NOT_ALLOWED("Method not allowed","C012_METHOD_NOT_ALLOWED",405),
     SYSTEM_FAIL("Internal Server Error.", "C002_SYSTEM_FAIL", 500),
 
     // EXTERNAL COMMUNICATION
     EXTERNAL_COMMUNICATION_FAILURE("External communication failed.", "E001_EXTERNAL_COMMUNICATION_FAILURE", 500),
     EXTERNAL_SERVICE_UNAVAILABLE("External service is unavailable.", "E002_EXTERNAL_SERVICE_UNAVAILABLE", 503),
-    EXTERNAL_SERVICE_TIMEOUT("External service call timed out.", "E003_EXTERNAL_SERVICE_TIMEOUT", 504),
+    EXTERNAL_SERVICE_TIMEOUT("External service call timed out.", "E003_EXTERNAL_SERVICE_TIMEOUT", 504),;
 }

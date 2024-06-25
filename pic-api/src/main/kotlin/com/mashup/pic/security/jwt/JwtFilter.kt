@@ -1,7 +1,7 @@
 package com.mashup.pic.security.jwt
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.mashup.pic.common.ApiResponse
+import com.mashup.pic.common.PicApiResponse
 import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.security.authentication.JwtAuthentication
@@ -39,7 +39,7 @@ class JwtFilter(
             response.characterEncoding = "UTF-8"
             response.writer.write(
                 objectMapper.writeValueAsString(
-                    ApiResponse.fail(
+                    PicApiResponse.fail(
                         PicExceptionType.INVALID_TOKEN_BEARER,
                         exception.message,
                     ),

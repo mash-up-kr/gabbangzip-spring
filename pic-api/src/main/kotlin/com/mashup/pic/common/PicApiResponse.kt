@@ -11,7 +11,7 @@ data class PicApiResponse<T>(
         fun <T> success(data: T? = null): PicApiResponse<T> {
             return PicApiResponse(
                 isSuccess = true,
-                data = data
+                data = data,
             )
         }
 

@@ -22,14 +22,15 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @OpenAPIDefinition(
-    info = Info(
-        title = "pic API",
-        description = "pic API api documents",
-        version = "v0"
-    )
+    info =
+        Info(
+            title = "pic API",
+            description = "pic API api documents",
+            version = "v0",
+        ),
 )
 class SwaggerConfig(
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
 ) {
     @Bean
     fun openApi(): OpenAPI {
@@ -44,8 +45,8 @@ class SwaggerConfig(
                             .type(SecurityScheme.Type.HTTP)
                             .`in`(SecurityScheme.In.HEADER)
                             .scheme("Bearer")
-                            .bearerFormat("JWT")
-                    )
+                            .bearerFormat("JWT"),
+                    ),
             )
     }
 
@@ -68,24 +69,32 @@ class SwaggerConfig(
         apiResponses.addApiResponse("500", createStandardResponse("500", "Internal Server Error"))
     }
 
-    private fun createStandardResponse(code: String, description: String): ApiResponse {
+    private fun createStandardResponse(
+        code: String,
+        description: String,
+    ): ApiResponse {
         val exceptionType = getExceptionTypeFromCode(code)
-        val errorResponse = exceptionType?.let {
-            ErrorResponse(code = it.errorCode, message = it.message)
-        }
-        val picApiResponse = PicApiResponse.fail(
+        val errorResponse =
+            exceptionType?.let {
+                ErrorResponse(code = it.errorCode, message = it.message)
+            }
+        val picApiResponse =
+            PicApiResponse.fail(
                 exceptionType = exceptionType ?: PicExceptionType.ARGUMENT_NOT_VALID,
-                message = errorResponse?.message)
+                message = errorResponse?.message,
+            )
 
         val exampleContent = objectMapper.writeValueAsString(picApiResponse)
         val example = Example().apply { value = exampleContent }
-        val mediaType = MediaType().apply {
-            addExamples("example", example)
-            schema = Schema<Any>()
-        }
-        val content = Content().apply {
-            addMediaType(org.springframework.http.MediaType.APPLICATION_JSON_VALUE, mediaType)
-        }
+        val mediaType =
+            MediaType().apply {
+                addExamples("example", example)
+                schema = Schema<Any>()
+            }
+        val content =
+            Content().apply {
+                addMediaType(org.springframework.http.MediaType.APPLICATION_JSON_VALUE, mediaType)
+            }
         return ApiResponse().apply {
             this.description = description
             this.content = content
@@ -102,4 +111,3 @@ class SwaggerConfig(
         }
     }
 }
-

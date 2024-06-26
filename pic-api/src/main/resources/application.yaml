@@ -7,8 +7,12 @@ spring:
 jwt:
   secret-key: ENC(NtDCxHj5jr9w2VZJ8ePLbjYrgB5mcL68ysQhvGgnj53mqiHnML6eWOi3X0sL4CRUnvqZMEKx9af16oM02kKDj91w76d72ljnLVhT49M1lhc=)
 kakao:
+  redirect:
+    uri: ENC(hQaRU6OCm1+wTd3XguO8SwBRrm60Q/WHVHXLqrUrvik27oOddgRqyplLtfu+kLcxGuzyCypBbJ5mvDKasDMPbTYGqmdEBTYGAdpuzNFAIKpaVgDesBfViqtt4MS4YImM/uj0JrJV85DzXIfyC3V83Q==)
   issuer: https://kauth.kakao.com
   audience:
     rest: ENC(u+lS/xGqXqujwaf1fYWKYJlAwkFFBEoxaFpQeu7DOUYbPUd0IfcYK+NzJEteORXDk4iWWQPkeX6mPyjqEVBrXsYxVL7R+lZaoCiMyUWgI/4=)
     native: ENC(yxu/eU8zyaMF3rpIk0sEzGAjDlGNMR6W8bwDFouuEfOtkQueHf9kp0ZRQeLrwI1DctSJOCwfgRm61jiWAdFSm5W+P7lnC87EFIBCXOoNOxE=)
   jwk-uri: https://kauth.kakao.com/.well-known/jwks.json
+  token-uri: https://kauth.kakao.com/oauth/token
+  info-uri: https://kapi.kakao.com/v1/user/access_token_info

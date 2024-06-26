@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>회원탈퇴</title>
@@ -27,7 +27,7 @@
 <div class="container">
     <h1>회원탈퇴</h1>
     <p>정말 회원탈퇴를 하시겠습니까?</p>
-    <a href="http://localhost:8080/page/complete" class="withdraw-link">회원탈퇴하기</a>
+    <a th:href="@{/page/complete/{userId}(userId=${userId})}" class="withdraw-link" th:text="'회원 탈퇴하기'"></a>
 </div>
 </body>
 </html>

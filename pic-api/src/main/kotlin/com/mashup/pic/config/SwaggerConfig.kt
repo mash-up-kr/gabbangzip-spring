@@ -75,11 +75,13 @@ class SwaggerConfig(
     ): ApiResponse {
         val exampleContent = createExampleContentByCode(code)
         val example = Example().apply { value = exampleContent }
-        val mediaType = MediaType().apply {
+        val mediaType =
+            MediaType().apply {
                 addExamples(EXAMPLE_KEY, example)
                 schema = Schema<Any>()
             }
-        val content = Content().apply {
+        val content =
+            Content().apply {
                 addMediaType(org.springframework.http.MediaType.APPLICATION_JSON_VALUE, mediaType)
             }
         return ApiResponse().apply {
@@ -88,18 +90,20 @@ class SwaggerConfig(
         }
     }
 
-    private fun createExampleContentByCode(code: String) : String {
+    private fun createExampleContentByCode(code: String): String {
         val exceptionType = getExceptionTypeFromCode(code)
 
-        val errorResponse = ErrorResponse(
-            code = exceptionType.errorCode,
-            message = exceptionType.message
-        )
+        val errorResponse =
+            ErrorResponse(
+                code = exceptionType.errorCode,
+                message = exceptionType.message,
+            )
 
-        val picApiResponse = PicApiResponse.fail(
-            exceptionType = exceptionType,
-            message = errorResponse.message
-        )
+        val picApiResponse =
+            PicApiResponse.fail(
+                exceptionType = exceptionType,
+                message = errorResponse.message,
+            )
 
         return objectMapper.writeValueAsString(picApiResponse)
     }

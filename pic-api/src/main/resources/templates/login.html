@@ -18,6 +18,9 @@
 <body>
 <div class="container" style="display: flex; justify-content: center; align-content: center; align-items: center; flex-direction: column; margin: 200px auto; ">
     <h1>PIC</h1>
+    <p> PIC 서비스를 이용해주셔서 감사합니다. 계정 삭제를 원하실 경우 앱 마이페이지 혹은 아래 웹 로그인을 통해 직접 처리하실 수 있습니다. </p>
+    <p> 계정 삭제 시 고객님의 개인정보 및 서비스 이용 내역 등 모든 데이터가 즉시 삭제됩니다.</p>
+    <p> 단, 법적 보관 의무 등으로 인해 일부 데이터는 최대 30일간 보관될 수 있습니다. </p>
     <a href="https://kauth.kakao.com/oauth/authorize"
        th:href="@{https://kauth.kakao.com/oauth/authorize(client_id=${kakaoApiKey}, redirect_uri=${redirectUri}, response_type='code')}" class="kakao-login-button">
     카카오 로그인

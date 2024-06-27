@@ -13,7 +13,7 @@ enum class PicExceptionType(
 
     // COMMON
     NOT_EXIST("존재하지 않습니다.", "C001_NOT_EXIST", 404),
-    INVALID_ACCESS("Invalid Access", "C03_INVALID_ACCESS", 403),
+    INVALID_ACCESS("Invalid Access", "C003_INVALID_ACCESS", 403),
     INVALID_INPUT("Invalid Input", "C004_INVALID_INPUT", 400),
     METHOD_ARGUMENT_TYPE_MISMATCH_VALUE("Request method argument type mismatch", "C005_TYPE_MISMATCH_VALUE", 400),
     HTTP_REQUEST_METHOD_NOT_SUPPORTED("HTTP request method not supported", "C006_HTTP_METHOD_NOT_SUPPORTED", 400),

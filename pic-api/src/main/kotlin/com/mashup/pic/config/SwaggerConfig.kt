@@ -35,23 +35,23 @@ class SwaggerConfig(
     @Bean
     fun openApi(): OpenAPI {
         return OpenAPI()
-            .addSecurityItem(SecurityRequirement().addList("Authorization"))
+            .addSecurityItem(SecurityRequirement().addList(AUTH_SCHEME_NAME))
             .components(
                 Components()
                     .addSecuritySchemes(
-                        "Authorization",
+                        AUTH_SCHEME_NAME,
                         SecurityScheme()
-                            .name("Authorization")
+                            .name(AUTH_SCHEME_NAME)
                             .type(SecurityScheme.Type.HTTP)
                             .`in`(SecurityScheme.In.HEADER)
-                            .scheme("Bearer")
+                            .scheme(BEARER)
                             .bearerFormat("JWT"),
                     ),
             )
     }
 
     @Bean
-    fun customiseResponses(): OpenApiCustomizer {
+    fun customizeResponses(): OpenApiCustomizer {
         return OpenApiCustomizer { openApi ->
             openApi.paths.orEmpty().values.forEach { pathItem ->
                 pathItem.readOperations().forEach { operation ->
@@ -73,26 +73,13 @@ class SwaggerConfig(
         code: String,
         description: String,
     ): ApiResponse {
-        val exceptionType = getExceptionTypeFromCode(code)
-        val errorResponse =
-            exceptionType?.let {
-                ErrorResponse(code = it.errorCode, message = it.message)
-            }
-        val picApiResponse =
-            PicApiResponse.fail(
-                exceptionType = exceptionType ?: PicExceptionType.ARGUMENT_NOT_VALID,
-                message = errorResponse?.message,
-            )
-
-        val exampleContent = objectMapper.writeValueAsString(picApiResponse)
+        val exampleContent = createExampleContentByCode(code)
         val example = Example().apply { value = exampleContent }
-        val mediaType =
-            MediaType().apply {
-                addExamples("example", example)
+        val mediaType = MediaType().apply {
+                addExamples(EXAMPLE_KEY, example)
                 schema = Schema<Any>()
             }
-        val content =
-            Content().apply {
+        val content = Content().apply {
                 addMediaType(org.springframework.http.MediaType.APPLICATION_JSON_VALUE, mediaType)
             }
         return ApiResponse().apply {
@@ -101,13 +88,34 @@ class SwaggerConfig(
         }
     }
 
-    private fun getExceptionTypeFromCode(code: String): PicExceptionType? {
+    private fun createExampleContentByCode(code: String) : String {
+        val exceptionType = getExceptionTypeFromCode(code)
+
+        val errorResponse = ErrorResponse(
+            code = exceptionType.errorCode,
+            message = exceptionType.message
+        )
+
+        val picApiResponse = PicApiResponse.fail(
+            exceptionType = exceptionType,
+            message = errorResponse.message
+        )
+
+        return objectMapper.writeValueAsString(picApiResponse)
+    }
+
+    private fun getExceptionTypeFromCode(code: String): PicExceptionType {
         return when (code) {
             "400" -> PicExceptionType.BAD_REQUEST
             "403" -> PicExceptionType.FORBIDDEN
             "405" -> PicExceptionType.METHOD_NOT_ALLOWED
-            "500" -> PicExceptionType.SYSTEM_FAIL
-            else -> null
+            else -> PicExceptionType.SYSTEM_FAIL
         }
+    }
+
+    companion object {
+        private const val AUTH_SCHEME_NAME = "Authorization"
+        private const val BEARER = "Bearer"
+        private const val EXAMPLE_KEY = "example"
     }
 }

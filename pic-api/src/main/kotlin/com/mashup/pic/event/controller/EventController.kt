@@ -22,7 +22,12 @@ class EventController {
         @Valid @RequestBody createEventRequest: CreateEventRequest,
     ): ApiResponse<CreateEventResponse> {
         return ApiResponse.success(
-            CreateEventResponse("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/default.png", "가빵집 회식", LocalDateTime.of(2024, 6, 24, 0, 0), LocalDateTime.of(2024, 6, 26, 11, 30)),
+            CreateEventResponse(
+                "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/default.png",
+                "가빵집 회식",
+                LocalDateTime.of(2024, 6, 24, 0, 0),
+                LocalDateTime.of(2024, 6, 26, 11, 30),
+            ),
         )
     }
 }

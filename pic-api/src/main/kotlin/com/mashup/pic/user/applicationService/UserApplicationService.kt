@@ -5,12 +5,14 @@ import com.mashup.pic.external.kakao.KakaoClient
 import com.mashup.pic.security.authentication.UserInfo
 import com.mashup.pic.security.jwt.JwtManager
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional(readOnly = true)
 class UserApplicationService(
-    val userService: UserService,
-    val kakaoClient: KakaoClient,
-    val jwtManager: JwtManager,
+    private val userService: UserService,
+    private val kakaoClient: KakaoClient,
+    private val jwtManager: JwtManager,
 ) {
     fun callbackPage(code: String): String? {
         val oAuthId = kakaoClient.getOAuthId(code)
@@ -24,6 +26,7 @@ class UserApplicationService(
         ).accessToken
     }
 
+    @Transactional
     fun deleteUser(userId: Long): Long {
         userService.deleteUser(userId)
         return userId

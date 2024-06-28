@@ -28,10 +28,15 @@ class UserPageController(
         @RequestParam("code") code: String,
         model: Model,
     ): String {
-        val userId = userApplicationService.callbackPage(code) ?: return "error"
+        val accessToken = userApplicationService.callbackPage(code) ?: return "error"
 
-        model.addAttribute("userId", userId)
+        model.addAttribute("accessToken", accessToken)
         return "withdraw"
+    }
+
+    @GetMapping("/error")
+    fun callback(): String {
+        return "error"
     }
 
     @GetMapping("/complete")

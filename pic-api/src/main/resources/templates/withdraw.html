@@ -12,12 +12,13 @@
             height: 100vh;
         }
 
-        .withdraw-btn {
+        .withdraw-link {
             background-color: #ff4d4d;
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
+            text-decoration: none;
             font-size: 16px;
             cursor: pointer;
         }
@@ -27,29 +28,31 @@
 <div class="container">
     <h1>회원탈퇴</h1>
     <p>정말 회원탈퇴를 하시겠습니까?</p>
-    <button class="withdraw-btn" th:onclick="|withdrawUser('[[${accessToken}]]')|">회원 탈퇴하기</button>
+    <button class="withdraw-link" id="withdrawBtn">회원탈퇴</button>
 </div>
 
-<script th:inline="javascript">
-    function withdrawUser(accessToken) {
-        fetch('/api/user', {
-            method: 'DELETE',
-            headers: {
-                'Authorization': 'Bearer ' + accessToken
-            }
-        })
-            .then(response => {
-                if (response.ok) {
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#withdrawBtn').click(function() {
+            let accessToken = '[[${accessToken}]]';
+
+            $.ajax({
+                url: '/api/v1/user',
+                type: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                success: function(response) {
                     window.location.href = '/page/complete';
-                } else {
+                },
+                error: function(xhr, status, error) {
                     window.location.href = '/page/error';
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                window.location.href = '/page/error';
             });
-    }
+        });
+    });
 </script>
 </body>
 </html>

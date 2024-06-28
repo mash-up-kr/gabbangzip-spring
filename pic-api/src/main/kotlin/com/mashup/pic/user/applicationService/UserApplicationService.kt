@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class UserApplicationService(
     val userService: UserService,
     val kakaoClient: KakaoClient,
-    val jwtManager: JwtManager
+    val jwtManager: JwtManager,
 ) {
     fun callbackPage(code: String): String? {
         val oAuthId = kakaoClient.getOAuthId(code)
@@ -19,12 +19,12 @@ class UserApplicationService(
             UserInfo(
                 id = user.id,
                 nickname = user.nickname,
-                roles = user.roles
-            )
+                roles = user.roles,
+            ),
         ).accessToken
     }
 
-    fun deleteUser(userId: Long) : Long {
+    fun deleteUser(userId: Long): Long {
         userService.deleteUser(userId)
         return userId
     }

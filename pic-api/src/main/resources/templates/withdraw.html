@@ -12,14 +12,14 @@
             height: 100vh;
         }
 
-        .withdraw-link {
+        .withdraw-btn {
             background-color: #ff4d4d;
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            text-decoration: none;
             font-size: 16px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -27,7 +27,29 @@
 <div class="container">
     <h1>회원탈퇴</h1>
     <p>정말 회원탈퇴를 하시겠습니까?</p>
-    <a th:href="@{/page/complete/{userId}(userId=${userId})}" class="withdraw-link" th:text="'회원 탈퇴하기'"></a>
+    <button class="withdraw-btn" th:onclick="|withdrawUser('[[${accessToken}]]')|">회원 탈퇴하기</button>
 </div>
+
+<script th:inline="javascript">
+    function withdrawUser(accessToken) {
+        fetch('/api/user', {
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/page/complete';
+                } else {
+                    window.location.href = '/page/error';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                window.location.href = '/page/error';
+            });
+    }
+</script>
 </body>
 </html>

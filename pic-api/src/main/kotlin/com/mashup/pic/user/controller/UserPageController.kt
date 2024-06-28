@@ -34,11 +34,8 @@ class UserPageController(
         return "withdraw"
     }
 
-    @GetMapping("/complete/{userId}")
-    fun complete(
-        @PathVariable userId: Long,
-    ): String {
-        userApplicationService.deleteUser(userId)
+    @GetMapping("/complete")
+    fun complete(): String {
         return "complete"
     }
 }

@@ -20,15 +20,15 @@ data class ViewGroupDetailResponse (
 
 fun sampleViewGroupDetailResponse(): ViewGroupDetailResponse {
     val framedImages = listOf(
-        FramedImage("image1.jpg", "frame1.png"),
-        FramedImage("image2.jpg", "frame2.png"),
-        FramedImage("image3.jpg", "frame3.png")
+        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample1.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg"),
+        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample2.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg"),
+        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample3.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg")
     )
 
     return ViewGroupDetailResponse(
-        groupName = "Group 1",
-        keyword = "Keyword 1",
-        keywordFrameUrl = "keywordFrame1.png",
+        groupName = "가빨집 모임",
+        keyword = "LITTLE_MOIM",
+        keywordFrameUrl = "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample3.jpeg",
         keywordColor1 = "#FFFFFF",
         keywordColor2 = "#000000",
         groupStatus = "Active",

@@ -45,7 +45,7 @@ class KakaoClient(
     private fun requestTokenInfo(accessToken: String): KakaoTokenInfoResponse {
         return restClient.get()
             .uri(infoUri)
-            .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+            .header(HttpHeaders.AUTHORIZATION, TOKEN_BEARER + accessToken)
             .retrieve()
             .onStatus(HttpStatusCode::is4xxClientError) { _, response ->
                 throw PicException.of(
@@ -53,7 +53,7 @@ class KakaoClient(
                     "Error fetching JWKS: ${response.statusCode}",
                 )
             }
-            .body<KakaoTokenInfoResponse>()!!
+            .body<KakaoTokenInfoResponse>() ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID)
     }
 
     private fun requestToken(code: String): KakaoTokenResponse {
@@ -68,7 +68,7 @@ class KakaoClient(
                     "Error requesting access token: ${response.statusCode}",
                 )
             }
-            .body<KakaoTokenResponse>()!!
+            .body<KakaoTokenResponse>() ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID)
     }
 
     private fun requestJwks(): JwksResponse {
@@ -81,7 +81,7 @@ class KakaoClient(
                     "Error fetching JWKS: ${response.statusCode}",
                 )
             }
-            .body<JwksResponse>()!!
+            .body<JwksResponse>() ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID)
     }
 
     private fun createTokenRequestBody(code: String): MultiValueMap<String, String> {
@@ -91,5 +91,9 @@ class KakaoClient(
             add("redirect_uri", redirectUri)
             add("code", code)
         }
+    }
+
+    companion object {
+        private const val TOKEN_BEARER = "Bearer "
     }
 }

@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController
 
 @Tag(name = "그룹")
 @RestController
-@RequestMapping("/api/v1/group")
-class GroupController() {
+@RequestMapping("/api/v1/groups")
+class GroupController {
 
     @GetMapping
     @Operation(summary = "그룹 조회")
@@ -30,7 +30,7 @@ class GroupController() {
     }
 
     @GetMapping("/{groupId}")
-    @Operation(summary = "그룹 세부 조회")
+    @Operation(summary = "그룹 상세 조회")
     fun viewGroupDetail(
         @PathVariable groupId: Long,
         @AuthenticationPrincipal user: UserInfo

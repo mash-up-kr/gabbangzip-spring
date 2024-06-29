@@ -51,11 +51,6 @@ class SwaggerConfig(
     }
 
     @Bean
-    fun modelResolver(objectMapper: ObjectMapper): ModelResolver {
-        return ModelResolver(objectMapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE))
-    }
-
-    @Bean
     fun customizeResponses(): OpenApiCustomizer {
         return OpenApiCustomizer { openApi ->
             openApi.paths.orEmpty().values.forEach { pathItem ->

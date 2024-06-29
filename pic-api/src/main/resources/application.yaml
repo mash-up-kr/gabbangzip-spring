@@ -25,6 +25,7 @@ cloud:
             access-key: ENC(nqIMjTrzfJTjqIT2/3qpuUBUwRPzxIuJLuVtMeKdNvHPZOSE9Sae+PI2f13nceG24JM9tDVDY9dV2xzJxqAX2w==)
             secret-key: ENC(elsL2RSUX6luPGphhQnWLX0hulYR1qgFK/32qZo5pTNz9SNa77Dg30I9s5NL5vs+WsbDXlsbusXFIS5635DiITcErULRBMmvEt+wjKuUcXQ=)
         s3:
-            bucket-name: ENC(X4oiFkzwBGS6d/TCJCcAcgNGFdVUT/QOYYcRNMVLutvXKb9csVR8k2JLWCYksh6N)
-            region:
-                static: "ap-northeast-2"
+            bucket: ENC(X4oiFkzwBGS6d/TCJCcAcgNGFdVUT/QOYYcRNMVLutvXKb9csVR8k2JLWCYksh6N)
+        region:
+            static: ap-northeast-2
+            auto: false

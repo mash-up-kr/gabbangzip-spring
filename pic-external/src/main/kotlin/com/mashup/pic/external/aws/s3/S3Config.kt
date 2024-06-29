@@ -16,7 +16,11 @@ import org.springframework.context.annotation.Configuration
 @EnableConfigurationProperties(S3Properties::class)
 class S3Config {
     @Bean
-    fun amazonS3(awsCredentialsProperties: AwsCredentialsProperties, awsRegionProperties: AwsRegionProperties, s3Properties: S3Properties): AmazonS3 {
+    fun amazonS3(
+        awsCredentialsProperties: AwsCredentialsProperties,
+        awsRegionProperties: AwsRegionProperties,
+        s3Properties: S3Properties,
+    ): AmazonS3 {
         val awsCredentials = BasicAWSCredentials(awsCredentialsProperties.accessKey, awsCredentialsProperties.secretKey)
         return AmazonS3ClientBuilder.standard()
             .withRegion(awsRegionProperties.static)
@@ -25,5 +29,5 @@ class S3Config {
     }
 
     @ConfigurationProperties(prefix = "cloud.aws.s3")
-    data class S3Properties(val bucketName: String)
+    data class S3Properties(val bucket: String)
 }

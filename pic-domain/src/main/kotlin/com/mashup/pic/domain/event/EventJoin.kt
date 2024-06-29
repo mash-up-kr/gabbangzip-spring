@@ -23,5 +23,5 @@ class EventJoin(
     @JoinColumn(name = "event_id")
     val event: Event,
     @Column(name = "visited_result", nullable = false)
-    val visitedResult: Boolean
+    val visitedResult: Boolean = false
 ) : BaseEntity()

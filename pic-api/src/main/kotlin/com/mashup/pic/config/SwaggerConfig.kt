@@ -1,10 +1,8 @@
 package com.mashup.pic.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.mashup.pic.common.ErrorResponse
 import com.mashup.pic.common.exception.PicExceptionType
-import io.swagger.v3.core.jackson.ModelResolver
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.info.Info
 import io.swagger.v3.oas.models.Components

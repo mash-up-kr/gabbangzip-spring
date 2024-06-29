@@ -1,7 +1,6 @@
 package com.mashup.pic.domain.event
 
 import com.mashup.pic.domain.common.BaseEntity
-import com.mashup.pic.domain.user.User
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType

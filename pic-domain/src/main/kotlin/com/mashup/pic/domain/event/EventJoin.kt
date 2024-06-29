@@ -1,7 +1,6 @@
 package com.mashup.pic.domain.event
 
 import com.mashup.pic.domain.common.BaseEntity
-import com.mashup.pic.domain.group.Group
 import com.mashup.pic.domain.user.User
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -16,7 +15,7 @@ import org.hibernate.annotations.SQLRestriction
 @Table(name = "event_join")
 @SQLDelete(sql = "UPDATE event_join SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @SQLRestriction("deleted_at is NULL")
-class EventJoin (
+class EventJoin(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     val user: User,

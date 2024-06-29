@@ -16,15 +16,13 @@ data class ViewGroupDetailResponse(
 )
 
 data class Keyword(
+    val id: Long,
     val name: String,
-    val frameUrl: String,
-    val color1: String,
-    val color2: String,
 )
 
 fun sampleViewGroupDetailResponse(): ViewGroupDetailResponse {
     val sampleKeyword =
-        Keyword("LITTLE_MOIM", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample3.jpeg", "#FFFF44", "#FF33FF")
+        Keyword(1, "LITTLE_MOIM")
     val framedImages =
         listOf(
             FramedImage(

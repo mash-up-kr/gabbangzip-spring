@@ -25,7 +25,7 @@ data class FramedImage(
 // TODO: Need to remove
 fun sampleViewGroupResponse(): ViewGroupResponse {
     val sampleKeyword =
-        Keyword("LITTLE_MOIM", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample3.jpeg", "#FFFF44", "#FF33FF")
+        Keyword(1, "LITTLE_MOIM")
 
     val framedImages1 =
         listOf(

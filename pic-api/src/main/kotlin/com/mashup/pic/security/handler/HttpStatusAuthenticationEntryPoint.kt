@@ -10,7 +10,7 @@ class HttpStatusAuthenticationEntryPoint : AuthenticationEntryPoint {
     override fun commence(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        authException: AuthenticationException,
+        authException: AuthenticationException
     ) {
         response.status = HttpStatus.UNAUTHORIZED.value()
     }

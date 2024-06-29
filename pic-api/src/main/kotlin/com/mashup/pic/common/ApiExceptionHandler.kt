@@ -24,7 +24,7 @@ class ApiExceptionHandler {
         log.error("MethodArgumentTypeMismatchException handler", exception)
         return ApiResponse.fail(
             exceptionType = PicExceptionType.METHOD_ARGUMENT_TYPE_MISMATCH_VALUE,
-            message = exception.message,
+            message = exception.message
         )
     }
 
@@ -42,7 +42,7 @@ class ApiExceptionHandler {
         log.error("MissingServletRequestParameterException handler", exception)
         return ApiResponse.fail(
             exceptionType = PicExceptionType.INVALID_INPUT,
-            message = exception.message,
+            message = exception.message
         )
     }
 
@@ -52,7 +52,7 @@ class ApiExceptionHandler {
         log.error("MethodNotSupportedException handler", exception)
         return ApiResponse.fail(
             exceptionType = PicExceptionType.HTTP_REQUEST_METHOD_NOT_SUPPORTED,
-            message = exception.message,
+            message = exception.message
         )
     }
 
@@ -62,7 +62,7 @@ class ApiExceptionHandler {
         log.error("AccessDeniedException handler", exception)
         return ApiResponse.fail(
             exceptionType = PicExceptionType.ACCESS_DENIED,
-            message = exception.message,
+            message = exception.message
         )
     }
 
@@ -80,13 +80,13 @@ class ApiExceptionHandler {
         log.error("Exception handler", exception)
         return ApiResponse.fail(
             exceptionType = PicExceptionType.SYSTEM_FAIL,
-            message = exception.message,
+            message = exception.message
         )
     }
 
     private fun PicException.toErrorResponse(): ErrorResponse =
         ErrorResponse(
             code = errorCode,
-            message = message,
+            message = message
         )
 }

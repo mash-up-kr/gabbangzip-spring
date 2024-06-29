@@ -28,5 +28,5 @@ class User(
     @CollectionTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")])
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    val roles: Set<UserRole> = setOf(UserRole.MEMBER),
+    val roles: Set<UserRole> = setOf(UserRole.MEMBER)
 ) : BaseEntity()

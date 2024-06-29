@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 class SecurityConfig(
     private val jwtTokenUtil: JwtManager,
-    private val objectMapper: ObjectMapper,
+    private val objectMapper: ObjectMapper
 ) {
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
@@ -50,7 +50,7 @@ class SecurityConfig(
                 "/health",
                 "/swagger-ui/**",
                 "/v3/api-docs/**",
-                "/page/**",
+                "/page/**"
             )
     }
 }

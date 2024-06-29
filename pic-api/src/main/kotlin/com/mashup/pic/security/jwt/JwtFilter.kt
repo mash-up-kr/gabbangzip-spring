@@ -14,12 +14,12 @@ import org.springframework.web.filter.OncePerRequestFilter
 
 class JwtFilter(
     private val jwtTokenUtil: JwtManager,
-    private val objectMapper: ObjectMapper,
+    private val objectMapper: ObjectMapper
 ) : OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        filterChain: FilterChain,
+        filterChain: FilterChain
     ) {
         val authorizationHeader = extractAuthorizationHeader(request)
         if (authorizationHeader == null) {
@@ -41,9 +41,9 @@ class JwtFilter(
                 objectMapper.writeValueAsString(
                     ApiResponse.fail(
                         PicExceptionType.INVALID_TOKEN_BEARER,
-                        exception.message,
-                    ),
-                ),
+                        exception.message
+                    )
+                )
             )
         }
     }

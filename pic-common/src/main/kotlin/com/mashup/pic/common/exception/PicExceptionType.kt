@@ -3,7 +3,7 @@ package com.mashup.pic.common.exception
 enum class PicExceptionType(
     val message: String,
     val errorCode: String,
-    val httpStatusCode: Int,
+    val httpStatusCode: Int
 ) {
     // USER
     AUTH_ERROR("유저 프로세스에서 오류가 발생했습니다.", "U000_AUTH_ERROR", 500),
@@ -28,5 +28,5 @@ enum class PicExceptionType(
     // EXTERNAL COMMUNICATION
     EXTERNAL_COMMUNICATION_FAILURE("External communication failed.", "E001_EXTERNAL_COMMUNICATION_FAILURE", 500),
     EXTERNAL_SERVICE_UNAVAILABLE("External service is unavailable.", "E002_EXTERNAL_SERVICE_UNAVAILABLE", 503),
-    EXTERNAL_SERVICE_TIMEOUT("External service call timed out.", "E003_EXTERNAL_SERVICE_TIMEOUT", 504),
+    EXTERNAL_SERVICE_TIMEOUT("External service call timed out.", "E003_EXTERNAL_SERVICE_TIMEOUT", 504)
 }

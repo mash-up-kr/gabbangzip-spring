@@ -5,7 +5,7 @@ data class UserDto(
     val oAuthId: Long,
     val nickname: String,
     val profileImage: String,
-    val roles: Set<UserRole>,
+    val roles: Set<UserRole>
 )
 
 fun User.toUserDto(): UserDto {
@@ -14,6 +14,6 @@ fun User.toUserDto(): UserDto {
         oAuthId = this.oAuthId,
         nickname = this.nickname,
         profileImage = this.profileImage,
-        roles = this.roles,
+        roles = this.roles
     )
 }

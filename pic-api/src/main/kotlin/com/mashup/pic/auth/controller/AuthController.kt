@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/auth")
 class AuthController(
-    private val authApplicationService: AuthApplicationService,
+    private val authApplicationService: AuthApplicationService
 ) {
     @SecurityRequirements(value = [])
     @Operation(summary = "로그인", description = "OIDC의 ID토큰으로 로그인")
     @PostMapping("/login")
     fun login(
-        @Valid @RequestBody loginRequest: LoginRequest,
+        @Valid @RequestBody loginRequest: LoginRequest
     ): ApiResponse<LoginResponse> {
         return ApiResponse.success(authApplicationService.login(loginRequest.toServiceRequest()))
     }
@@ -34,7 +34,7 @@ class AuthController(
     @Operation(summary = "토큰 재발급", description = "리프레시 토큰으로 액세스 토큰, 리프레시 토큰 재발급")
     @PostMapping("/token")
     fun reissue(
-        @Valid @RequestBody reissueRequest: ReissueRequest,
+        @Valid @RequestBody reissueRequest: ReissueRequest
     ): ApiResponse<ReissueResponse> {
         return ApiResponse.success(authApplicationService.reissueToken(reissueRequest.toServiceRequest()))
     }

@@ -5,5 +5,5 @@ import com.mashup.pic.domain.user.UserRole
 data class UserInfo(
     val id: Long,
     val nickname: String,
-    val roles: Set<UserRole>,
+    val roles: Set<UserRole>
 )

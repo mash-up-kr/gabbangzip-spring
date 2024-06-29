@@ -26,11 +26,11 @@ import org.springframework.context.annotation.Configuration
         Info(
             title = "pic API",
             description = "pic API api documents",
-            version = "v0",
-        ),
+            version = "v0"
+        )
 )
 class SwaggerConfig(
-    private val objectMapper: ObjectMapper,
+    private val objectMapper: ObjectMapper
 ) {
     @Bean
     fun openApi(): OpenAPI {
@@ -45,8 +45,8 @@ class SwaggerConfig(
                             .type(SecurityScheme.Type.HTTP)
                             .`in`(SecurityScheme.In.HEADER)
                             .scheme(BEARER)
-                            .bearerFormat("JWT"),
-                    ),
+                            .bearerFormat("JWT")
+                    )
             )
     }
 
@@ -76,7 +76,7 @@ class SwaggerConfig(
 
     private fun createStandardResponse(
         code: String,
-        description: String,
+        description: String
     ): io.swagger.v3.oas.models.responses.ApiResponse {
         val exampleContent = createExampleContentByCode(code)
         val example = Example().apply { value = exampleContent }
@@ -101,13 +101,13 @@ class SwaggerConfig(
         val errorResponse =
             ErrorResponse(
                 code = exceptionType.errorCode,
-                message = exceptionType.message,
+                message = exceptionType.message
             )
 
         val picApiResponse =
             com.mashup.pic.common.ApiResponse.fail(
                 exceptionType = exceptionType,
-                message = errorResponse.message,
+                message = errorResponse.message
             )
 
         return objectMapper.writeValueAsString(picApiResponse)

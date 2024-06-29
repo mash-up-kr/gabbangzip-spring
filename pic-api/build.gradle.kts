@@ -80,10 +80,7 @@ configure<JibExtension> {
     }
 }
 
-fun getProfileAndImageName(registryUsername: String?): Array<String> {
+fun getProfileAndImageName(registryUsername: String?): Pair<String, String> {
     val containerImageName = "$registryUsername/${project.name}"
-    if (project.hasProperty("release")) {
-        return arrayOf("release", containerImageName)
-    }
-    return arrayOf("dev", "$containerImageName-dev")
+    return "develop" to "$containerImageName-develop"
 }

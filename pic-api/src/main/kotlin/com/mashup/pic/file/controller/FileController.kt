@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/files")
 class FileController(
-    private val fileApplicationService: FileApplicationService,
+    private val fileApplicationService: FileApplicationService
 ) {
     @GetMapping("/upload")
     fun getUploadUrl(
-        @Valid @RequestParam @NotBlank extension: String,
+        @Valid @RequestParam @NotBlank extension: String
     ): ApiResponse<UploadUrlResponse> {
         return ApiResponse.success(UploadUrlResponse.from(fileApplicationService.getUploadUrl(extension)))
     }

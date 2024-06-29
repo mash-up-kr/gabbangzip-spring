@@ -19,7 +19,7 @@ class S3Config {
     fun amazonS3(
         awsCredentialsProperties: AwsCredentialsProperties,
         awsRegionProperties: AwsRegionProperties,
-        s3Properties: S3Properties,
+        s3Properties: S3Properties
     ): AmazonS3 {
         val awsCredentials = BasicAWSCredentials(awsCredentialsProperties.accessKey, awsCredentialsProperties.secretKey)
         return AmazonS3ClientBuilder.standard()

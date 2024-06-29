@@ -9,11 +9,11 @@ import java.util.Date
 @Service
 class S3Service(
     private val amazonS3: AmazonS3,
-    private val s3Properties: S3Config.S3Properties,
+    private val s3Properties: S3Config.S3Properties
 ) {
     fun generatePresignedUrl(
         objectKey: String,
-        expirationInMinutes: Int,
+        expirationInMinutes: Int
     ): String {
         val expiration = Date()
         val expTimeMillis = expiration.time + expirationInMinutes * 60 * 1000

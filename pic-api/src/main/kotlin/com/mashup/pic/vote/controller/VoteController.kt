@@ -20,17 +20,21 @@ class VoteController(
 ) {
     @Operation(summary = "내 PIC 올리기 API", security = [SecurityRequirement(name = "Authorization")])
     @PostMapping("/pic")
-    fun uploadMyPic(@RequestBody request: UploadMyPicRequest): ApiResponse<Unit> {
+    fun uploadMyPic(
+        @RequestBody request: UploadMyPicRequest,
+    ): ApiResponse<Unit> {
         return ApiResponse.success(
-            voteApplicationService.uploadMyPic()
+            voteApplicationService.uploadMyPic(),
         )
     }
 
     @Operation(summary = "투표하기 API", security = [SecurityRequirement(name = "Authorization")])
     @PostMapping
-    fun vote(@RequestBody request: VoteRequest): ApiResponse<Unit> {
+    fun vote(
+        @RequestBody request: VoteRequest,
+    ): ApiResponse<Unit> {
         return ApiResponse.success(
-            voteApplicationService.vote()
+            voteApplicationService.vote(),
         )
     }
 }

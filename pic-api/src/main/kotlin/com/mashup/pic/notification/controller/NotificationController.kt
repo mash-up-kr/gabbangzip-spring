@@ -23,7 +23,7 @@ class NotificationController(
         @RequestBody request: NotifyMembersRequest,
     ): ApiResponse<Unit> {
         return ApiResponse.success(
-            notificationApplicationService.notifyMembers()
+            notificationApplicationService.notifyMembers(),
         )
     }
 }

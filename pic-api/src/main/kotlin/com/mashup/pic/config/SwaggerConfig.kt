@@ -3,7 +3,6 @@ package com.mashup.pic.config
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.mashup.pic.common.ErrorResponse
-import com.mashup.pic.common.ApiResponse
 import com.mashup.pic.common.exception.PicExceptionType
 import io.swagger.v3.core.jackson.ModelResolver
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
@@ -14,7 +13,6 @@ import io.swagger.v3.oas.models.examples.Example
 import io.swagger.v3.oas.models.media.Content
 import io.swagger.v3.oas.models.media.MediaType
 import io.swagger.v3.oas.models.media.Schema
-import io.swagger.v3.oas.models.responses.ApiResponse
 import io.swagger.v3.oas.models.responses.ApiResponses
 import io.swagger.v3.oas.models.security.SecurityRequirement
 import io.swagger.v3.oas.models.security.SecurityScheme
@@ -79,7 +77,7 @@ class SwaggerConfig(
     private fun createStandardResponse(
         code: String,
         description: String,
-    ): ApiResponse {
+    ): io.swagger.v3.oas.models.responses.ApiResponse {
         val exampleContent = createExampleContentByCode(code)
         val example = Example().apply { value = exampleContent }
         val mediaType =
@@ -91,7 +89,7 @@ class SwaggerConfig(
             Content().apply {
                 addMediaType(org.springframework.http.MediaType.APPLICATION_JSON_VALUE, mediaType)
             }
-        return ApiResponse().apply {
+        return io.swagger.v3.oas.models.responses.ApiResponse().apply {
             this.description = description
             this.content = content
         }
@@ -107,7 +105,7 @@ class SwaggerConfig(
             )
 
         val picApiResponse =
-            ApiResponse.fail(
+            com.mashup.pic.common.ApiResponse.fail(
                 exceptionType = exceptionType,
                 message = errorResponse.message,
             )

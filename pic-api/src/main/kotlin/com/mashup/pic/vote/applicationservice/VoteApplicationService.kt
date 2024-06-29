@@ -1,5 +1,6 @@
 package com.mashup.pic.vote.applicationservice
 
+import com.mashup.pic.vote.applicationservice.dto.GetVoteResultResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -31,5 +32,17 @@ class VoteApplicationService {
     @Transactional
     fun completeVote() {
         TODO("Not yet implemented")
+    }
+
+    /**
+     * Request: eventId, userId
+     * Flow
+     * 1. 후보 사진 테이블에서 eventId로 select
+     * 2. 해당 list 추천수로 정렬 (동점일경우 createdAt)
+     * 3. 이미지 리스트 리턴 및 템플릿 url 리턴
+     * @return 참여자 first_read_yn 체크 후 false일경우 true로 업데이트 및 need_lottie_yn = true로 return
+     */
+    fun getVoteResult(eventId: String): GetVoteResultResponse {
+        return GetVoteResultResponse.sample()
     }
 }

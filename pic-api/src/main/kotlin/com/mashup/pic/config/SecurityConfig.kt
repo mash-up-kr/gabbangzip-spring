@@ -50,7 +50,9 @@ class SecurityConfig(
                 "/health",
                 "/swagger-ui/**",
                 "/v3/api-docs/**",
-                "/page/**"
+                "/page/**",
+                // for Mock
+                "/api/v1/**"
             )
     }
 }

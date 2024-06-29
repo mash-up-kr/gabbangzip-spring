@@ -52,7 +52,7 @@ class SecurityConfig(
                 "/v3/api-docs/**",
                 "/page/**",
                 // for Mock
-                "/api/v1/**"
+                "/api/v1/**",
             )
     }
 }

@@ -2,7 +2,7 @@ package com.mashup.pic.group.controller.dto
 
 import java.time.LocalDateTime
 
-data class ViewGroupDetailResponse (
+data class ViewGroupDetailResponse(
     val groupName: String,
     val keyword: String,
     val keywordFrameUrl: String,
@@ -15,15 +15,25 @@ data class ViewGroupDetailResponse (
     val voted: Boolean,
     val recentEventDate: LocalDateTime,
     val cardFrontImageUrl: String,
-    val cardBackImages: List<FramedImage>
+    val cardBackImages: List<FramedImage>,
 )
 
 fun sampleViewGroupDetailResponse(): ViewGroupDetailResponse {
-    val framedImages = listOf(
-        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample1.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg"),
-        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample2.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg"),
-        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample3.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg")
-    )
+    val framedImages =
+        listOf(
+            FramedImage(
+                "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample1.jpeg",
+                "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg",
+            ),
+            FramedImage(
+                "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample2.jpeg",
+                "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg",
+            ),
+            FramedImage(
+                "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample3.jpeg",
+                "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg",
+            ),
+        )
 
     return ViewGroupDetailResponse(
         groupName = "가빨집 모임",
@@ -38,6 +48,6 @@ fun sampleViewGroupDetailResponse(): ViewGroupDetailResponse {
         voted = false,
         recentEventDate = LocalDateTime.now(),
         cardFrontImageUrl = "frontImage1.jpg",
-        cardBackImages = framedImages
+        cardBackImages = framedImages,
     )
 }

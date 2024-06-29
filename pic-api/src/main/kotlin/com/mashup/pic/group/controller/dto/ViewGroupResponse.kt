@@ -28,19 +28,23 @@ data class FramedImage(
 // TODO: Need to remove
 fun sampleViewGroupResponse(): ViewGroupResponse {
     val framedImages1 = listOf(
-        FramedImage("image1.jpg", "frame1.png"),
-        FramedImage("image2.jpg", "frame2.png"),
-        FramedImage("image3.jpg", "frame3.png")
-    )
+        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample1.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg"),
+        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample2.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg"),
+        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample3.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg"),
+        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample1.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg"),
+        )
     val framedImages2 = listOf(
-        FramedImage("image4.jpg", "frame4.png"),
-        FramedImage("image5.jpg", "frame5.png"),
-        FramedImage("image6.jpg", "frame6.png")
-    )
+        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample1.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg"),
+        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample2.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg"),
+        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample3.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg"),
+        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample2.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg"),
+        )
     val framedImages3 = listOf(
-        FramedImage("image7.jpg", "frame7.png"),
-        FramedImage("image8.jpg", "frame8.png"),
-        FramedImage("image9.jpg", "frame9.png")
+        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample1.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg"),
+        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample2.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg"),
+        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample3.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg"),
+        FramedImage("https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample3.jpeg", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/system/frames/club.svg")
+
     )
 
     val viewGroupItems = listOf(

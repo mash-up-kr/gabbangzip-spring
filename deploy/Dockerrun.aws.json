@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "gappangzip/pic-api:latest",
+    "Name": "gappangzip/pic-api-develop:latest",
     "Update": "true"
   },
   "Ports": [

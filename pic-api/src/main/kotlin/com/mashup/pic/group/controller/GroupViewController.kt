@@ -20,17 +20,17 @@ class GroupViewController {
     @Operation(summary = "그룹 조회")
     fun viewGroup(): ApiResponse<ViewGroupResponse> {
         return ApiResponse.success(
-            sampleViewGroupResponse(),
+            sampleViewGroupResponse()
         )
     }
 
     @GetMapping("/{groupId}")
     @Operation(summary = "그룹 상세 조회")
     fun viewGroupDetail(
-        @PathVariable groupId: Long,
+        @PathVariable groupId: Long
     ): ApiResponse<ViewGroupDetailResponse> {
         return ApiResponse.success(
-            sampleViewGroupDetailResponse(),
+            sampleViewGroupDetailResponse()
         )
     }
 }

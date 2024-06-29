@@ -18,7 +18,7 @@ data class ViewGroupItem(
 
 data class FramedImage(
     val imageUrl: String,
-    val frameUrl: String
+    val frame: String
 )
 
 // TODO: Need to remove

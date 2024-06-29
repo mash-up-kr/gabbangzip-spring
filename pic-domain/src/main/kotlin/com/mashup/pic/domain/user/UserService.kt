@@ -34,4 +34,9 @@ class UserService(
             ),
         ).toUserDto()
     }
+
+    @Transactional
+    fun deleteUser(id: Long) {
+        userRepository.deleteById(id)
+    }
 }

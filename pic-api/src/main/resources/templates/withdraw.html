@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원탈퇴</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .withdraw-link {
+            background-color: #ff4d4d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>회원탈퇴</h1>
+    <p>정말 회원탈퇴를 하시겠습니까?</p>
+    <button class="withdraw-link" id="withdrawBtn">회원탈퇴</button>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#withdrawBtn').click(function() {
+            let accessToken = '[[${accessToken}]]';
+
+            $.ajax({
+                url: '/api/v1/user',
+                type: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                success: function(response) {
+                    window.location.href = '/page/complete';
+                },
+                error: function(xhr, status, error) {
+                    window.location.href = '/page/error';
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

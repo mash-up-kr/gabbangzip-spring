@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.external.common.response.JwkKey
-import com.mashup.pic.external.kakao.KakaoJwksClient
+import com.mashup.pic.external.kakao.KakaoClient
 import io.jsonwebtoken.Jwts
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
@@ -16,7 +16,7 @@ import java.util.Base64
 
 @Component
 class KakaoIdTokenValidator(
-    private val kakaoJwksClient: KakaoJwksClient,
+    private val kakaoJwksClient: KakaoClient,
     private val objectMapper: ObjectMapper,
     @Value("\${kakao.issuer}") private val issuer: String,
     @Value("\${kakao.audience.rest}") private val restAudience: String,

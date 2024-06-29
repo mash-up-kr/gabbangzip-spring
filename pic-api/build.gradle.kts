@@ -18,6 +18,9 @@ dependencies {
     implementation(project(":pic-domain"))
     implementation(project(":pic-external"))
 
+    // thymeleaf
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+
     // validation
     implementation("org.springframework.boot:spring-boot-starter-validation")
 

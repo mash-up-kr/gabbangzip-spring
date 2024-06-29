@@ -1,23 +1,27 @@
-package com.mashup.pic.domain.group
+package com.mashup.pic.domain.event
 
 import com.mashup.pic.domain.common.BaseEntity
+import com.mashup.pic.domain.group.Group
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
-import jakarta.persistence.ManyToOne
 import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import org.hibernate.annotations.SQLDelete
 import org.hibernate.annotations.SQLRestriction
+import java.time.LocalDateTime
 
 @Entity
-@SQLDelete(sql = "UPDATE group SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
+@SQLDelete(sql = "UPDATE event SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @SQLRestriction("deleted_at is NULL")
-class Group(
+class Event (
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id")
+    val group: Group,
     @Column(nullable = false)
     val name: String,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "keyword_id")
-    val keyword: Keyword,
     @Column(nullable = false)
-    val imageUrl: String
+    val description: String,
+    @Column(nullable = false)
+    val date: LocalDateTime
 ) : BaseEntity()

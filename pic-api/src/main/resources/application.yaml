@@ -4,6 +4,8 @@ spring:
   config:
     import:
       - classpath:/application-domain.yaml
+      - classpath:/application-external.yaml
+
 jwt:
   secret-key: ENC(NtDCxHj5jr9w2VZJ8ePLbjYrgB5mcL68ysQhvGgnj53mqiHnML6eWOi3X0sL4CRUnvqZMEKx9af16oM02kKDj91w76d72ljnLVhT49M1lhc=)
 kakao:

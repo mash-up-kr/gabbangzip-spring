@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @Tag(name = "그룹")
 @RestController
-@RequestMapping("/api/v1/group")
+@RequestMapping("/api/v1/groups")
 class GroupController(private val groupApplicationService: GroupApplicationService) {
     @Operation(summary = "그룹 만들기 API", security = [SecurityRequirement(name = "Authorization")])
     @PostMapping

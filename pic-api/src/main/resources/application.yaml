@@ -18,3 +18,14 @@ kakao:
     jwk-uri: https://kauth.kakao.com/.well-known/jwks.json
     token-uri: https://kauth.kakao.com/oauth/token
     info-uri: https://kapi.kakao.com/v1/user/access_token_info
+
+cloud:
+    aws:
+        credentials:
+            access-key: ENC(nqIMjTrzfJTjqIT2/3qpuUBUwRPzxIuJLuVtMeKdNvHPZOSE9Sae+PI2f13nceG24JM9tDVDY9dV2xzJxqAX2w==)
+            secret-key: ENC(elsL2RSUX6luPGphhQnWLX0hulYR1qgFK/32qZo5pTNz9SNa77Dg30I9s5NL5vs+WsbDXlsbusXFIS5635DiITcErULRBMmvEt+wjKuUcXQ=)
+        s3:
+            bucket: ENC(X4oiFkzwBGS6d/TCJCcAcgNGFdVUT/QOYYcRNMVLutvXKb9csVR8k2JLWCYksh6N)
+        region:
+            static: ap-northeast-2
+            auto: false

@@ -11,12 +11,13 @@ import org.springframework.transaction.annotation.Transactional
 class UserService(
     private val userRepository: UserRepository,
 ) {
-    fun findUserByOAuthIdOrNull(oAuthId: Long): User? {
-        return userRepository.findByOAuthId(oAuthId)
+    fun findUserByOAuthIdOrNull(oAuthId: Long): UserDto? {
+        return userRepository.findByOAuthId(oAuthId)?.toUserDto() ?: return null
     }
 
-    fun findUserByUserId(userId: Long): User {
-        return userRepository.findByIdOrNull(userId) ?: throw PicException.of(PicExceptionType.AUTH_ERROR)
+    fun findUserByUserId(userId: Long): UserDto {
+        return userRepository.findByIdOrNull(userId)?.toUserDto()
+            ?: throw PicException.of(PicExceptionType.AUTH_ERROR)
     }
 
     @Transactional
@@ -24,13 +25,13 @@ class UserService(
         oAuthId: Long,
         nickname: String,
         profileImage: String,
-    ): User {
+    ): UserDto {
         return userRepository.save(
             User(
                 oAuthId = oAuthId,
                 nickname = nickname,
                 profileImage = profileImage,
             ),
-        )
+        ).toUserDto()
     }
 }

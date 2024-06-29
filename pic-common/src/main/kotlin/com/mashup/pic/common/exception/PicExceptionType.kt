@@ -20,6 +20,9 @@ enum class PicExceptionType(
     ACCESS_DENIED("Access denied. Check authentication.", "C007_ACCESS_DENIED", 403),
     AUTHENTICATION_FAILURE("Authentication failed. Check login.", "C008_AUTHENTICATION_FAILURE", 401),
     ARGUMENT_NOT_VALID("Method Argument Not Valid. Check argument validation.", "C009_ARGUMENT_NOT_VALID", 400),
+    BAD_REQUEST("Bad request", "C010_BAD_REQUEST", 400),
+    FORBIDDEN("Forbidden", "C011_FORBIDDEN", 403),
+    METHOD_NOT_ALLOWED("Method not allowed", "C012_METHOD_NOT_ALLOWED", 405),
     SYSTEM_FAIL("Internal Server Error.", "C002_SYSTEM_FAIL", 500),
 
     // EXTERNAL COMMUNICATION

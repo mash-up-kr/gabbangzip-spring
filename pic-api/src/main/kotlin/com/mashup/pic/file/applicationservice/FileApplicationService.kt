@@ -12,6 +12,7 @@ class FileApplicationService(
 ) {
     fun getUploadUrl(extension: String): String {
         val objectKey = "pic/${UUID.randomUUID()}.${extension}"
+        /** upload 가능 시간 10분 */
         return s3Service.generatePresignedUrl(objectKey, 10)
     }
 }

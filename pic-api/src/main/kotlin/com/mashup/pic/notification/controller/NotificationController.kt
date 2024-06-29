@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/notification")
 class NotificationController(
-    private val notificationApplicationService: NotificationApplicationService,
+    private val notificationApplicationService: NotificationApplicationService
 ) {
     @Operation(summary = "쿡 찌르기 API", security = [SecurityRequirement(name = "Authorization")])
     @PostMapping
     fun notifyMembers(
-        @RequestBody request: NotifyMembersRequest,
+        @RequestBody request: NotifyMembersRequest
     ): ApiResponse<Unit> {
         return ApiResponse.success(
-            notificationApplicationService.notifyMembers(),
+            notificationApplicationService.notifyMembers()
         )
     }
 }

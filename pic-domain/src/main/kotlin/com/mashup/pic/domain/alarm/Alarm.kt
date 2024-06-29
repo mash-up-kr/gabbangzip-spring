@@ -13,7 +13,7 @@ import org.hibernate.annotations.SQLRestriction
 @Entity
 @SQLDelete(sql = "UPDATE alarm SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @SQLRestriction("deleted_at is NULL")
-class Alarm (
+class Alarm(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     val user: User,

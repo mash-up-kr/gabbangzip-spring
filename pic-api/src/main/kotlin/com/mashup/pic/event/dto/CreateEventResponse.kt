@@ -10,5 +10,5 @@ data class CreateEventResponse(
     /** 모임을 가졌던 날짜 */
     val eventDate: LocalDateTime,
     /** 사진 올리기가 종료되는 시간 */
-    val finishedAt: LocalDateTime,
+    val uploadDueDate: LocalDateTime,
 )

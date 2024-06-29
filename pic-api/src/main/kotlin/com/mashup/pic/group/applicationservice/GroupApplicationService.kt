@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class GroupApplicationService {
-
     @Transactional
     fun create(request: CreateGroupServiceRequest): CreateGroupResponse {
         return CreateGroupResponse.sample()

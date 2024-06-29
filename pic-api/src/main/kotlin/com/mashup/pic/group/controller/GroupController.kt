@@ -17,10 +17,11 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/group")
 class GroupController(private val groupApplicationService: GroupApplicationService) {
-
     @Operation(summary = "그룹 만들기 API", security = [SecurityRequirement(name = "Authorization")])
     @PostMapping
-    fun create(@RequestBody request: CreateGroupRequest): ApiResponse<CreateGroupResponse> {
+    fun create(
+        @RequestBody request: CreateGroupRequest
+    ): ApiResponse<CreateGroupResponse> {
         // TODO: Use authorized user id
         val userId = 0L
         return ApiResponse.success(

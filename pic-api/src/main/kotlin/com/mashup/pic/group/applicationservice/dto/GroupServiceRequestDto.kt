@@ -6,5 +6,5 @@ data class CreateGroupServiceRequest(
     val userId: Long,
     val groupName: String,
     val keyword: GroupKeyword,
-    val groupImageUrl: String? = null,
+    val groupImageUrl: String? = null
 )

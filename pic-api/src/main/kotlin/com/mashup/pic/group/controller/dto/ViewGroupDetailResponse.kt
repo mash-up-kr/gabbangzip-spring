@@ -4,10 +4,7 @@ import java.time.LocalDateTime
 
 data class ViewGroupDetailResponse(
     val groupName: String,
-    val keyword: String,
-    val keywordFrameUrl: String,
-    val keywordColor1: String,
-    val keywordColor2: String,
+    val keyword: Keyword,
     val groupStatus: String? = null,
     val hasCurrentEvent: Boolean,
     val hasPastEvent: Boolean,
@@ -18,7 +15,16 @@ data class ViewGroupDetailResponse(
     val cardBackImages: List<FramedImage>,
 )
 
+data class Keyword(
+    val name: String,
+    val frameUrl: String,
+    val color1: String,
+    val color2: String,
+)
+
 fun sampleViewGroupDetailResponse(): ViewGroupDetailResponse {
+    val sampleKeyword =
+        Keyword("LITTLE_MOIM", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample3.jpeg", "#FFFF44", "#FF33FF")
     val framedImages =
         listOf(
             FramedImage(
@@ -36,11 +42,8 @@ fun sampleViewGroupDetailResponse(): ViewGroupDetailResponse {
         )
 
     return ViewGroupDetailResponse(
-        groupName = "가빨집 모임",
-        keyword = "LITTLE_MOIM",
-        keywordFrameUrl = "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample3.jpeg",
-        keywordColor1 = "#FFFFFF",
-        keywordColor2 = "#000000",
+        groupName = "가빵집 모임",
+        keyword = sampleKeyword,
         groupStatus = "Active",
         hasCurrentEvent = true,
         hasPastEvent = false,

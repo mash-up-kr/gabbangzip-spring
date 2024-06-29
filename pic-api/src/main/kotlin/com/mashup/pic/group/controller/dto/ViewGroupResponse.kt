@@ -8,11 +8,8 @@ data class ViewGroupResponse(
 
 data class ViewGroupItem(
     val groupName: String,
-    val keyword: String,
-    val keywordFrameUrl: String,
-    val keywordColor1: String,
-    val keywordColor2: String,
-    val groupStatus: String? = null,
+    val keyword: Keyword,
+    val groupStatus: String,
     val hasCurrentEvent: Boolean,
     val hasPastEvent: Boolean,
     val recentEventDate: LocalDateTime,
@@ -27,6 +24,9 @@ data class FramedImage(
 
 // TODO: Need to remove
 fun sampleViewGroupResponse(): ViewGroupResponse {
+    val sampleKeyword =
+        Keyword("LITTLE_MOIM", "https://pic-api-bucket.s3.ap-northeast-2.amazonaws.com/gbzsample3.jpeg", "#FFFF44", "#FF33FF")
+
     val framedImages1 =
         listOf(
             FramedImage(
@@ -89,10 +89,7 @@ fun sampleViewGroupResponse(): ViewGroupResponse {
         listOf(
             ViewGroupItem(
                 groupName = "Group 1",
-                keyword = "Keyword 1",
-                keywordFrameUrl = "keywordFrame1.png",
-                keywordColor1 = "#FFFFFF",
-                keywordColor2 = "#000000",
+                keyword = sampleKeyword,
                 groupStatus = "Active",
                 hasCurrentEvent = true,
                 hasPastEvent = false,
@@ -102,10 +99,7 @@ fun sampleViewGroupResponse(): ViewGroupResponse {
             ),
             ViewGroupItem(
                 groupName = "Group 2",
-                keyword = "Keyword 2",
-                keywordFrameUrl = "keywordFrame2.png",
-                keywordColor1 = "#CCCCCC",
-                keywordColor2 = "#333333",
+                keyword = sampleKeyword,
                 groupStatus = "Inactive",
                 hasCurrentEvent = false,
                 hasPastEvent = true,
@@ -115,10 +109,7 @@ fun sampleViewGroupResponse(): ViewGroupResponse {
             ),
             ViewGroupItem(
                 groupName = "Group 3",
-                keyword = "Keyword 3",
-                keywordFrameUrl = "keywordFrame3.png",
-                keywordColor1 = "#AAAAAA",
-                keywordColor2 = "#555555",
+                keyword = sampleKeyword,
                 groupStatus = "Active",
                 hasCurrentEvent = true,
                 hasPastEvent = true,

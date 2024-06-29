@@ -5,7 +5,7 @@ import com.mashup.pic.auth.controller.dto.LoginRequest
 import com.mashup.pic.auth.controller.dto.LoginResponse
 import com.mashup.pic.auth.controller.dto.ReissueRequest
 import com.mashup.pic.auth.controller.dto.ReissueResponse
-import com.mashup.pic.common.PicApiResponse
+import com.mashup.pic.common.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirements
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -26,8 +26,8 @@ class AuthController(
     @PostMapping("/login")
     fun login(
         @Valid @RequestBody loginRequest: LoginRequest,
-    ): PicApiResponse<LoginResponse> {
-        return PicApiResponse.success(authApplicationService.login(loginRequest.toServiceRequest()))
+    ): ApiResponse<LoginResponse> {
+        return ApiResponse.success(authApplicationService.login(loginRequest.toServiceRequest()))
     }
 
     @SecurityRequirements(value = [])
@@ -35,7 +35,7 @@ class AuthController(
     @PostMapping("/token")
     fun reissue(
         @Valid @RequestBody reissueRequest: ReissueRequest,
-    ): PicApiResponse<ReissueResponse> {
-        return PicApiResponse.success(authApplicationService.reissueToken(reissueRequest.toServiceRequest()))
+    ): ApiResponse<ReissueResponse> {
+        return ApiResponse.success(authApplicationService.reissueToken(reissueRequest.toServiceRequest()))
     }
 }

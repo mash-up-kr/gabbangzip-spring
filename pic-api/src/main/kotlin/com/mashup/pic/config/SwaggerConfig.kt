@@ -3,7 +3,7 @@ package com.mashup.pic.config
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.mashup.pic.common.ErrorResponse
-import com.mashup.pic.common.PicApiResponse
+import com.mashup.pic.common.ApiResponse
 import com.mashup.pic.common.exception.PicExceptionType
 import io.swagger.v3.core.jackson.ModelResolver
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
@@ -107,7 +107,7 @@ class SwaggerConfig(
             )
 
         val picApiResponse =
-            PicApiResponse.fail(
+            ApiResponse.fail(
                 exceptionType = exceptionType,
                 message = errorResponse.message,
             )

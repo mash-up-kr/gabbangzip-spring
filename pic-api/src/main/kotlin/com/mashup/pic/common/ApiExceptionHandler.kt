@@ -20,9 +20,9 @@ class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentTypeMismatchException::class)
-    private fun handlerMethodArgumentNotValidException(exception: MethodArgumentTypeMismatchException): PicApiResponse<Any> {
+    private fun handlerMethodArgumentNotValidException(exception: MethodArgumentTypeMismatchException): ApiResponse<Any> {
         log.error("MethodArgumentTypeMismatchException handler", exception)
-        return PicApiResponse.fail(
+        return ApiResponse.fail(
             exceptionType = PicExceptionType.METHOD_ARGUMENT_TYPE_MISMATCH_VALUE,
             message = exception.message,
         )
@@ -30,17 +30,17 @@ class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException::class)
-    private fun handleMethodArgumentNotValidException(exception: MethodArgumentNotValidException): PicApiResponse<Any> {
+    private fun handleMethodArgumentNotValidException(exception: MethodArgumentNotValidException): ApiResponse<Any> {
         log.error("MethodArgumentNotValidException handler", exception)
         val errorMessage = exception.allErrors.joinToString(" ,")
-        return PicApiResponse.fail(PicExceptionType.ARGUMENT_NOT_VALID, errorMessage)
+        return ApiResponse.fail(PicExceptionType.ARGUMENT_NOT_VALID, errorMessage)
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MissingServletRequestParameterException::class)
-    private fun handleMissingServletRequestParameterException(exception: MissingServletRequestParameterException): PicApiResponse<Any> {
+    private fun handleMissingServletRequestParameterException(exception: MissingServletRequestParameterException): ApiResponse<Any> {
         log.error("MissingServletRequestParameterException handler", exception)
-        return PicApiResponse.fail(
+        return ApiResponse.fail(
             exceptionType = PicExceptionType.INVALID_INPUT,
             message = exception.message,
         )
@@ -48,9 +48,9 @@ class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
-    private fun httpRequestMethodNotSupportedException(exception: HttpRequestMethodNotSupportedException): PicApiResponse<Any> {
+    private fun httpRequestMethodNotSupportedException(exception: HttpRequestMethodNotSupportedException): ApiResponse<Any> {
         log.error("MethodNotSupportedException handler", exception)
-        return PicApiResponse.fail(
+        return ApiResponse.fail(
             exceptionType = PicExceptionType.HTTP_REQUEST_METHOD_NOT_SUPPORTED,
             message = exception.message,
         )
@@ -58,27 +58,27 @@ class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AccessDeniedException::class)
-    private fun handleAccessDeniedException(exception: AccessDeniedException): PicApiResponse<Any> {
+    private fun handleAccessDeniedException(exception: AccessDeniedException): ApiResponse<Any> {
         log.error("AccessDeniedException handler", exception)
-        return PicApiResponse.fail(
+        return ApiResponse.fail(
             exceptionType = PicExceptionType.ACCESS_DENIED,
             message = exception.message,
         )
     }
 
     @ExceptionHandler(PicException::class)
-    private fun handlePicException(exception: PicException): ResponseEntity<PicApiResponse<Unit>> {
+    private fun handlePicException(exception: PicException): ResponseEntity<ApiResponse<Unit>> {
         log.error("PicException handler", exception)
         return ResponseEntity
             .status(exception.httpStatusCode)
-            .body(PicApiResponse(isSuccess = false, errorResponse = exception.toErrorResponse()))
+            .body(ApiResponse(isSuccess = false, errorResponse = exception.toErrorResponse()))
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception::class)
-    private fun handleInternalServerException(exception: Exception): PicApiResponse<Any> {
+    private fun handleInternalServerException(exception: Exception): ApiResponse<Any> {
         log.error("Exception handler", exception)
-        return PicApiResponse.fail(
+        return ApiResponse.fail(
             exceptionType = PicExceptionType.SYSTEM_FAIL,
             message = exception.message,
         )

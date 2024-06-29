@@ -2,28 +2,28 @@ package com.mashup.pic.common
 
 import com.mashup.pic.common.exception.PicExceptionType
 
-data class PicApiResponse<T>(
+data class ApiResponse<T>(
     val isSuccess: Boolean,
     val data: T? = null,
     val errorResponse: ErrorResponse? = null,
 ) {
     companion object {
-        fun <T> success(data: T? = null): PicApiResponse<T> {
-            return PicApiResponse(
+        fun <T> success(data: T? = null): ApiResponse<T> {
+            return ApiResponse(
                 isSuccess = true,
                 data = data,
             )
         }
 
-        fun success(): PicApiResponse<Unit> {
-            return PicApiResponse(isSuccess = true)
+        fun success(): ApiResponse<Unit> {
+            return ApiResponse(isSuccess = true)
         }
 
         fun fail(
             exceptionType: PicExceptionType,
             message: String? = null,
-        ): PicApiResponse<Any> {
-            return PicApiResponse(
+        ): ApiResponse<Any> {
+            return ApiResponse(
                 isSuccess = false,
                 errorResponse =
                     ErrorResponse(

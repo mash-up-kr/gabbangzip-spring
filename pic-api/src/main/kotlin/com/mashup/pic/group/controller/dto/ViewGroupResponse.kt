@@ -7,9 +7,9 @@ data class ViewGroupResponse(
 )
 
 data class ViewGroupItem(
-    val groupName: String,
+    val name: String,
     val keyword: Keyword,
-    val groupStatus: String,
+    val status: String,
     val hasCurrentEvent: Boolean,
     val hasPastEvent: Boolean,
     val recentEventDate: LocalDateTime,
@@ -88,9 +88,9 @@ fun sampleViewGroupResponse(): ViewGroupResponse {
     val viewGroupItems =
         listOf(
             ViewGroupItem(
-                groupName = "Group 1",
+                name = "Group 1",
                 keyword = sampleKeyword,
-                groupStatus = "Active",
+                status = "쉿, 투표중",
                 hasCurrentEvent = true,
                 hasPastEvent = false,
                 recentEventDate = LocalDateTime.now(),
@@ -98,9 +98,9 @@ fun sampleViewGroupResponse(): ViewGroupResponse {
                 cardBackImages = framedImages1,
             ),
             ViewGroupItem(
-                groupName = "Group 2",
+                name = "Group 2",
                 keyword = sampleKeyword,
-                groupStatus = "Inactive",
+                status = "6일전 업데이트",
                 hasCurrentEvent = false,
                 hasPastEvent = true,
                 recentEventDate = LocalDateTime.now().minusDays(7),
@@ -108,9 +108,9 @@ fun sampleViewGroupResponse(): ViewGroupResponse {
                 cardBackImages = framedImages2,
             ),
             ViewGroupItem(
-                groupName = "Group 3",
+                name = "Group 3",
                 keyword = sampleKeyword,
-                groupStatus = "Active",
+                status = "일주일전 업데이트",
                 hasCurrentEvent = true,
                 hasPastEvent = true,
                 recentEventDate = LocalDateTime.now().minusDays(3),

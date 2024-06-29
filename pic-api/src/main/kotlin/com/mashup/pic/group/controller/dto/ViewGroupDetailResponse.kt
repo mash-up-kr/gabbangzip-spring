@@ -3,13 +3,13 @@ package com.mashup.pic.group.controller.dto
 import java.time.LocalDateTime
 
 data class ViewGroupDetailResponse(
-    val groupName: String,
+    val name: String,
     val keyword: Keyword,
-    val groupStatus: String? = null,
+    val status: String? = null,
     val hasCurrentEvent: Boolean,
     val hasPastEvent: Boolean,
     val updatedImages: Boolean,
-    val voted: Boolean,
+    val piced: Boolean,
     val recentEventDate: LocalDateTime,
     val cardFrontImageUrl: String,
     val cardBackImages: List<FramedImage>,
@@ -40,13 +40,13 @@ fun sampleViewGroupDetailResponse(): ViewGroupDetailResponse {
         )
 
     return ViewGroupDetailResponse(
-        groupName = "가빵집 모임",
+        name = "가빵집 모임",
         keyword = sampleKeyword,
-        groupStatus = "Active",
+        status = "Active",
         hasCurrentEvent = true,
         hasPastEvent = false,
         updatedImages = true,
-        voted = false,
+        piced = false,
         recentEventDate = LocalDateTime.now(),
         cardFrontImageUrl = "frontImage1.jpg",
         cardBackImages = framedImages,

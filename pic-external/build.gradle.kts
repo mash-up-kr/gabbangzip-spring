@@ -1,5 +1,6 @@
 val jacksonAnnotationVersion: String by project.extra
 val awsVersion: String by project.extra
+val firebaseVersion: String by project.extra
 
 dependencies {
     implementation(project(":pic-common"))
@@ -9,4 +10,6 @@ dependencies {
 
     // aws
     implementation("org.springframework.cloud:spring-cloud-starter-aws:$awsVersion")
+    // fcm
+    implementation("com.google.firebase:firebase-admin:$firebaseVersion")
 }

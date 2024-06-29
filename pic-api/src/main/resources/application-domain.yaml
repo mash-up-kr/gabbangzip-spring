@@ -1,8 +1,4 @@
 spring:
-    config:
-        activate:
-            on-profile: local, default
-
     datasource:
         url: ENC(Ay1RamiVb1M/bs+asVmYBsfpJKWCV/GlfYiAJTiO5nW7l9HAeGWVDneMntFvqS+myIfeypom11iMvX0KAXkBKnRd408MJWVuepy8uMU6tR+NqmwTJBOdSd9flGdOvSlnyG7l/YqwK46KtSC513pNwsV8UlIypgEDVn+Of3q/N2biF/oUXcJRsmGxn5XzY7v8InR+CBoakJJmCzHaaYPxMRQFEd/l3a9bsTfyNSUcbYg=)
         username: ENC(MeGy+GMnB7qvepqgo1UWRTBadVuqO/NYMlQmif0WItNsbzShuX2U5Dl4iVKrznuz)
@@ -16,6 +12,11 @@ spring:
             hibernate:
                 dialect: org.hibernate.dialect.MySQL8Dialect
                 format_sql: true
+---
+spring:
+    config:
+        activate:
+            on-profile: local, default
 redis:
     data:
         host: localhost

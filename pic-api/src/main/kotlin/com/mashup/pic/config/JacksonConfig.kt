@@ -1,6 +1,7 @@
 package com.mashup.pic.config
 
 import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer
@@ -25,6 +26,7 @@ class JacksonConfig {
                 .serializerByType(LocalDateTime::class.java, LocalDateTimeSerializer(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .serializerByType(LocalDate::class.java, LocalDateSerializer(DateTimeFormatter.ISO_LOCAL_DATE))
                 .serializerByType(LocalTime::class.java, LocalTimeSerializer(DateTimeFormatter.ISO_LOCAL_TIME))
+                .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
         customizers.forEach { customizer -> customizer.customize(builder) }
         return builder
     }

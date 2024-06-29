@@ -4,11 +4,11 @@ data class LoginServiceRequest(
     val idToken: String,
     val provider: LoginProvider,
     val nickname: String,
-    val profileImage: String,
+    val profileImage: String
 )
 
 enum class LoginProvider {
     KAKAO,
     NAVER,
-    GOOGLE,
+    GOOGLE
 }

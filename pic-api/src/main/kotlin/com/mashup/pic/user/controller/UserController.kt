@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/user")
 class UserController(
-    private val userApplicationService: UserApplicationService,
+    private val userApplicationService: UserApplicationService
 ) {
     @Operation(summary = "회원탈퇴")
     @DeleteMapping
     fun withdraw(
-        @AuthenticationPrincipal user: UserInfo,
+        @AuthenticationPrincipal user: UserInfo
     ): ApiResponse<DeleteUserResponse> {
         return ApiResponse.success(DeleteUserResponse(userApplicationService.deleteUser(user.id)))
     }

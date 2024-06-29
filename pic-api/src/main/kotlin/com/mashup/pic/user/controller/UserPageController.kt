@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam
 class UserPageController(
     @Value("\${kakao.audience.rest}") private val kakaoApiKey: String,
     @Value("\${kakao.redirect.uri}") private val redirectUri: String,
-    private val userApplicationService: UserApplicationService,
+    private val userApplicationService: UserApplicationService
 ) {
     @GetMapping("/login")
     fun loginForm(model: Model): String {
@@ -25,7 +25,7 @@ class UserPageController(
     @GetMapping("/callback")
     fun callback(
         @RequestParam("code") code: String,
-        model: Model,
+        model: Model
     ): String {
         val accessToken = userApplicationService.callbackPage(code) ?: return "error"
 

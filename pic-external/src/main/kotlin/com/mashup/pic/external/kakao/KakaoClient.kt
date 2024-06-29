@@ -25,7 +25,7 @@ class KakaoClient(
     @Value("\${kakao.token-uri}") private val tokenUri: String,
     @Value("\${kakao.info-uri}") private val infoUri: String,
     @Value("\${kakao.audience.rest}") private val restApiKey: String,
-    @Value("\${kakao.redirect.uri}") private val redirectUri: String,
+    @Value("\${kakao.redirect.uri}") private val redirectUri: String
 ) : JwksClient {
     @Cacheable("kakao-jwks")
     override fun getJwks(): JwksResponse {
@@ -50,7 +50,7 @@ class KakaoClient(
             .onStatus(HttpStatusCode::is4xxClientError) { _, response ->
                 throw PicException.of(
                     PicExceptionType.EXTERNAL_COMMUNICATION_FAILURE,
-                    "Error fetching JWKS: ${response.statusCode}",
+                    "Error fetching JWKS: ${response.statusCode}"
                 )
             }
             .body<KakaoTokenInfoResponse>() ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID)
@@ -65,7 +65,7 @@ class KakaoClient(
             .onStatus(HttpStatusCode::is4xxClientError) { _, response ->
                 throw PicException.of(
                     PicExceptionType.EXTERNAL_COMMUNICATION_FAILURE,
-                    "Error requesting access token: ${response.statusCode}",
+                    "Error requesting access token: ${response.statusCode}"
                 )
             }
             .body<KakaoTokenResponse>() ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID)
@@ -78,7 +78,7 @@ class KakaoClient(
             .onStatus(HttpStatusCode::is4xxClientError) { _, response ->
                 throw PicException.of(
                     PicExceptionType.EXTERNAL_COMMUNICATION_FAILURE,
-                    "Error fetching JWKS: ${response.statusCode}",
+                    "Error fetching JWKS: ${response.statusCode}"
                 )
             }
             .body<JwksResponse>() ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID)

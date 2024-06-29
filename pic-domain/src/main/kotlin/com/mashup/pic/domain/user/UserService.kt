@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class UserService(
-    private val userRepository: UserRepository,
+    private val userRepository: UserRepository
 ) {
     fun findUserByOAuthIdOrNull(oAuthId: Long): UserDto? {
         return userRepository.findByOAuthId(oAuthId)?.toUserDto() ?: return null
@@ -24,14 +24,14 @@ class UserService(
     fun create(
         oAuthId: Long,
         nickname: String,
-        profileImage: String,
+        profileImage: String
     ): UserDto {
         return userRepository.save(
             User(
                 oAuthId = oAuthId,
                 nickname = nickname,
-                profileImage = profileImage,
-            ),
+                profileImage = profileImage
+            )
         ).toUserDto()
     }
 

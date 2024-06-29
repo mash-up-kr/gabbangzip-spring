@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class JwksResponse(
     @JsonProperty("keys")
-    val keys: List<JwkKey>,
+    val keys: List<JwkKey>
 ) {
     fun getJwkKeyByKid(kid: String): JwkKey? {
         return keys.find { it.kid == kid }
@@ -23,5 +23,5 @@ data class JwkKey(
     @JsonProperty("n")
     val n: String,
     @JsonProperty("e")
-    val e: String,
+    val e: String
 )

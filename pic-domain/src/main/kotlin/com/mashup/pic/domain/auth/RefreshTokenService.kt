@@ -8,12 +8,12 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class RefreshTokenService(
-    private val refreshTokenRepository: RefreshTokenRepository,
+    private val refreshTokenRepository: RefreshTokenRepository
 ) {
     @Transactional
     fun saveToken(
         userId: Long,
-        token: String,
+        token: String
     ) {
         refreshTokenRepository.save(RefreshToken(token, userId))
     }
@@ -30,7 +30,7 @@ class RefreshTokenService(
     fun updateToken(
         userId: Long,
         originToken: String,
-        newToken: String,
+        newToken: String
     ) {
         refreshTokenRepository.deleteByRefreshToken(originToken)
         refreshTokenRepository.save(RefreshToken(newToken, userId))

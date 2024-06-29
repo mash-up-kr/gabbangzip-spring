@@ -18,5 +18,5 @@ data class KakaoTokenResponse(
     @JsonProperty("refresh_token_expires_in")
     val refreshTokenExpiresIn: Int,
     @JsonProperty("scope")
-    val scope: String,
+    val scope: String
 )

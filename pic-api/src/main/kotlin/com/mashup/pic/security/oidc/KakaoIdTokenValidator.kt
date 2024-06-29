@@ -20,14 +20,14 @@ class KakaoIdTokenValidator(
     private val objectMapper: ObjectMapper,
     @Value("\${kakao.issuer}") private val issuer: String,
     @Value("\${kakao.audience.rest}") private val restAudience: String,
-    @Value("\${kakao.audience.native}") private val nativeAudience: String,
+    @Value("\${kakao.audience.native}") private val nativeAudience: String
 ) : IdTokenValidator {
     private val decoder = Base64.getUrlDecoder()
     private val keyFactory = KeyFactory.getInstance(SIGNING_ALGORITHM)
 
     override fun validateAndGetId(
         idToken: String,
-        nickname: String,
+        nickname: String
     ): Long {
         verifyPayload(idToken, nickname)
         verifySignature(idToken)
@@ -41,7 +41,7 @@ class KakaoIdTokenValidator(
 
     private fun verifyPayload(
         idToken: String,
-        nickname: String,
+        nickname: String
     ) {
         val payload = decodePayload(idToken)
         require(payload[ISSUER_KEY] == issuer) { "Invalid issuer" }

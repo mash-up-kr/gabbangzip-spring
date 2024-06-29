@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest
 @Disabled("암호화, 복호화 결과 확인을 위한 테스트이므로 비활성화")
 @SpringBootTest(classes = [JasyptConfig::class])
 class JasyptConfigTest(
-    private val stringEncryptor: StringEncryptor,
+    private val stringEncryptor: StringEncryptor
 ) : SharedContext() {
     private val plainText: String = "test"
 

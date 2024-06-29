@@ -17,7 +17,7 @@ import java.util.Date
 @Component
 class JwtManager(
     @Value("\${jwt.secret-key}") private val secretKey: String,
-    private val objectMapper: ObjectMapper,
+    private val objectMapper: ObjectMapper
 ) {
     private val signKey: Key = Keys.hmacShaKeyFor(secretKey.toByteArray())
     private val jwtParser: JwtParser = Jwts.parserBuilder().setSigningKey(signKey).build()
@@ -25,7 +25,7 @@ class JwtManager(
     fun generateAuthToken(userInfo: UserInfo): AuthToken {
         return AuthToken(
             accessToken = generateAccessToken(userInfo),
-            refreshToken = generateRefreshToken(),
+            refreshToken = generateRefreshToken()
         )
     }
 

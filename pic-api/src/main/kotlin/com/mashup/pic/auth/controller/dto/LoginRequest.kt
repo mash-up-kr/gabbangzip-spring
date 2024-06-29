@@ -8,14 +8,14 @@ data class LoginRequest(
     @NotBlank val idToken: String,
     @NotBlank val provider: LoginProvider,
     @NotBlank val nickname: String,
-    @NotBlank val profileImage: String,
+    @NotBlank val profileImage: String
 ) {
     fun toServiceRequest(): LoginServiceRequest {
         return LoginServiceRequest(
             idToken = idToken,
             provider = provider,
             nickname = nickname,
-            profileImage = profileImage,
+            profileImage = profileImage
         )
     }
 }

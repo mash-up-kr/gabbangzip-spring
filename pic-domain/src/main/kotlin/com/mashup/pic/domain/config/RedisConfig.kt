@@ -15,7 +15,7 @@ import java.time.Duration
 @Configuration
 class RedisConfig(
     @Value("\${redis.data.host}") private val host: String,
-    @Value("\${redis.data.port}") private val port: Int,
+    @Value("\${redis.data.port}") private val port: Int
 ) {
     @Bean
     fun cacheManager(): CacheManager {

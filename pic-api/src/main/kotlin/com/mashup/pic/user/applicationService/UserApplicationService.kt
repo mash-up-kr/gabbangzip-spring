@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 class UserApplicationService(
     private val userService: UserService,
     private val kakaoClient: KakaoClient,
-    private val jwtManager: JwtManager,
+    private val jwtManager: JwtManager
 ) {
     fun callbackPage(code: String): String? {
         val oAuthId = kakaoClient.getOAuthId(code)
@@ -21,8 +21,8 @@ class UserApplicationService(
             UserInfo(
                 id = user.id,
                 nickname = user.nickname,
-                roles = user.roles,
-            ),
+                roles = user.roles
+            )
         ).accessToken
     }
 

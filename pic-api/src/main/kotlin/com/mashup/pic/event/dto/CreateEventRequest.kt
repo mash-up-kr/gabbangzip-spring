@@ -11,5 +11,5 @@ data class CreateEventRequest(
     /** 이벤트 날짜 */
     @field:NotNull val eventDate: LocalDateTime,
     /** 이벤트 생성자가 입력하는 투표에 사용될 사진들 */
-    @field:Size(min = 1, max = 4) val pictures: List<String>,
+    @field:Size(min = 1, max = 4) val pictures: List<String>
 )

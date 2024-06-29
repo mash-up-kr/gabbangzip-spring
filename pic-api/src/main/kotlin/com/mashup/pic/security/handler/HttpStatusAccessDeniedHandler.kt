@@ -14,7 +14,7 @@ class HttpStatusAccessDeniedHandler : AccessDeniedHandler {
     override fun handle(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        accessDeniedException: AccessDeniedException,
+        accessDeniedException: AccessDeniedException
     ) {
         logger.warn("Access denied: {}", accessDeniedException.message)
         response.status = HttpStatus.FORBIDDEN.value()

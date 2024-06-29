@@ -70,12 +70,12 @@ configure<JibExtension> {
                 "-Dfile.encoding=UTF-8",
                 "-Djava.awt.headless=true",
                 "-Dspring.profiles.active=$activeProfile",
-                "-Djasypt.encryptor.password=$jasyptPassword",
+                "-Djasypt.encryptor.password=$jasyptPassword"
             )
         ports = listOf("8080")
         environment =
             mapOf(
-                "TZ" to "Asia/Seoul",
+                "TZ" to "Asia/Seoul"
             )
     }
 }

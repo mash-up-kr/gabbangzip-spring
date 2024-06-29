@@ -1,19 +1,32 @@
 spring:
-  datasource:
-    url: ENC(Ay1RamiVb1M/bs+asVmYBsfpJKWCV/GlfYiAJTiO5nW7l9HAeGWVDneMntFvqS+myIfeypom11iMvX0KAXkBKnRd408MJWVuepy8uMU6tR+NqmwTJBOdSd9flGdOvSlnyG7l/YqwK46KtSC513pNwsV8UlIypgEDVn+Of3q/N2biF/oUXcJRsmGxn5XzY7v8InR+CBoakJJmCzHaaYPxMRQFEd/l3a9bsTfyNSUcbYg=)
-    username: ENC(MeGy+GMnB7qvepqgo1UWRTBadVuqO/NYMlQmif0WItNsbzShuX2U5Dl4iVKrznuz)
-    password: ENC(9hUR9OvMkz9IEOgjKsf7uXbUaLUaT1RXGR9AjOU2vDYEhVuTwFtu+vyU9IPv6HzHfmK16liLpmKXdBsf2OkZyg==)
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-        format_sql: true
+    config:
+        activate:
+            on-profile: local, default
+
+    datasource:
+        url: ENC(Ay1RamiVb1M/bs+asVmYBsfpJKWCV/GlfYiAJTiO5nW7l9HAeGWVDneMntFvqS+myIfeypom11iMvX0KAXkBKnRd408MJWVuepy8uMU6tR+NqmwTJBOdSd9flGdOvSlnyG7l/YqwK46KtSC513pNwsV8UlIypgEDVn+Of3q/N2biF/oUXcJRsmGxn5XzY7v8InR+CBoakJJmCzHaaYPxMRQFEd/l3a9bsTfyNSUcbYg=)
+        username: ENC(MeGy+GMnB7qvepqgo1UWRTBadVuqO/NYMlQmif0WItNsbzShuX2U5Dl4iVKrznuz)
+        password: ENC(9hUR9OvMkz9IEOgjKsf7uXbUaLUaT1RXGR9AjOU2vDYEhVuTwFtu+vyU9IPv6HzHfmK16liLpmKXdBsf2OkZyg==)
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL8Dialect
+                format_sql: true
+redis:
+    data:
+        host: localhost
+        port: 6379
+---
+spring:
+    config:
+        activate:
+            on-profile: develop
 
 redis:
     data:
-      host: ENC(kiaq4/zTmL2SPJ8mpqCxmBooPmCsfUs7YkZCyZ5usEAkpYS64lyFfAH1eJOkI+nk6YNBuVGofBRDgLOwCp+dH641tmb6FxtSL6e9FePACyHyvu3J9TjTPq+oBUwD2CK6)
-      port: ENC(5PPNFYq6MXLiysCHoUWT37zoHPcClkr2bSngDL4vhyD3ZIorgKVsSHGCoMlyAUkW)
+        host: ENC(kiaq4/zTmL2SPJ8mpqCxmBooPmCsfUs7YkZCyZ5usEAkpYS64lyFfAH1eJOkI+nk6YNBuVGofBRDgLOwCp+dH641tmb6FxtSL6e9FePACyHyvu3J9TjTPq+oBUwD2CK6)
+        port: ENC(5PPNFYq6MXLiysCHoUWT37zoHPcClkr2bSngDL4vhyD3ZIorgKVsSHGCoMlyAUkW)

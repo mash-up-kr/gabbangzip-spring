@@ -1,51 +1,52 @@
 name: CD
 on:
-  push:
-    branches:
-      - main
-      - develop
+    push:
+        branches:
+            - main
+            - develop
 
 env:
-  JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
+    JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
+    build:
+        environment: develop
+        runs-on: ubuntu-latest
+        steps:
 
-      - name: Checkout
-        uses: actions/checkout@v3
+            -   name: Checkout
+                uses: actions/checkout@v3
 
-      - name: Set up JDK 21
-        uses: actions/setup-java@v3
-        with:
-          java-version: 21
-          distribution: temurin
+            -   name: Set up JDK 21
+                uses: actions/setup-java@v3
+                with:
+                    java-version: 21
+                    distribution: temurin
 
-      - name: Get CurrentTime
-        uses: 1466587594/get-current-time@v2
-        id: current-time
-        with:
-          format: YYYY-MM-DDTHH-mm-ss
-          utcOffset: "+09:00"
+            -   name: Get CurrentTime
+                uses: 1466587594/get-current-time@v2
+                id: current-time
+                with:
+                    format: YYYY-MM-DDTHH-mm-ss
+                    utcOffset: "+09:00"
 
-      - run: chmod +x gradlew && ./gradlew build
+            -   run: chmod +x gradlew && ./gradlew build
 
-      - name: 도커 이미지 빌드 & 푸시 by jib
-        run: |
-          ./gradlew :pic-api:jib -Prelease
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+            -   name: 도커 이미지 빌드 & 푸시 by jib
+                run: |
+                    ./gradlew :pic-api:jib -Prelease
+                env:
+                    DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+                    DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Beanstalk Deploy
-        uses: einaregilsson/beanstalk-deploy@v22
-        with:
-          aws_access_key: ${{ secrets.AWS_BEANSTALK_ACCESS_KEY }}
-          aws_secret_key: ${{ secrets.AWS_BEANSTALK_SECRET_KEY }}
-          application_name: pic-backend-eb-app
-          environment_name: pic-backend-eb-env
-          version_label: pic-deploy-${{steps.current-time.outputs.formattedTime}}
-          region: ap-northeast-2
-          wait_for_environment_recovery: 180
-          deployment_package: ./deploy/Dockerrun.aws.json
+            -   name: Beanstalk Deploy
+                uses: einaregilsson/beanstalk-deploy@v22
+                with:
+                    aws_access_key: ${{ secrets.AWS_BEANSTALK_ACCESS_KEY }}
+                    aws_secret_key: ${{ secrets.AWS_BEANSTALK_SECRET_KEY }}
+                    application_name: pic-backend-eb-app
+                    environment_name: pic-backend-eb-env
+                    version_label: pic-deploy-${{steps.current-time.outputs.formattedTime}}
+                    region: ap-northeast-2
+                    wait_for_environment_recovery: 180
+                    deployment_package: ./deploy/Dockerrun.aws.json

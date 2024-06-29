@@ -4,8 +4,8 @@ import com.mashup.pic.domain.common.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
-import jakarta.persistence.ManyToOne
 import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import org.hibernate.annotations.SQLDelete
 import org.hibernate.annotations.SQLRestriction
 

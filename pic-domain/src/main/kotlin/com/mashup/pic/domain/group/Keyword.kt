@@ -9,7 +9,7 @@ import org.hibernate.annotations.SQLRestriction
 @Entity
 @SQLDelete(sql = "UPDATE keyword SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @SQLRestriction("deleted_at is NULL")
-class Keyword (
+class Keyword(
     @Column(nullable = false)
     val name: String
 ) : BaseEntity()

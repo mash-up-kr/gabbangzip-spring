@@ -14,7 +14,7 @@ import org.hibernate.annotations.SQLRestriction
 @Table(name = "group_join")
 @SQLDelete(sql = "UPDATE group_join SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @SQLRestriction("deleted_at is NULL")
-class GroupJoin (
+class GroupJoin(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     val user: User,

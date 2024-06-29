@@ -19,6 +19,6 @@ class Alarm(
     val user: User,
     @Column(nullable = false)
     val message: String,
-    @Column(nullable = false)
-    val read: Boolean = false
+    @Column(name = "is_read", nullable = false)
+    val isRead: Boolean = false
 ) : BaseEntity()

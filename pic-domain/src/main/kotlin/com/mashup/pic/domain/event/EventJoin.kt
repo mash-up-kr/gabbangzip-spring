@@ -22,6 +22,6 @@ class EventJoin(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id")
     val event: Event,
-    @Column(name = "visited_result", nullable = false)
-    val visitedResult: Boolean = false
+    @Column(name = "is_visited", nullable = false)
+    val isVisited: Boolean = false
 ) : BaseEntity()

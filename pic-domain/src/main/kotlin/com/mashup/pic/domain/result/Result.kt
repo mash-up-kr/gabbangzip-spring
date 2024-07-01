@@ -21,8 +21,7 @@ class Result(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_image_option_id")
     val eventImageOption: EventImageOption,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "frame_id")
+    @Column(nullable = false)
     val frame: Frame,
     @Column(name = "image_order", nullable = false)
     val imageOrder: Int

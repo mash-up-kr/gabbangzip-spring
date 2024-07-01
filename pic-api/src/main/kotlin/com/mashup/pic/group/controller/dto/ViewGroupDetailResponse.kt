@@ -15,13 +15,12 @@ data class ViewGroupDetailResponse(
     val history: List<HistoryItem>
 )
 
-data class HistoryItem (
+data class HistoryItem(
     val id: Long,
     val name: String,
     val date: LocalDateTime,
     val images: List<FramedImage>
 )
-
 
 fun sampleViewGroupDetailResponse(): ViewGroupDetailResponse {
     val sampleKeyword =
@@ -42,20 +41,21 @@ fun sampleViewGroupDetailResponse(): ViewGroupDetailResponse {
             )
         )
 
-    val sampleHistory = listOf(
-        HistoryItem(
-            id = 1,
-            name = "가빵집 모임 #1",
-            date = LocalDateTime.of(2023, 4, 1, 10, 0),
-            images = framedImages
-        ),
-        HistoryItem(
-            id = 2,
-            name = "가빵집 모임 #2",
-            date = LocalDateTime.of(2023, 5, 1, 14, 0),
-            images = framedImages
+    val sampleHistory =
+        listOf(
+            HistoryItem(
+                id = 1,
+                name = "가빵집 모임 #1",
+                date = LocalDateTime.of(2023, 4, 1, 10, 0),
+                images = framedImages
+            ),
+            HistoryItem(
+                id = 2,
+                name = "가빵집 모임 #2",
+                date = LocalDateTime.of(2023, 5, 1, 14, 0),
+                images = framedImages
+            )
         )
-    )
 
     return ViewGroupDetailResponse(
         id = 12,

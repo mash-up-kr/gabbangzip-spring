@@ -4,12 +4,18 @@ import com.mashup.pic.common.ApiResponse
 import com.mashup.pic.group.applicationservice.GroupApplicationService
 import com.mashup.pic.group.applicationservice.dto.CreateGroupResponse
 import com.mashup.pic.group.controller.dto.CreateGroupRequest
+import com.mashup.pic.group.controller.dto.ViewGroupDetailResponse
+import com.mashup.pic.group.controller.dto.ViewGroupResponse
+import com.mashup.pic.group.controller.dto.sampleViewGroupDetailResponse
+import com.mashup.pic.group.controller.dto.sampleViewGroupResponse
 import com.mashup.pic.group.controller.dto.toServiceRequest
 import com.mashup.pic.security.authentication.UserInfo
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -27,6 +33,24 @@ class GroupController(private val groupApplicationService: GroupApplicationServi
     ): ApiResponse<CreateGroupResponse> {
         return ApiResponse.success(
             groupApplicationService.create(request.toServiceRequest(userInfo.id))
+        )
+    }
+
+    @GetMapping
+    @Operation(summary = "그룹 조회")
+    fun viewGroup(): ApiResponse<ViewGroupResponse> {
+        return ApiResponse.success(
+            sampleViewGroupResponse()
+        )
+    }
+
+    @GetMapping("/{groupId}")
+    @Operation(summary = "그룹 상세 조회")
+    fun viewGroupDetail(
+        @PathVariable groupId: Long
+    ): ApiResponse<ViewGroupDetailResponse> {
+        return ApiResponse.success(
+            sampleViewGroupDetailResponse()
         )
     }
 }

@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class PicObjectMapperBuilderCustomizer: Jackson2ObjectMapperBuilderCustomizer {
+class PicObjectMapperBuilderCustomizer : Jackson2ObjectMapperBuilderCustomizer {
     override fun customize(jacksonObjectMapperBuilder: Jackson2ObjectMapperBuilder) {
         jacksonObjectMapperBuilder
             .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)

@@ -3,6 +3,7 @@ package com.mashup.pic.config
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.pic.common.ErrorResponse
 import com.mashup.pic.common.exception.PicExceptionType
+import io.swagger.v3.core.jackson.ModelResolver
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.info.Info
 import io.swagger.v3.oas.models.Components
@@ -58,6 +59,11 @@ class SwaggerConfig(
                 }
             }
         }
+    }
+
+    @Bean
+    fun modelResolver(objectMapper: ObjectMapper): ModelResolver {
+        return ModelResolver(objectMapper)
     }
 
     private fun addStandardResponses(apiResponses: ApiResponses) {

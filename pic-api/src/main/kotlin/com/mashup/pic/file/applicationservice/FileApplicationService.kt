@@ -4,7 +4,8 @@ import com.mashup.pic.external.aws.s3.S3Service
 import com.mashup.pic.file.controller.dto.UploadUrlResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
+import java.util.Date
+import java.util.UUID
 
 @Service
 @Transactional(readOnly = true)

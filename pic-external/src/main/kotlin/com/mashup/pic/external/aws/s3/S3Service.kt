@@ -13,12 +13,8 @@ class S3Service(
 ) {
     fun generatePresignedUrl(
         objectKey: String,
-        expirationInMinutes: Int
+        expiration: Date
     ): String {
-        val expiration = Date()
-        val expTimeMillis = expiration.time + expirationInMinutes * 60 * 1000
-        expiration.time = expTimeMillis
-
         val generatePresignedUrlRequest =
             GeneratePresignedUrlRequest(s3Properties.bucket, objectKey)
                 .withMethod(HttpMethod.PUT)

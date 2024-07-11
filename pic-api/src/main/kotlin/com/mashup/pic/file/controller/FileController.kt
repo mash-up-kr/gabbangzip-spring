@@ -21,6 +21,6 @@ class FileController(
     fun getUploadUrl(
         @Valid @RequestParam @NotBlank extension: String
     ): ApiResponse<UploadUrlResponse> {
-        return ApiResponse.success(UploadUrlResponse.from(fileApplicationService.getUploadUrl(extension)))
+        return ApiResponse.success(fileApplicationService.getUploadUrl(extension))
     }
 }

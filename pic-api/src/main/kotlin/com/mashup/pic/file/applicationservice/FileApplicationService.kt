@@ -19,7 +19,7 @@ class FileApplicationService(
         expiration.time = expTimeMillis
 
         /** upload 가능 시간 10분 */
-        val uploadUrl =  s3Service.generatePresignedUrl(fileId, expiration)
+        val uploadUrl = s3Service.generatePresignedUrl(fileId, expiration)
 
         return UploadUrlResponse.from(uploadUrl, fileId, expTimeMillis)
     }

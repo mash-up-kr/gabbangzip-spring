@@ -7,6 +7,7 @@ import com.mashup.pic.external.common.response.JwkKey
 import com.mashup.pic.external.kakao.KakaoClient
 import io.jsonwebtoken.Jwts
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import java.math.BigInteger
 import java.security.Key
@@ -15,6 +16,7 @@ import java.security.spec.RSAPublicKeySpec
 import java.util.Base64
 
 @Component
+@Profile("!test")
 class KakaoIdTokenValidator(
     private val kakaoJwksClient: KakaoClient,
     private val objectMapper: ObjectMapper,

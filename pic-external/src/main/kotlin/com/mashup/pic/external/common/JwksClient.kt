@@ -6,4 +6,6 @@ interface JwksClient {
     fun getJwks(): JwksResponse
 
     fun refreshAndGetJwks(): JwksResponse
+
+    fun getOAuthId(code: String): Long
 }

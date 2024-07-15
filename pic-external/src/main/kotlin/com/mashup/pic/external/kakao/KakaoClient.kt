@@ -9,6 +9,7 @@ import com.mashup.pic.external.kakao.dto.KakaoTokenResponse
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.CachePut
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.MediaType
@@ -19,6 +20,7 @@ import org.springframework.web.client.RestClient
 import org.springframework.web.client.body
 
 @Component
+@Profile("!test")
 class KakaoClient(
     private val restClient: RestClient,
     @Value("\${kakao.jwk-uri}") private val jwkUri: String,
@@ -37,7 +39,7 @@ class KakaoClient(
         return requestJwks()
     }
 
-    fun getOAuthId(code: String): Long {
+    override fun getOAuthId(code: String): Long {
         val tokenResponse = requestToken(code)
         return requestTokenInfo(tokenResponse.accessToken).id
     }

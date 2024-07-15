@@ -4,9 +4,11 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
 import com.google.firebase.messaging.Notification
 import org.slf4j.LoggerFactory
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 
 @Service
+@Profile("!test")
 class FcmServiceImpl(private val firebaseMessaging: FirebaseMessaging) : FcmService {
     private val logger = LoggerFactory.getLogger(FcmServiceImpl::class.java)
 

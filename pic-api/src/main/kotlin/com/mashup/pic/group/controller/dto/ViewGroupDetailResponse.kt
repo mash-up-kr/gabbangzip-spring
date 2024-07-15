@@ -1,12 +1,13 @@
 package com.mashup.pic.group.controller.dto
 
 import com.mashup.pic.domain.result.Frame
+import com.mashup.pic.group.applicationservice.dto.KeywordResponse
 import java.time.LocalDateTime
 
 data class ViewGroupDetailResponse(
     val id: Long,
     val name: String,
-    val keyword: GroupKeyword,
+    val keyword: KeywordResponse,
     val status: Status,
     val statusDescription: String,
     val recentEventDate: LocalDateTime,
@@ -23,8 +24,6 @@ data class HistoryItem(
 )
 
 fun sampleViewGroupDetailResponse(): ViewGroupDetailResponse {
-    val sampleKeyword =
-        GroupKeyword.HOBBY
     val framedImages =
         listOf(
             FramedImage(
@@ -60,7 +59,7 @@ fun sampleViewGroupDetailResponse(): ViewGroupDetailResponse {
     return ViewGroupDetailResponse(
         id = 12,
         name = "가빵집 모임",
-        keyword = sampleKeyword,
+        keyword = KeywordResponse.sample(),
         status = Status.AFTER_MY_VOTE,
         statusDescription = "2일전 업데이트",
         recentEventDate = LocalDateTime.now(),

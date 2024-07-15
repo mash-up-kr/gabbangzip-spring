@@ -32,7 +32,7 @@ class ApiExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException::class)
     private fun handleMethodArgumentNotValidException(exception: MethodArgumentNotValidException): ApiResponse<Any> {
         log.error("MethodArgumentNotValidException handler", exception)
-        val errorMessage = exception.allErrors.joinToString(" ,")
+        val errorMessage = exception.fieldErrors.firstOrNull()?.defaultMessage ?: exception.allErrors.joinToString(" ,")
         return ApiResponse.fail(PicExceptionType.ARGUMENT_NOT_VALID, errorMessage)
     }
 

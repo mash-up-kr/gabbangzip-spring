@@ -28,7 +28,7 @@ class GroupServiceTest : IntegrationTestSupport {
 
     @DisplayName("name, keywordId, imageUrl을 입력받아 Group을 생성한다.")
     @Test
-    fun create1() {
+    fun create() {
         // given
         val name = "Group Sample Name"
         val keyword = Keyword("Sample Keyword")
@@ -49,7 +49,7 @@ class GroupServiceTest : IntegrationTestSupport {
 
     @DisplayName("Group 생성 시 keyword를 찾을 수 없다면 실패한다.")
     @Test
-    fun create2() {
+    fun createWhenNotExistingKeyword() {
         // given
         val name = "Group Sample Name"
         val imageUrl = "https://www.sample.com/image.png"
@@ -63,7 +63,7 @@ class GroupServiceTest : IntegrationTestSupport {
 
     @DisplayName("userId와 groupId를 입력받아 Group에 Join 할 수 있다.")
     @Test
-    fun join1() {
+    fun join() {
         // given
         val user = createSampleUser()
         val group = createSampleGroup()
@@ -79,7 +79,7 @@ class GroupServiceTest : IntegrationTestSupport {
 
     @DisplayName("Group Join 시 user를 찾을 수 없으면 실패한다.")
     @Test
-    fun join2() {
+    fun joinWhenNotExistingUser() {
         // given
         val userId = -1L
         val group = createSampleGroup()
@@ -92,7 +92,7 @@ class GroupServiceTest : IntegrationTestSupport {
 
     @DisplayName("Group Join 시 group을 찾을 수 없으면 실패한다.")
     @Test
-    fun join3() {
+    fun joinWhenNotExistingGroup() {
         // given
         val user = createSampleUser()
         val groupId = -1L

@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component
 @Profile("test")
 class FakeJwksClient : JwksClient {
     override fun getJwks(): JwksResponse {
-        return TODO()
+        TODO("Do Nothing in testing environment")
     }
 
     override fun refreshAndGetJwks(): JwksResponse {
-        return TODO()
+        TODO("Do Nothing in testing environment")
     }
 
     override fun getOAuthId(code: String): Long {
-        return TODO()
+        TODO("Do Nothing in testing environment")
     }
 }

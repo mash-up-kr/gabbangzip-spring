@@ -12,6 +12,6 @@ class FakeFileUploader : FileUploader {
         objectKey: String,
         expirationInMinutes: Date
     ): String {
-        TODO("Not yet implemented")
+        TODO("Do Nothing in testing environment")
     }
 }

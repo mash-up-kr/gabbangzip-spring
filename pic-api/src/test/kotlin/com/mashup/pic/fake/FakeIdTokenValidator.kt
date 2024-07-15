@@ -11,6 +11,6 @@ class FakeIdTokenValidator : IdTokenValidator {
         idToken: String,
         nickname: String
     ): Long {
-        return -1L
+        TODO("Do Nothing in testing environment")
     }
 }

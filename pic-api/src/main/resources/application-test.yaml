@@ -1,0 +1,10 @@
+---
+spring:
+    config:
+        activate:
+            on-profile: test
+        import:
+            - classpath:/application-domain.yaml
+
+jwt:
+    secret-key: secretKeyForTestsecretKeyForTestsecretKeyForTestsecretKeyForTest

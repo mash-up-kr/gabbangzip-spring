@@ -1,5 +1,6 @@
 package com.mashup.pic.group.controller.dto
 
+import com.mashup.pic.domain.group.GroupKeyword
 import com.mashup.pic.domain.result.Frame
 import java.time.LocalDateTime
 
@@ -34,9 +35,6 @@ enum class Status {
 
 // TODO: Need to remove
 fun sampleViewGroupResponse(): ViewGroupResponse {
-    val sampleKeyword =
-        GroupKeyword.CREW
-
     val framedImages1 =
         listOf(
             FramedImage(
@@ -99,7 +97,7 @@ fun sampleViewGroupResponse(): ViewGroupResponse {
         listOf(
             ViewGroupItem(
                 name = "Group 1",
-                keyword = sampleKeyword,
+                keyword = GroupKeyword.CREW,
                 status = Status.EVENT_COMPLETED,
                 statusDescription = "쉿, 투표중",
                 recentEventDate = LocalDateTime.now(),
@@ -108,7 +106,7 @@ fun sampleViewGroupResponse(): ViewGroupResponse {
             ),
             ViewGroupItem(
                 name = "Group 2",
-                keyword = sampleKeyword,
+                keyword = GroupKeyword.CREW,
                 status = Status.NO_PAST_AND_CURRENT_EVENT,
                 statusDescription = "2일전 업데이트",
                 recentEventDate = LocalDateTime.now().minusDays(7),
@@ -117,7 +115,7 @@ fun sampleViewGroupResponse(): ViewGroupResponse {
             ),
             ViewGroupItem(
                 name = "Group 3",
-                keyword = sampleKeyword,
+                keyword = GroupKeyword.CREW,
                 status = Status.BEFORE_MY_VOTE,
                 statusDescription = "일주일전 업데이트",
                 recentEventDate = LocalDateTime.now().minusDays(3),

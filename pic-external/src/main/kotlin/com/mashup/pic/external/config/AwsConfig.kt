@@ -1,4 +1,4 @@
-package com.mashup.pic.external.aws
+package com.mashup.pic.external.config
 
 import org.springframework.cloud.aws.autoconfigure.context.ContextCredentialsAutoConfiguration
 import org.springframework.cloud.aws.autoconfigure.context.ContextRegionProviderAutoConfiguration

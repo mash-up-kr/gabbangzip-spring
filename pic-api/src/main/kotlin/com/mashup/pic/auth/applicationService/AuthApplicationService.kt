@@ -9,7 +9,7 @@ import com.mashup.pic.domain.user.UserDto
 import com.mashup.pic.domain.user.UserService
 import com.mashup.pic.security.authentication.UserInfo
 import com.mashup.pic.security.jwt.JwtManager
-import com.mashup.pic.security.oidc.KakaoIdTokenValidator
+import com.mashup.pic.security.oidc.IdTokenValidator
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -19,7 +19,7 @@ class AuthApplicationService(
     private val userService: UserService,
     private val refreshTokenService: RefreshTokenService,
     private val jwtManager: JwtManager,
-    private val idTokenValidator: KakaoIdTokenValidator
+    private val idTokenValidator: IdTokenValidator
 ) {
     @Transactional
     fun login(request: LoginServiceRequest): LoginResponse {

@@ -2,6 +2,7 @@ package com.mashup.pic.user.controller
 
 import com.mashup.pic.user.applicationService.UserApplicationService
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 @RequestMapping("/page")
+@Profile("!test")
 class UserPageController(
     @Value("\${kakao.audience.rest}") private val kakaoApiKey: String,
     @Value("\${kakao.redirect.uri}") private val redirectUri: String,

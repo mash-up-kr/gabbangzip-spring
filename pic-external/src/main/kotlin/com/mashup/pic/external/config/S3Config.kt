@@ -1,19 +1,21 @@
-package com.mashup.pic.external.aws.s3
+package com.mashup.pic.external.config
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider
 import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
-import com.mashup.pic.external.aws.s3.S3Config.S3Properties
+import com.mashup.pic.external.config.S3Config.S3Properties
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.aws.autoconfigure.context.properties.AwsCredentialsProperties
 import org.springframework.cloud.aws.autoconfigure.context.properties.AwsRegionProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 
 @Configuration
 @EnableConfigurationProperties(S3Properties::class)
+@Profile("!test")
 class S3Config {
     @Bean
     fun amazonS3(

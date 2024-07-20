@@ -9,24 +9,3 @@ spring:
             - classpath:/application-external.yaml
 jwt:
     secret-key: ENC(NtDCxHj5jr9w2VZJ8ePLbjYrgB5mcL68ysQhvGgnj53mqiHnML6eWOi3X0sL4CRUnvqZMEKx9af16oM02kKDj91w76d72ljnLVhT49M1lhc=)
-kakao:
-    redirect:
-        uri: ENC(hQaRU6OCm1+wTd3XguO8SwBRrm60Q/WHVHXLqrUrvik27oOddgRqyplLtfu+kLcxGuzyCypBbJ5mvDKasDMPbTYGqmdEBTYGAdpuzNFAIKpaVgDesBfViqtt4MS4YImM/uj0JrJV85DzXIfyC3V83Q==)
-    issuer: https://kauth.kakao.com
-    audience:
-        rest: ENC(u+lS/xGqXqujwaf1fYWKYJlAwkFFBEoxaFpQeu7DOUYbPUd0IfcYK+NzJEteORXDk4iWWQPkeX6mPyjqEVBrXsYxVL7R+lZaoCiMyUWgI/4=)
-        native: ENC(yxu/eU8zyaMF3rpIk0sEzGAjDlGNMR6W8bwDFouuEfOtkQueHf9kp0ZRQeLrwI1DctSJOCwfgRm61jiWAdFSm5W+P7lnC87EFIBCXOoNOxE=)
-    jwk-uri: https://kauth.kakao.com/.well-known/jwks.json
-    token-uri: https://kauth.kakao.com/oauth/token
-    info-uri: https://kapi.kakao.com/v1/user/access_token_info
-
-cloud:
-    aws:
-        credentials:
-            access-key: ENC(nqIMjTrzfJTjqIT2/3qpuUBUwRPzxIuJLuVtMeKdNvHPZOSE9Sae+PI2f13nceG24JM9tDVDY9dV2xzJxqAX2w==)
-            secret-key: ENC(elsL2RSUX6luPGphhQnWLX0hulYR1qgFK/32qZo5pTNz9SNa77Dg30I9s5NL5vs+WsbDXlsbusXFIS5635DiITcErULRBMmvEt+wjKuUcXQ=)
-        s3:
-            bucket: ENC(X4oiFkzwBGS6d/TCJCcAcgNGFdVUT/QOYYcRNMVLutvXKb9csVR8k2JLWCYksh6N)
-        region:
-            static: ap-northeast-2
-            auto: false

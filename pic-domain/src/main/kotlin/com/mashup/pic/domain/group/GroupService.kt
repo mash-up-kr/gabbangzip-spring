@@ -11,21 +11,15 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class GroupService(
     private val groupRepository: GroupRepository,
-    private val keywordRepository: KeywordRepository,
     private val userRepository: UserRepository,
     private val groupJoinRepository: GroupJoinRepository
 ) {
     @Transactional
     fun create(
         name: String,
-        keywordId: Long,
+        keyword: GroupKeyword,
         imageUrl: String
     ): GroupDto {
-        val keyword =
-            keywordRepository.findByIdOrNull(keywordId) ?: throw PicException.of(
-                type = PicExceptionType.NOT_EXIST,
-                message = "$keywordId 에 해당하는 키워드를 찾을 수 없습니다."
-            )
         return groupRepository.save(Group(name, keyword, imageUrl)).toDto()
     }
 

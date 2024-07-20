@@ -1,5 +1,6 @@
 package com.mashup.pic.group.controller.dto
 
+import com.mashup.pic.domain.group.GroupKeyword
 import com.mashup.pic.group.applicationservice.dto.CreateGroupServiceRequest
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
@@ -9,12 +10,12 @@ data class CreateGroupRequest(
     @Schema(description = "그룹 이름")
     @field:NotBlank(message = "그룹 이름은 공백이 아니어야 합니다.")
     val groupName: String,
-    @Schema(description = "그룹 키워드 id")
-    val keywordId: Long,
+    @Schema(description = "그룹 키워드")
+    val keyword: GroupKeyword,
     @Schema(description = "그룹 이미지 URL")
     @field:NotBlank(message = "그룹 이미지 URL은 공백이 아니어야 합니다.")
     val groupImageUrl: String
 )
 
 fun CreateGroupRequest.toServiceRequest(userId: Long): CreateGroupServiceRequest =
-    CreateGroupServiceRequest(userId, groupName, keywordId, groupImageUrl)
+    CreateGroupServiceRequest(userId, groupName, keyword, groupImageUrl)

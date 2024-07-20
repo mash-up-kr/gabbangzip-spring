@@ -1,6 +1,7 @@
 package com.mashup.pic.group.controller
 
 import com.mashup.pic.ControllerTestSupport
+import com.mashup.pic.domain.group.GroupKeyword
 import com.mashup.pic.group.controller.dto.CreateGroupRequest
 import com.mashup.pic.security.WithCustomUser
 import org.hamcrest.core.IsNull
@@ -18,7 +19,7 @@ class GroupControllerTest : ControllerTestSupport() {
         val request =
             CreateGroupRequest(
                 groupName = "Sample Group Name",
-                keywordId = 1L,
+                keyword = GroupKeyword.CREW,
                 groupImageUrl = "www.sample.com/group-image.png"
             )
 
@@ -43,7 +44,7 @@ class GroupControllerTest : ControllerTestSupport() {
         val request =
             CreateGroupRequest(
                 groupName = "",
-                keywordId = 1L,
+                keyword = GroupKeyword.CREW,
                 groupImageUrl = "www.sample.com/group-image.png"
             )
 
@@ -70,7 +71,7 @@ class GroupControllerTest : ControllerTestSupport() {
         val request =
             CreateGroupRequest(
                 groupName = "Sample Group Name",
-                keywordId = 1L,
+                keyword = GroupKeyword.CREW,
                 groupImageUrl = ""
             )
 

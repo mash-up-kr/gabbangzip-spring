@@ -1,13 +1,13 @@
 package com.mashup.pic.group.controller.dto
 
+import com.mashup.pic.domain.group.GroupKeyword
 import com.mashup.pic.domain.result.Frame
-import com.mashup.pic.group.applicationservice.dto.KeywordResponse
 import java.time.LocalDateTime
 
 data class ViewGroupDetailResponse(
     val id: Long,
     val name: String,
-    val keyword: KeywordResponse,
+    val keyword: GroupKeyword,
     val status: Status,
     val statusDescription: String,
     val recentEventDate: LocalDateTime,
@@ -59,7 +59,7 @@ fun sampleViewGroupDetailResponse(): ViewGroupDetailResponse {
     return ViewGroupDetailResponse(
         id = 12,
         name = "가빵집 모임",
-        keyword = KeywordResponse.sample(),
+        keyword = GroupKeyword.CREW,
         status = Status.AFTER_MY_VOTE,
         statusDescription = "2일전 업데이트",
         recentEventDate = LocalDateTime.now(),

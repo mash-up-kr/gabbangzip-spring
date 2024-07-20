@@ -3,11 +3,11 @@ package com.mashup.pic.domain.group
 data class GroupDto(
     val id: Long,
     val name: String,
-    val keywordDto: KeywordDto,
+    val keyword: GroupKeyword,
     val imageUrl: String
 )
 
-fun Group.toDto(): GroupDto = GroupDto(id, name, keyword.toDto(), imageUrl)
+fun Group.toDto(): GroupDto = GroupDto(id, name, keyword, imageUrl)
 
 data class GroupJoinDto(
     val id: Long,

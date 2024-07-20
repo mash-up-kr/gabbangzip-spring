@@ -21,9 +21,6 @@ class GroupServiceTest : IntegrationTestSupport {
     private lateinit var userRepository: UserRepository
 
     @Autowired
-    private lateinit var keywordRepository: KeywordRepository
-
-    @Autowired
     private lateinit var groupRepository: GroupRepository
 
     @DisplayName("name, keywordId, imageUrl을 입력받아 Group을 생성한다.")
@@ -31,34 +28,17 @@ class GroupServiceTest : IntegrationTestSupport {
     fun create() {
         // given
         val name = "Group Sample Name"
-        val keyword = Keyword("Sample Keyword")
-        keywordRepository.save(keyword)
+        val keyword = GroupKeyword.CREW
         val imageUrl = "https://www.sample.com/image.png"
 
         // when
-        val foundGroup = groupService.create(name, keyword.id, imageUrl)
+        val foundGroup = groupService.create(name, keyword, imageUrl)
 
         // then
         assertThat(foundGroup).isInstanceOfGroupDto()
         assertThat(foundGroup.name).isEqualTo(name)
         assertThat(foundGroup.imageUrl).isEqualTo(imageUrl)
-        assertThat(foundGroup.keywordDto).isInstanceOf(KeywordDto::class.java)
-        assertThat(foundGroup.keywordDto.id).isEqualTo(keyword.id)
-        assertThat(foundGroup.keywordDto.name).isEqualTo(keyword.name)
-    }
-
-    @DisplayName("Group 생성 시 keyword를 찾을 수 없다면 실패한다.")
-    @Test
-    fun createWhenNotExistingKeyword() {
-        // given
-        val name = "Group Sample Name"
-        val imageUrl = "https://www.sample.com/image.png"
-        val keywordId = -1L
-
-        // when // then
-        assertThatThrownBy { groupService.create(name, keywordId, imageUrl) }
-            .isInstanceOf(PicException::class.java)
-            .hasMessage("$keywordId 에 해당하는 키워드를 찾을 수 없습니다.")
+        assertThat(foundGroup.keyword).isEqualTo(keyword)
     }
 
     @DisplayName("userId와 groupId를 입력받아 Group에 Join 할 수 있다.")
@@ -117,9 +97,7 @@ class GroupServiceTest : IntegrationTestSupport {
         keywordName: String = "Sample Keyword",
         groupImageUrl: String = "http://www.example.com/group-image.png"
     ): Group {
-        val keyword = Keyword(keywordName)
-        keywordRepository.save(keyword)
-
+        val keyword = GroupKeyword.CREW
         val group = Group(name = groupName, keyword = keyword, imageUrl = groupImageUrl)
         return groupRepository.save(group)
     }

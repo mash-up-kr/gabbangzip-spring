@@ -17,7 +17,10 @@ import org.springframework.stereotype.Component
 class RedisMessageListener(
     private val publisher: ApplicationEventPublisher
 ) : MessageListener {
-    override fun onMessage(message: Message, pattern: ByteArray?) {
+    override fun onMessage(
+        message: Message,
+        pattern: ByteArray?
+    ) {
         val eventInfo = ExpiredEventInfo.parseMessage(message)
         when (ChannelTopic.from(eventInfo.topic)) {
             ChannelTopic.EVENT_OPEN -> TODO("VOTE_OPEN으로 업데이트")
@@ -32,11 +35,11 @@ data class ExpiredEventInfo(
 ) {
     companion object {
         fun parseMessage(message: Message): ExpiredEventInfo {
-            val messageInfo = String(message.body).split(delimiter)
+            val messageInfo = String(message.body).split(DELIMITER)
             return ExpiredEventInfo(messageInfo[0], messageInfo[1])
         }
 
-        private const val delimiter = ":"
+        private const val DELIMITER = ":"
     }
 }
 

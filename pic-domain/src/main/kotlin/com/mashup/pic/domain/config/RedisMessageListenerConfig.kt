@@ -16,9 +16,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 )
 class RedisMessageListenerConfig {
     @Bean
-    fun messageListenerAdaptor(
-        redisMessageListener: MessageListener
-    ): MessageListenerAdapter {
+    fun messageListenerAdaptor(redisMessageListener: MessageListener): MessageListenerAdapter {
         return MessageListenerAdapter(redisMessageListener)
     }
 

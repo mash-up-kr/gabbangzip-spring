@@ -30,6 +30,11 @@ jobs:
                     format: YYYY-MM-DDTHH-mm-ss
                     utcOffset: "+09:00"
 
+            - name: Start Redis
+              uses: supercharge/redis-github-action@1.1.0
+              with:
+                  redis-version: 6
+
             -   run: chmod +x gradlew && ./gradlew build
 
             -   name: 도커 이미지 빌드 & 푸시 by jib

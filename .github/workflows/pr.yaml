@@ -20,6 +20,11 @@ jobs:
           java-version: 21
           distribution: temurin
 
+      - name: Start Redis
+        uses: supercharge/redis-github-action@1.1.0
+        with:
+          redis-version: 6
+
       - name: Get CurrentTime
         uses: 1466587594/get-current-time@v2
         id: current-time

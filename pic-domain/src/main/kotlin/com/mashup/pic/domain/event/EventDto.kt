@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 class EventDto(
     val id: Long,
-    val name: String,
+    val groupId: Long,
     val description: String,
     val date: LocalDateTime
 )
@@ -12,7 +12,7 @@ class EventDto(
 fun Event.toEventDto(): EventDto {
     return EventDto(
         id = this.id,
-        name = this.name,
+        groupId = this.group.id,
         description = this.description,
         date = this.date
     )

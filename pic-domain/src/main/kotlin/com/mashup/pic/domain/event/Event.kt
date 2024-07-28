@@ -2,7 +2,6 @@ package com.mashup.pic.domain.event
 
 import com.mashup.pic.domain.common.BaseEntity
 import com.mashup.pic.domain.group.Group
-import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType

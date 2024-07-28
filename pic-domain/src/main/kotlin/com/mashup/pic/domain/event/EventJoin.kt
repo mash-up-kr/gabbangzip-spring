@@ -26,6 +26,6 @@ class EventJoin(
     val event: Event,
     @Column(name = "is_visited", nullable = false)
     val isVisited: Boolean = false,
-    @OneToMany(mappedBy = "eventJoin", cascade = [CascadeType.ALL],  fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "eventJoin", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     val images: List<EventImageOption> = listOf()
 ) : BaseEntity()

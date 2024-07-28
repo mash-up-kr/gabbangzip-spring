@@ -1,8 +1,6 @@
 package com.mashup.pic.domain.group
 
 import com.mashup.pic.domain.common.BaseEntity
-import com.mashup.pic.domain.event.Event
-import com.mashup.pic.domain.event.EventJoin
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -27,5 +25,5 @@ class Group(
     @Column(nullable = false)
     val imageUrl: String,
     @OneToMany(mappedBy = "group", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    val groupJoins: List<GroupJoin> = listOf(),
+    val groupJoins: List<GroupJoin> = listOf()
 ) : BaseEntity()

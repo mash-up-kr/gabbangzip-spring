@@ -1,5 +1,6 @@
 package com.mashup.pic.group.generator
 
+import com.mashup.pic.util.InviteCodeGenerator
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

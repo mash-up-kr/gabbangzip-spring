@@ -3,7 +3,7 @@ package com.mashup.pic.group.applicationservice
 import com.mashup.pic.domain.group.GroupService
 import com.mashup.pic.group.applicationservice.dto.CreateGroupResponse
 import com.mashup.pic.group.applicationservice.dto.CreateGroupServiceRequest
-import com.mashup.pic.group.generator.InviteCodeGenerator
+import com.mashup.pic.util.InviteCodeGenerator
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

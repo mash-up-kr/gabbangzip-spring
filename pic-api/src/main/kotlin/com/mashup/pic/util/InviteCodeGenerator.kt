@@ -1,4 +1,4 @@
-package com.mashup.pic.group.generator
+package com.mashup.pic.util
 
 import java.nio.charset.StandardCharsets
 import java.util.Base64

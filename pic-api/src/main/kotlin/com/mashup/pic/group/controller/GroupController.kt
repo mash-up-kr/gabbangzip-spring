@@ -4,6 +4,8 @@ import com.mashup.pic.common.ApiResponse
 import com.mashup.pic.group.applicationservice.GroupApplicationService
 import com.mashup.pic.group.applicationservice.dto.CreateGroupResponse
 import com.mashup.pic.group.controller.dto.CreateGroupRequest
+import com.mashup.pic.group.controller.dto.JoinGroupRequest
+import com.mashup.pic.group.controller.dto.JoinGroupResponse
 import com.mashup.pic.group.controller.dto.ViewGroupDetailResponse
 import com.mashup.pic.group.controller.dto.ViewGroupResponse
 import com.mashup.pic.group.controller.dto.sampleViewGroupDetailResponse
@@ -37,6 +39,17 @@ class GroupController(private val groupApplicationService: GroupApplicationServi
     ): ApiResponse<CreateGroupResponse> {
         return ApiResponse.success(
             groupApplicationService.create(request.toServiceRequest(userInfo.id))
+        )
+    }
+
+    @Operation(summary = "초대 코드로 그룹 참가", security = [SecurityRequirement(name = "Authorization")])
+    @PostMapping("/join")
+    fun joinGroupByCode(
+        @AuthenticationPrincipal userInfo: UserInfo,
+        @RequestBody @Valid request: JoinGroupRequest
+    ): ApiResponse<JoinGroupResponse> {
+        return ApiResponse.success(
+            groupApplicationService.joinGroup(request.toServiceRequest(userInfo.id))
         )
     }
 

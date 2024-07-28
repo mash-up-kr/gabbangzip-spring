@@ -23,7 +23,6 @@ class EventService(
         date: LocalDateTime,
         pictures: List<String>
     ): Long {
-        println("=============================" + groupId)
         val group =
             groupRepository.findByIdOrNull(groupId)
                 ?: throw PicException.of(

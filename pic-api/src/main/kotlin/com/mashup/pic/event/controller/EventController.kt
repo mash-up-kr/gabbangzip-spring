@@ -24,7 +24,6 @@ class EventController(
     fun createEvent(
         @Valid @RequestBody createEventRequest: CreateEventRequest
     ): ApiResponse<CreateEventResponse> {
-        println("=============")
         return ApiResponse.success(
             eventApplicationService.create(createEventRequest.toServiceRequest())
         )

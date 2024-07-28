@@ -57,7 +57,7 @@ class EventService(
         eventRepository.deleteById(eventId)
     }
 
-    private fun getGroupById(groupId: Long) : Group {
+    private fun getGroupById(groupId: Long): Group {
         return groupRepository.findByIdOrNull(groupId)
             ?: throw PicException.of(
                 type = PicExceptionType.NOT_EXIST,

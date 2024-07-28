@@ -23,13 +23,7 @@ class EventService(
         date: LocalDateTime,
         pictures: List<String>
     ): Long {
-        val group =
-            groupRepository.findByIdOrNull(groupId)
-                ?: throw PicException.of(
-                    type = PicExceptionType.NOT_EXIST,
-                    message = "$groupId 에 해당하는 그룹를 찾을 수 없습니다."
-                )
-
+        val group = getGroupById(groupId)
         val event =
             eventRepository.save(
                 Event(
@@ -61,5 +55,13 @@ class EventService(
     @Transactional
     fun deleteEvent(eventId: Long) {
         eventRepository.deleteById(eventId)
+    }
+
+    private fun getGroupById(groupId: Long) : Group {
+        return groupRepository.findByIdOrNull(groupId)
+            ?: throw PicException.of(
+                type = PicExceptionType.NOT_EXIST,
+                message = "$groupId 에 해당하는 그룹를 찾을 수 없습니다."
+            )
     }
 }

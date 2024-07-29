@@ -7,6 +7,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
+import jakarta.persistence.OneToMany
 import org.hibernate.annotations.SQLDelete
 import org.hibernate.annotations.SQLRestriction
 import java.time.LocalDateTime
@@ -19,9 +20,9 @@ class Event(
     @JoinColumn(name = "group_id")
     val group: Group,
     @Column(nullable = false)
-    val name: String,
-    @Column(nullable = false)
     val description: String,
     @Column(nullable = false)
-    val date: LocalDateTime
+    val date: LocalDateTime,
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
+    val eventJoins: List<EventJoin> = listOf()
 ) : BaseEntity()

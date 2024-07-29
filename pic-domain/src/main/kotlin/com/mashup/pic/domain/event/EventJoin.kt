@@ -2,11 +2,13 @@ package com.mashup.pic.domain.event
 
 import com.mashup.pic.domain.common.BaseEntity
 import com.mashup.pic.domain.user.User
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
+import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 import org.hibernate.annotations.SQLDelete
 import org.hibernate.annotations.SQLRestriction
@@ -23,5 +25,7 @@ class EventJoin(
     @JoinColumn(name = "event_id")
     val event: Event,
     @Column(name = "is_visited", nullable = false)
-    val isVisited: Boolean = false
+    val isVisited: Boolean = false,
+    @OneToMany(mappedBy = "eventJoin", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    val images: List<EventImageOption> = listOf()
 ) : BaseEntity()

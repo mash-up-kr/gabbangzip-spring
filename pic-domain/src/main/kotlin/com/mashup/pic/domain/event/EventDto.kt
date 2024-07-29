@@ -12,7 +12,7 @@ class EventDto(
 fun Event.toEventDto(): EventDto {
     return EventDto(
         id = this.id,
-        groupId = this.group.id,
+        groupId = this.groupId,
         description = this.description,
         date = this.date
     )

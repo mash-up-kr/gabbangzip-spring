@@ -18,14 +18,10 @@ import org.hibernate.annotations.SQLRestriction
 @SQLDelete(sql = "UPDATE event_join SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @SQLRestriction("deleted_at is NULL")
 class EventJoin(
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    val user: User,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id")
-    val event: Event,
-    @Column(name = "is_visited", nullable = false)
-    val isVisited: Boolean = false,
-    @OneToMany(mappedBy = "eventJoin", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    val images: List<EventImageOption> = listOf()
+    @Column(nullable = false)
+    val userId: Long,
+    @Column(nullable = false)
+    val eventId: Long,
+    @Column(nullable = false)
+    val isVisited: Boolean = false
 ) : BaseEntity()

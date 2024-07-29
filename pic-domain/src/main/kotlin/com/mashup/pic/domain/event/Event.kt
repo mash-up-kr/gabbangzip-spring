@@ -16,13 +16,10 @@ import java.time.LocalDateTime
 @SQLDelete(sql = "UPDATE event SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @SQLRestriction("deleted_at is NULL")
 class Event(
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id")
-    val group: Group,
+    @Column(nullable = false)
+    val groupId: Long,
     @Column(nullable = false)
     val description: String,
     @Column(nullable = false)
-    val date: LocalDateTime,
-    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
-    val eventJoins: List<EventJoin> = listOf()
+    val date: LocalDateTime
 ) : BaseEntity()

@@ -24,6 +24,4 @@ class Group(
     val keyword: GroupKeyword,
     @Column(nullable = false)
     val imageUrl: String,
-    @OneToMany(mappedBy = "group", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    val groupJoins: List<GroupJoin> = listOf()
 ) : BaseEntity()

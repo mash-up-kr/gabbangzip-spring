@@ -3,6 +3,7 @@ package com.mashup.pic.domain.event
 import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.domain.group.Group
+import com.mashup.pic.domain.group.GroupJoinRepository
 import com.mashup.pic.domain.group.GroupRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -13,7 +14,7 @@ import java.time.LocalDateTime
 @Transactional(readOnly = true)
 class EventService(
     private val eventRepository: EventRepository,
-    private val groupRepository: GroupRepository,
+    private val groupJoinRepository: GroupJoinRepository,
     private val eventJoinRepository: EventJoinRepository
 ) {
     @Transactional
@@ -23,31 +24,29 @@ class EventService(
         date: LocalDateTime,
         pictures: List<String>
     ): Long {
-        val group = getGroupById(groupId)
         val event =
             eventRepository.save(
                 Event(
-                    group = group,
+                    groupId = groupId,
                     description = description,
                     date = date
                 )
             )
-        createEventJoinsByGroup(event, group)
+        createEventJoinsByGroup(event.id, groupId)
 
         return event.id
     }
 
     private fun createEventJoinsByGroup(
-        event: Event,
-        group: Group
+        eventId: Long,
+        groupId: Long
     ) {
-        val eventJoins =
-            group.groupJoins.map { groupJoin ->
-                EventJoin(
-                    user = groupJoin.user,
-                    event = event
-                )
-            }
+        val eventJoins = groupJoinRepository.findAllByGroupId(groupId).map { groupJoin ->
+            EventJoin(
+                userId = groupJoin.userId,
+                eventId = eventId
+            )
+        }
 
         eventJoinRepository.saveAll(eventJoins)
     }
@@ -55,13 +54,5 @@ class EventService(
     @Transactional
     fun deleteEvent(eventId: Long) {
         eventRepository.deleteById(eventId)
-    }
-
-    private fun getGroupById(groupId: Long): Group {
-        return groupRepository.findByIdOrNull(groupId)
-            ?: throw PicException.of(
-                type = PicExceptionType.NOT_EXIST,
-                message = "$groupId 에 해당하는 그룹를 찾을 수 없습니다."
-            )
     }
 }

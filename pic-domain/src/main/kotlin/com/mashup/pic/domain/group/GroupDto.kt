@@ -15,4 +15,4 @@ data class GroupJoinDto(
     val groupId: Long
 )
 
-fun GroupJoin.toDto(): GroupJoinDto = GroupJoinDto(id, user.id, group.id)
+fun GroupJoin.toDto(): GroupJoinDto = GroupJoinDto(id, userId, groupId)

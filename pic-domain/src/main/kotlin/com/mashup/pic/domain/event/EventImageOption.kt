@@ -15,9 +15,8 @@ import org.hibernate.annotations.SQLRestriction
 @SQLDelete(sql = "UPDATE event_image_choice SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @SQLRestriction("deleted_at is NULL")
 class EventImageOption(
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_join_id")
-    val eventJoin: EventJoin,
+    @Column(nullable = false)
+    val eventJoinId: Long,
     @Column(nullable = false)
     val imageUrl: String
 ) : BaseEntity()

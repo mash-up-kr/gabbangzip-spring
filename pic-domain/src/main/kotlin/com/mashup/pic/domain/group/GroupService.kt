@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class GroupService(
     private val groupRepository: GroupRepository,
-    private val userRepository: UserRepository,
     private val groupJoinRepository: GroupJoinRepository
 ) {
     @Transactional
@@ -29,29 +28,26 @@ class GroupService(
         userId: Long,
         groupId: Long
     ): GroupJoinDto {
-        val user = getUserById(userId)
-        val group = getGroupById(groupId)
+        if (isGroupFull(groupId)) {
+            throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "인원 초과")
+        }
 
-        // TODO: 4명 이상일 때 예외던지기: Group의 joins 수 가져오기
-
-        if (groupJoinRepository.existsByUserAndGroup(user, group)) {
+        if (isAlreadyJoined(userId, groupId)) {
             throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "이미 참여")
         }
 
-        return groupJoinRepository.save(GroupJoin(user, group)).toDto()
+        return groupJoinRepository.save(GroupJoin(userId, groupId)).toDto()
     }
 
-    private fun getUserById(userId: Long): User {
-        return userRepository.findByIdOrNull(userId) ?: throw PicException.of(
-            type = PicExceptionType.NOT_EXIST,
-            message = "$userId 에 해당하는 유저를 찾을 수 없습니다."
-        )
+    private fun isGroupFull(groupId: Long) : Boolean {
+        return groupJoinRepository.findAllByGroupId(groupId).size >= GROUP_MEMBER_MAX_COUNT
     }
 
-    private fun getGroupById(groupId: Long): Group {
-        return groupRepository.findByIdOrNull(groupId) ?: throw PicException.of(
-            type = PicExceptionType.NOT_EXIST,
-            message = "$groupId 에 해당하는 그룹을 찾을 수 없습니다."
-        )
+    private fun isAlreadyJoined(userId: Long, groupId: Long) : Boolean {
+        return groupJoinRepository.existsByUserIdAndGroupId(userId, groupId)
+    }
+
+    companion object {
+        const val GROUP_MEMBER_MAX_COUNT = 4
     }
 }

@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController
 class AlarmController(
     private val alarmApplicationService: AlarmApplicationService
 ) {
-
     @Operation(summary = "FCM 토큰 등록")
     @PostMapping("/token")
     fun registerTokenForUser(
@@ -30,5 +29,4 @@ class AlarmController(
     ): ApiResponse<RegisterTokenResponse> {
         return ApiResponse.success(alarmApplicationService.registerAlarmToken(request.toServiceRequest(user.id)))
     }
-
 }

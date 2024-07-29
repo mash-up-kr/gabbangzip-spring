@@ -8,7 +8,8 @@ import java.time.LocalDateTime
 data class CreateEventRequest(
     val groupId: Long,
     /** 이벤트 한 줄 요약 */
-    @field:NotBlank val description: String,
+    @field:NotBlank(message = "이벤트 설명이 공백이 아니어야 합니다")
+    val description: String,
     /** 이벤트 날짜 */
     @field:NotNull val date: LocalDateTime,
     /** 이벤트 생성자가 입력하는 투표에 사용될 사진들 */

@@ -14,10 +14,9 @@ import org.hibernate.annotations.SQLRestriction
 @SQLDelete(sql = "UPDATE croup SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @SQLRestriction("deleted_at is NULL")
 class AlarmToken(
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    val user: User,
     @Column(nullable = false)
-    val token: String
+    val userId: Long,
+    @Column(nullable = false)
+    var token: String
 ) : BaseEntity()
 

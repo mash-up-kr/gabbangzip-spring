@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface AlarmTokenRepository : JpaRepository<AlarmToken, Long> {
     fun findAllByUserIdIn(userIds: List<Long>): List<AlarmToken>
+
+    fun findByUserId(userId: Long): AlarmToken?
 }

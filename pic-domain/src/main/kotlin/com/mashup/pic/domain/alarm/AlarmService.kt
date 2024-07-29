@@ -1,10 +1,5 @@
 package com.mashup.pic.domain.alarm
 
-import com.mashup.pic.common.exception.PicException
-import com.mashup.pic.common.exception.PicExceptionType
-import com.mashup.pic.domain.user.User
-import com.mashup.pic.domain.user.UserRepository
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -19,7 +14,10 @@ class AlarmService(
     }
 
     @Transactional
-    fun registerTokenForUser(userId: Long, token: String) : String {
+    fun registerTokenForUser(
+        userId: Long,
+        token: String
+    ): String {
         val alarmToken = alarmTokenRepository.findByUserId(userId)
 
         if (alarmToken != null) {

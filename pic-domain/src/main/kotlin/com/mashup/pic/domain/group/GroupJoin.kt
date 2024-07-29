@@ -1,12 +1,8 @@
 package com.mashup.pic.domain.group
 
 import com.mashup.pic.domain.common.BaseEntity
-import com.mashup.pic.domain.user.User
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import org.hibernate.annotations.SQLDelete
 import org.hibernate.annotations.SQLRestriction

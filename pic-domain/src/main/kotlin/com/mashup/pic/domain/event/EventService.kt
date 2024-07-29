@@ -1,11 +1,6 @@
 package com.mashup.pic.domain.event
 
-import com.mashup.pic.common.exception.PicException
-import com.mashup.pic.common.exception.PicExceptionType
-import com.mashup.pic.domain.group.Group
 import com.mashup.pic.domain.group.GroupJoinRepository
-import com.mashup.pic.domain.group.GroupRepository
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -41,12 +36,13 @@ class EventService(
         eventId: Long,
         groupId: Long
     ) {
-        val eventJoins = groupJoinRepository.findAllByGroupId(groupId).map { groupJoin ->
-            EventJoin(
-                userId = groupJoin.userId,
-                eventId = eventId
-            )
-        }
+        val eventJoins =
+            groupJoinRepository.findAllByGroupId(groupId).map { groupJoin ->
+                EventJoin(
+                    userId = groupJoin.userId,
+                    eventId = eventId
+                )
+            }
 
         eventJoinRepository.saveAll(eventJoins)
     }

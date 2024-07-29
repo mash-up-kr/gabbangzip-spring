@@ -2,9 +2,6 @@ package com.mashup.pic.domain.group
 
 import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
-import com.mashup.pic.domain.user.User
-import com.mashup.pic.domain.user.UserRepository
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -39,11 +36,14 @@ class GroupService(
         return groupJoinRepository.save(GroupJoin(userId, groupId)).toDto()
     }
 
-    private fun isGroupFull(groupId: Long) : Boolean {
+    private fun isGroupFull(groupId: Long): Boolean {
         return groupJoinRepository.findAllByGroupId(groupId).size >= GROUP_MEMBER_MAX_COUNT
     }
 
-    private fun isAlreadyJoined(userId: Long, groupId: Long) : Boolean {
+    private fun isAlreadyJoined(
+        userId: Long,
+        groupId: Long
+    ): Boolean {
         return groupJoinRepository.existsByUserIdAndGroupId(userId, groupId)
     }
 

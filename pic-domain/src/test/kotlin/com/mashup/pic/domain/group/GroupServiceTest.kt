@@ -94,7 +94,6 @@ class GroupServiceTest : IntegrationTestSupport {
 
     private fun createSampleGroup(
         groupName: String = "Sample Group",
-        keywordName: String = "Sample Keyword",
         groupImageUrl: String = "http://www.example.com/group-image.png"
     ): Group {
         val keyword = GroupKeyword.CREW

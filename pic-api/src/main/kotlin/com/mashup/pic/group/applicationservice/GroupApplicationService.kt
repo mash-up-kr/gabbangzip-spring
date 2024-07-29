@@ -3,7 +3,9 @@ package com.mashup.pic.group.applicationservice
 import com.mashup.pic.domain.group.GroupService
 import com.mashup.pic.group.applicationservice.dto.CreateGroupResponse
 import com.mashup.pic.group.applicationservice.dto.CreateGroupServiceRequest
-import com.mashup.pic.util.InviteCodeGenerator
+import com.mashup.pic.group.applicationservice.dto.JoinGroupServiceRequest
+import com.mashup.pic.group.controller.dto.JoinGroupResponse
+import com.mashup.pic.util.InviteCodeUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -17,7 +19,16 @@ class GroupApplicationService(
         val groupDto = groupService.create(request.groupName, request.keyword, request.groupImageUrl)
         groupService.join(request.userId, groupDto.id)
 
-        val invitationCode = InviteCodeGenerator.generateInviteCode(groupDto.id)
+        val invitationCode = InviteCodeUtil.generateInviteCode(groupDto.id)
         return CreateGroupResponse.from(groupDto, invitationCode)
+    }
+
+    fun joinGroup(request: JoinGroupServiceRequest): JoinGroupResponse {
+        val groupId = InviteCodeUtil.getIdFromInviteCode(request.code)
+        groupService.join(
+            userId = request.userId,
+            groupId = groupId
+        )
+        return JoinGroupResponse(groupId)
     }
 }

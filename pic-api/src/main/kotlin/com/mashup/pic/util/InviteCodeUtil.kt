@@ -3,7 +3,7 @@ package com.mashup.pic.util
 import java.nio.charset.StandardCharsets
 import java.util.Base64
 
-object InviteCodeGenerator {
+object InviteCodeUtil {
     fun generateInviteCode(id: Long): String {
         val idString = String.format("%08d", id)
         val encodedBytes = Base64.getUrlEncoder().withoutPadding().encode(idString.toByteArray(StandardCharsets.UTF_8))

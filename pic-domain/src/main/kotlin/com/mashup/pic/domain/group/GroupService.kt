@@ -36,6 +36,11 @@ class GroupService(
         return groupJoinRepository.save(GroupJoin(userId, groupId)).toDto()
     }
 
+    fun getGroupsByUser(userId: Long): List<GroupDto> {
+        val myGroupIds = groupJoinRepository.findAllByUserId(userId).map { it.groupId }
+        return groupRepository.findAllById(myGroupIds).map { it.toDto() }
+    }
+
     private fun validateUser(userId: Long) {
         if (!checkUserExists(userId)) {
             throw PicException.of(

@@ -8,8 +8,6 @@ import com.mashup.pic.group.controller.dto.JoinGroupRequest
 import com.mashup.pic.group.controller.dto.JoinGroupResponse
 import com.mashup.pic.group.controller.dto.ViewGroupDetailResponse
 import com.mashup.pic.group.controller.dto.ViewGroupResponse
-import com.mashup.pic.group.controller.dto.sampleViewGroupDetailResponse
-import com.mashup.pic.group.controller.dto.sampleViewGroupResponse
 import com.mashup.pic.group.controller.dto.toServiceRequest
 import com.mashup.pic.security.authentication.UserInfo
 import io.swagger.v3.oas.annotations.Operation
@@ -55,19 +53,18 @@ class GroupController(private val groupApplicationService: GroupApplicationServi
 
     @GetMapping
     @Operation(summary = "그룹 조회")
-    fun viewGroup(): ApiResponse<ViewGroupResponse> {
-        return ApiResponse.success(
-            sampleViewGroupResponse()
-        )
+    fun viewGroup(
+        @AuthenticationPrincipal userInfo: UserInfo
+    ): ApiResponse<ViewGroupResponse> {
+        return ApiResponse.success(groupApplicationService.getAllGroups(userInfo.id))
     }
 
     @GetMapping("/{groupId}")
     @Operation(summary = "그룹 상세 조회")
     fun viewGroupDetail(
+        @AuthenticationPrincipal userInfo: UserInfo,
         @PathVariable groupId: Long
     ): ApiResponse<ViewGroupDetailResponse> {
-        return ApiResponse.success(
-            sampleViewGroupDetailResponse()
-        )
+        return ApiResponse.success(groupApplicationService.getGroup(userInfo.id, groupId))
     }
 }

@@ -15,9 +15,8 @@ import org.hibernate.annotations.SQLRestriction
 @SQLDelete(sql = "UPDATE event_transaction SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @SQLRestriction("deleted_at is NULL")
 class EventTransaction(
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id")
-    val event: Event,
+    @Column(nullable = false)
+    val eventId: Long,
     @Column(nullable = false)
     val name: String,
     @Column(nullable = false)

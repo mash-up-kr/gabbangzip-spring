@@ -9,4 +9,6 @@ interface GroupJoinRepository : JpaRepository<GroupJoin, Long> {
     ): Boolean
 
     fun findAllByGroupId(groupId: Long): List<GroupJoin>
+
+    fun findAllByUserId(userId: Long): List<GroupJoin>
 }

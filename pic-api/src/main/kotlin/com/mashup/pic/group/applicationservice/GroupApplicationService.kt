@@ -23,7 +23,6 @@ import com.mashup.pic.group.util.GroupViewStatusUtil
 import com.mashup.pic.util.InviteCodeUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDateTime
 
 @Service
 @Transactional(readOnly = true)
@@ -58,12 +57,18 @@ class GroupApplicationService(
         return ViewGroupResponse(groupItems)
     }
 
-    fun getGroup(userId: Long, groupId: Long): ViewGroupDetailResponse? {
+    fun getGroup(
+        userId: Long,
+        groupId: Long
+    ): ViewGroupDetailResponse? {
         // TODO: add detail view logic
         return null
     }
 
-    private fun getViewGroupItem(userId: Long, group: GroupDto) : ViewGroupItem {
+    private fun getViewGroupItem(
+        userId: Long,
+        group: GroupDto
+    ): ViewGroupItem {
         val lastEvent = eventService.getLastEvent(group.id)
 
         val status: GroupViewStatus
@@ -72,44 +77,38 @@ class GroupApplicationService(
         val cardFrontImageUrl: String
         var cardBackImages: ResultDto? = null
 
-        // 현 이벤트 X, 역대 이벤트 X
-        if (lastEvent == null) {
+        if (lastEvent == null) { // 현 이벤트 X, 역대 이벤트 X
             status = GroupViewStatus.NO_PAST_AND_CURRENT_EVENT
             cardFrontImageUrl = group.imageUrl
-        }
-
-        // 현 이벤트 X, 역대 이벤트 O
-        else if (lastEvent.eventStatus == EventStatus.COMPLETE) {
+        } else if (lastEvent.eventStatus == EventStatus.COMPLETE) { // 현 이벤트 X, 역대 이벤트 O
             status = GroupViewStatus.EVENT_COMPLETED
             recentEvent = RecentEvent(lastEvent.description, lastEvent.date)
             cardBackImages = resultService.getResultOfEvent(lastEvent.id)
             cardFrontImageUrl = cardBackImages.resultImages[0].imageUrl
-        }
-
-        // 현 이벤트 O
-        else {
+        } else { // 현 이벤트 O
             recentEvent = RecentEvent(lastEvent.description, lastEvent.date)
             cardFrontImageUrl = eventService.getRandomImageOption(lastEvent.id)
 
-            status = when (lastEvent.eventStatus) {
-                EventStatus.UPLOADING ->
-                    if (uploadService.hasUserUploaded(userId, lastEvent.id)) {
-                        GroupViewStatus.AFTER_MY_UPLOAD
-                    } else {
-                        GroupViewStatus.BEFORE_MY_UPLOAD
-                    }
+            status =
+                when (lastEvent.eventStatus) {
+                    EventStatus.UPLOADING ->
+                        if (uploadService.hasUserUploaded(userId, lastEvent.id)) {
+                            GroupViewStatus.AFTER_MY_UPLOAD
+                        } else {
+                            GroupViewStatus.BEFORE_MY_UPLOAD
+                        }
 
-                EventStatus.VOTING ->
-                    if (voteService.hasUserVoted(userId, lastEvent.id)) {
-                        GroupViewStatus.AFTER_MY_VOTE
-                    } else {
-                        GroupViewStatus.BEFORE_MY_VOTE
-                    }
+                    EventStatus.VOTING ->
+                        if (voteService.hasUserVoted(userId, lastEvent.id)) {
+                            GroupViewStatus.AFTER_MY_VOTE
+                        } else {
+                            GroupViewStatus.BEFORE_MY_VOTE
+                        }
 
-                else -> {
-                    GroupViewStatus.EVENT_COMPLETED
+                    else -> {
+                        GroupViewStatus.EVENT_COMPLETED
+                    }
                 }
-            }
         }
 
         return group.toViewGroupItem(

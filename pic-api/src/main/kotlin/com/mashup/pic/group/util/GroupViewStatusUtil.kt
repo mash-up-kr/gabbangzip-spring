@@ -25,7 +25,7 @@ object GroupViewStatusUtil {
         hasPastEvent: Boolean,
         uploaded: Boolean,
         voted: Boolean,
-        visited: Boolean,
+        visited: Boolean
     ): GroupViewStatus {
         return when {
             !hasCurrentEvent && !hasPastEvent -> GroupViewStatus.NO_PAST_AND_CURRENT_EVENT
@@ -39,9 +39,7 @@ object GroupViewStatusUtil {
     }
 
     // TODO: Update with real parameters
-    fun generateDescription(
-        event: EventDto?
-    ) : String {
+    fun generateDescription(event: EventDto?): String {
         return when {
             event != null -> "최근 업데이트 10일 전"
             else -> "쉿, 투표 중"

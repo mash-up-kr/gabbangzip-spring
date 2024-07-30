@@ -12,7 +12,7 @@ fun Group.toDto(): GroupDto = GroupDto(id, name, keyword, imageUrl)
 data class GroupJoinDto(
     val id: Long,
     val userId: Long,
-    val groupId: Long,
+    val groupId: Long
 )
 
 fun GroupJoin.toDto(): GroupJoinDto = GroupJoinDto(id, userId, groupId)

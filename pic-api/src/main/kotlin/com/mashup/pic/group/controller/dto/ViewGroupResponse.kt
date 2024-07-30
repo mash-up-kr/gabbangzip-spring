@@ -1,8 +1,8 @@
 package com.mashup.pic.group.controller.dto
 
 import com.mashup.pic.domain.group.GroupDto
-import com.mashup.pic.domain.result.Frame
 import com.mashup.pic.domain.group.GroupKeyword
+import com.mashup.pic.domain.result.Frame
 import java.time.LocalDateTime
 
 data class ViewGroupResponse(
@@ -36,7 +36,7 @@ fun GroupDto.toViewGroupItem(
     recentEvent: RecentEvent,
     cardFrontImageUrl: String,
     cardBackImages: List<FramedImage>?
-) : ViewGroupItem {
+): ViewGroupItem {
     return ViewGroupItem(
         id = this.id,
         name = this.name,

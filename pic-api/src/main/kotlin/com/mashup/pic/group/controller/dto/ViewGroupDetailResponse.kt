@@ -1,7 +1,6 @@
 package com.mashup.pic.group.controller.dto
 
 import com.mashup.pic.domain.group.GroupKeyword
-import com.mashup.pic.domain.result.Frame
 import java.time.LocalDateTime
 
 data class ViewGroupDetailResponse(
@@ -19,7 +18,7 @@ data class ViewGroupDetailResponse(
 data class RecentEventDetail(
     val name: String,
     val date: LocalDateTime,
-    val deadline:LocalDateTime
+    val deadline: LocalDateTime
 )
 
 data class HistoryItem(

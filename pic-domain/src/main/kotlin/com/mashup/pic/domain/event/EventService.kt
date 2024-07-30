@@ -79,6 +79,6 @@ class EventService(
     }
 
     private fun getEventById(eventId: Long): Event {
-        return eventRepository.findByIdOrNull(eventId) ?: throw PicException.of(PicExceptionType.NOT_EXIST,"$eventId 는 없는 이벤트")
+        return eventRepository.findByIdOrNull(eventId) ?: throw PicException.of(PicExceptionType.NOT_EXIST, "$eventId 는 없는 이벤트")
     }
 }

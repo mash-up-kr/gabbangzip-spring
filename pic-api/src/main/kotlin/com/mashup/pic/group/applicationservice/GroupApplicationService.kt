@@ -3,11 +3,11 @@ package com.mashup.pic.group.applicationservice
 import com.mashup.pic.domain.event.EventService
 import com.mashup.pic.domain.event.EventStatus
 import com.mashup.pic.domain.event.UploadService
-import com.mashup.pic.domain.event.VoteService
 import com.mashup.pic.domain.group.GroupDto
 import com.mashup.pic.domain.group.GroupService
 import com.mashup.pic.domain.result.ResultDto
 import com.mashup.pic.domain.result.ResultService
+import com.mashup.pic.domain.vote.VoteService
 import com.mashup.pic.group.applicationservice.dto.CreateGroupResponse
 import com.mashup.pic.group.applicationservice.dto.CreateGroupServiceRequest
 import com.mashup.pic.group.applicationservice.dto.JoinGroupServiceRequest
@@ -42,6 +42,7 @@ class GroupApplicationService(
         return CreateGroupResponse.from(groupDto, invitationCode)
     }
 
+    @Transactional
     fun joinGroup(request: JoinGroupServiceRequest): JoinGroupResponse {
         val groupId = InviteCodeUtil.getIdFromInviteCode(request.code)
         groupService.join(
@@ -87,7 +88,7 @@ class GroupApplicationService(
             cardFrontImageUrl = cardBackImages.resultImages[0].imageUrl
         } else { // 현 이벤트 O
             recentEvent = RecentEvent(lastEvent.description, lastEvent.date)
-            cardFrontImageUrl = eventService.getRandomImageOption(lastEvent.id)
+            cardFrontImageUrl = eventService.getRandomImageOptionFromEvent(lastEvent.id)
 
             status =
                 when (lastEvent.eventStatus) {

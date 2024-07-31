@@ -7,6 +7,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
+import kotlin.random.Random
 
 @Service
 @Transactional(readOnly = true)
@@ -18,6 +19,7 @@ class EventService(
 ) {
     @Transactional
     fun create(
+        userId: Long,
         groupId: Long,
         description: String,
         date: LocalDateTime,
@@ -33,7 +35,13 @@ class EventService(
             )
 
         createEventJoinsByGroup(event.id, groupId)
-        // TODO: 이벤트 생성하면서 생성한 사람에 대하여 이미지 후보군 바로 등록하기
+        val creatorEventJoin = getEventJoinByUserIdAndEventId(userId, event.id)
+
+        val eventImageOptions =
+            pictures.map { picture ->
+                EventImageOption(creatorEventJoin.id, picture)
+            }
+        eventImageOptionRepository.saveAll(eventImageOptions)
 
         return event.id
     }
@@ -42,9 +50,11 @@ class EventService(
         return eventRepository.findTopByGroupIdOrderByDateDesc(groupId)?.toDto()
     }
 
-    fun getRandomImageOption(id: Long): String {
-        // TODO: 등록된 후보 중 랜덤으로 1개 URL 반환
-        return "TODOTODO"
+    fun getRandomImageOptionFromEvent(eventId: Long): String {
+        val eventJoinIds = eventJoinRepository.findAllByEventId(eventId).map { it.id }
+        val imageOptions = eventImageOptionRepository.findAllByEventJoinIdIn(eventJoinIds)
+
+        return imageOptions[Random.nextInt(imageOptions.size)].imageUrl
     }
 
     fun endEventUploading(eventId: Long) {
@@ -80,5 +90,12 @@ class EventService(
 
     private fun getEventById(eventId: Long): Event {
         return eventRepository.findByIdOrNull(eventId) ?: throw PicException.of(PicExceptionType.NOT_EXIST, "$eventId 는 없는 이벤트")
+    }
+
+    private fun getEventJoinByUserIdAndEventId(
+        userId: Long,
+        eventId: Long
+    ): EventJoin {
+        return eventJoinRepository.findByUserIdAndEventId(userId, eventId) ?: throw PicException.of(PicExceptionType.NOT_EXIST)
     }
 }

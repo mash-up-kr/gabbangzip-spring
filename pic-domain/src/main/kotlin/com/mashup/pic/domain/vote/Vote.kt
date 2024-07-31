@@ -1,4 +1,4 @@
-package com.mashup.pic.domain.event
+package com.mashup.pic.domain.vote
 
 import com.mashup.pic.domain.common.BaseEntity
 import jakarta.persistence.Column

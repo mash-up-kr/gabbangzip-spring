@@ -12,9 +12,13 @@ class EventApplicationService(
     private val eventService: EventService
 ) {
     @Transactional
-    fun create(request: CreateEventServiceRequest): CreateEventResponse {
+    fun create(
+        userId: Long,
+        request: CreateEventServiceRequest
+    ): CreateEventResponse {
         return CreateEventResponse(
             eventService.create(
+                userId = userId,
                 groupId = request.groupId,
                 description = request.description,
                 date = request.date,

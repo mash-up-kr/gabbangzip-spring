@@ -1,22 +1,26 @@
-package com.mashup.pic.domain.event
+package com.mashup.pic.domain.vote
 
 import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
+import com.mashup.pic.domain.event.EventImageOptionRepository
+import com.mashup.pic.domain.event.EventJoin
+import com.mashup.pic.domain.event.EventJoinRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true)
-class UploadService(
+class VoteService(
+    private val voteRepository: VoteRepository,
     private val eventJoinRepository: EventJoinRepository,
     private val eventImageOptionRepository: EventImageOptionRepository
 ) {
-    fun hasUserUploaded(
+    fun hasUserVoted(
         userId: Long,
         eventId: Long
     ): Boolean {
         val eventJoin = getEventJoinByUserIdAndEventId(userId, eventId)
-        return eventImageOptionRepository.existsByEventJoinId(eventJoin.id)
+        return voteRepository.existsByEventJoinId(eventJoin.id)
     }
 
     private fun getEventJoinByUserIdAndEventId(

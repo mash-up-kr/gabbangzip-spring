@@ -15,7 +15,8 @@ class EventService(
     private val eventRepository: EventRepository,
     private val groupJoinRepository: GroupJoinRepository,
     private val eventJoinRepository: EventJoinRepository,
-    private val eventImageOptionRepository: EventImageOptionRepository
+    private val eventImageOptionRepository: EventImageOptionRepository,
+    private val eventRedisRepository: EventRedisRepository
 ) {
     @Transactional
     fun create(
@@ -42,6 +43,7 @@ class EventService(
                 EventImageOption(creatorEventJoin.id, picture)
             }
         eventImageOptionRepository.saveAll(eventImageOptions)
+        eventRedisRepository.setEventStatusExpiredTime(currentEventStatus = EventStatus.UPLOADING, eventId = event.id)
 
         return event.id
     }
@@ -81,19 +83,20 @@ class EventService(
     @Transactional
     fun endEventUploading(eventId: Long) {
         val event = getEventById(eventId)
-
-        event.eventStatus = EventStatus.VOTING
-        event.uploadingEndDate = LocalDateTime.now()
-        eventRepository.save(event)
+        if (event.eventStatus == EventStatus.UPLOADING) {
+            event.eventStatus = EventStatus.VOTING
+            event.uploadingEndDate = LocalDateTime.now()
+            eventRedisRepository.setEventStatusExpiredTime(currentEventStatus = EventStatus.VOTING, eventId = eventId)
+        }
     }
 
     @Transactional
     fun endEventVoting(eventId: Long) {
         val event = getEventById(eventId)
-
-        event.eventStatus = EventStatus.COMPLETE
-        event.votingEndDate = LocalDateTime.now()
-        eventRepository.save(event)
+        if (event.eventStatus == EventStatus.VOTING) {
+            event.eventStatus = EventStatus.COMPLETE
+            event.votingEndDate = LocalDateTime.now()
+        }
     }
 
     private fun validateUserImageUpload(

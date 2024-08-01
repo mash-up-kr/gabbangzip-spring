@@ -2,7 +2,7 @@ package com.mashup.pic.domain.event
 
 import java.time.LocalDateTime
 
-class EventDto(
+data class EventDto(
     val id: Long,
     val groupId: Long,
     val description: String,

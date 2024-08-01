@@ -2,20 +2,18 @@ package com.mashup.pic.domain.redis
 
 import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
-import org.springframework.context.ApplicationEventPublisher
+import com.mashup.pic.domain.event.EventService
+import com.mashup.pic.domain.event.EventStatus
 import org.springframework.data.redis.connection.Message
 import org.springframework.data.redis.connection.MessageListener
 import org.springframework.stereotype.Component
 
 /**
- * TODO
- * key는 EVENT:{status}:{eventId}???
- * 2시간마다 키 만료될때 만료 이벤트 발행해서 이벤트 도메인 객체 상태 업데이트
- * applicationEventPublisher로 이벤트 발행해서 의존성 분리? 혹은 여기서 로직 진행?
+ * key: {EventStatus}:{eventId}
  */
 @Component
 class RedisMessageListener(
-    private val publisher: ApplicationEventPublisher
+    private val eventService: EventService
 ) : MessageListener {
     override fun onMessage(
         message: Message,
@@ -23,38 +21,42 @@ class RedisMessageListener(
     ) {
         val eventInfo = ExpiredEventInfo.parseMessage(message)
         when (ChannelTopic.from(eventInfo.topic)) {
-            ChannelTopic.EVENT_OPEN -> TODO("VOTE_OPEN으로 업데이트")
-            ChannelTopic.VOTE_OPEN -> TODO("VOTE_FINISHED로 업데이트")
+            ChannelTopic.EVENT_OPEN -> eventService.endEventUploading(eventInfo.eventId)
+            ChannelTopic.VOTE_OPEN -> eventService.endEventVoting(eventInfo.eventId)
         }
     }
 }
 
 data class ExpiredEventInfo(
     val topic: String,
-    val eventId: String
+    val eventId: Long
 ) {
     companion object {
         fun parseMessage(message: Message): ExpiredEventInfo {
             val messageInfo = String(message.body).split(DELIMITER)
-            return ExpiredEventInfo(messageInfo[0], messageInfo[1])
+            return ExpiredEventInfo(messageInfo[0], messageInfo[1].toLong())
         }
 
         private const val DELIMITER = ":"
     }
 }
 
-/**
- * 이벤트 객체 status enum으로 대체하기
- * 테스트용 임시 객체
- */
-enum class ChannelTopic(val description: String, val nextStep: String) {
-    EVENT_OPEN("이벤트 개설", "VOTE_OPEN"),
-    VOTE_OPEN("투표 개설", "VOTE_FINISHED");
+enum class ChannelTopic(val description: String) {
+    EVENT_OPEN("이벤트 개설"),
+    VOTE_OPEN("투표 개설");
 
     companion object {
         fun from(topic: String): ChannelTopic {
             return ChannelTopic.entries.firstOrNull { it.name == topic }
                 ?: throw PicException.of(PicExceptionType.SYSTEM_FAIL)
+        }
+
+        fun from(eventStatus: EventStatus): ChannelTopic {
+            return when (eventStatus) {
+                EventStatus.UPLOADING -> EVENT_OPEN
+                EventStatus.VOTING -> VOTE_OPEN
+                else -> throw PicException.of(PicExceptionType.SYSTEM_FAIL)
+            }
         }
     }
 }

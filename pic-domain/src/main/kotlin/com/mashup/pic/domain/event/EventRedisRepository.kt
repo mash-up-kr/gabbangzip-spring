@@ -9,8 +9,12 @@ import java.time.Duration
 class EventRedisRepository(
     private val redisTemplate: RedisTemplate<String, String>
 ) {
-    fun setEventStatusExpiredTime(currentEventStatus: EventStatus, eventId: Long) {
-        redisTemplate.opsForValue().set("${ChannelTopic.from(currentEventStatus)}:$eventId", "$eventId", Duration.ofHours(EXPIRED_TIME_HOUR))
+    fun setEventStatusExpiredTime(
+        currentEventStatus: EventStatus,
+        eventId: Long
+    ) {
+        redisTemplate.opsForValue()
+            .set("${ChannelTopic.from(currentEventStatus)}:$eventId", "$eventId", Duration.ofHours(EXPIRED_TIME_HOUR))
     }
 
     companion object {

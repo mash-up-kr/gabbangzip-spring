@@ -33,6 +33,11 @@ class EventApplicationService(
             eventId = request.eventId,
             imageUrls = request.imageUrls
         )
+
+        if (eventService.hasEveryoneUploadedImages(request.eventId)) {
+            eventService.endEventUploading(request.eventId)
+        }
+
         return UploadImageResponse(request.eventId)
     }
 }

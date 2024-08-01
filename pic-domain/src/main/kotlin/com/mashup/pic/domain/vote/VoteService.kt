@@ -33,7 +33,7 @@ class VoteService(
         return eventImageOptionRepository.findAllByEventJoinIdIn(eventJoinIds).map { it.toDto() }
     }
 
-    private fun validateEvent(eventId: Long)  {
+    private fun validateEvent(eventId: Long) {
         if (!eventRepository.existsById(eventId)) {
             throw PicException.of(PicExceptionType.NOT_EXIST, "없는 이벤트")
         }

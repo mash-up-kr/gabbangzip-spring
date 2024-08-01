@@ -57,6 +57,17 @@ class EventService(
         return imageOptions[Random.nextInt(imageOptions.size)].imageUrl
     }
 
+    @Transactional
+    fun addImageOptions(
+        userId: Long,
+        eventId: Long,
+        imageUrls: List<String>
+    ) {
+        val eventJoin = getEventJoinByUserIdAndEventId(userId, eventId)
+        val eventImageOptions = imageUrls.map { EventImageOption(eventJoin.id, it) }
+        eventImageOptionRepository.saveAll(eventImageOptions)
+    }
+
     fun endEventUploading(eventId: Long) {
         val event = getEventById(eventId)
 

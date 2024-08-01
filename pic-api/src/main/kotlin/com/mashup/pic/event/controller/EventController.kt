@@ -5,6 +5,9 @@ import com.mashup.pic.event.applicationService.EventApplicationService
 import com.mashup.pic.event.applicationService.dto.toServiceRequest
 import com.mashup.pic.event.controller.dto.CreateEventRequest
 import com.mashup.pic.event.controller.dto.CreateEventResponse
+import com.mashup.pic.event.controller.dto.UploadImageRequest
+import com.mashup.pic.event.controller.dto.UploadImageResponse
+import com.mashup.pic.event.controller.dto.toServiceRequest
 import com.mashup.pic.security.authentication.UserInfo
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -28,7 +31,18 @@ class EventController(
         @Valid @RequestBody createEventRequest: CreateEventRequest
     ): ApiResponse<CreateEventResponse> {
         return ApiResponse.success(
-            eventApplicationService.create(user.id, createEventRequest.toServiceRequest())
+            eventApplicationService.create(createEventRequest.toServiceRequest(user.id))
+        )
+    }
+
+    @Operation(summary = "이미지 업로드")
+    @PostMapping("/images")
+    fun uploadImageOptions(
+        @AuthenticationPrincipal user: UserInfo,
+        @Valid @RequestBody uploadImageRequest: UploadImageRequest
+    ): ApiResponse<UploadImageResponse> {
+        return ApiResponse.success(
+            eventApplicationService.uploadImages(uploadImageRequest.toServiceRequest(user.id))
         )
     }
 }

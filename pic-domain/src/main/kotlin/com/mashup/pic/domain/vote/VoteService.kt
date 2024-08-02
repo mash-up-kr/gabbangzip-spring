@@ -33,6 +33,24 @@ class VoteService(
         return eventImageOptionRepository.findAllByEventJoinIdIn(eventJoinIds).map { it.toDto() }
     }
 
+    @Transactional
+    fun vote(
+        userId: Long,
+        eventId: Long,
+        likedOptionIds: List<Long>
+    ) {
+        val eventJoin = getEventJoinByUserIdAndEventId(userId, eventId)
+        val likedOptions = likedOptionIds.map { Vote(eventJoin.id, it) }
+        voteRepository.saveAll(likedOptions)
+    }
+
+    fun hasEveryoneVoted(eventId: Long): Boolean {
+        val eventJoins = eventJoinRepository.findAllByEventId(eventId)
+        val votedJoinCnt = voteRepository.countDistinctEventJoinIds()
+
+        return eventJoins.size == votedJoinCnt
+    }
+
     private fun validateEvent(eventId: Long) {
         if (!eventRepository.existsById(eventId)) {
             throw PicException.of(PicExceptionType.NOT_EXIST, "없는 이벤트")

@@ -8,4 +8,6 @@ interface VoteRepository : JpaRepository<Vote, Long> {
 
     @Query("SELECT COUNT(DISTINCT v.eventJoinId) FROM Vote v")
     fun countDistinctEventJoinIds(): Int
+
+    fun findAllByEventImageOptionIdIn(imageOptionIds: List<Long>): List<Vote>
 }

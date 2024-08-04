@@ -44,11 +44,18 @@ class VoteService(
         voteRepository.saveAll(likedOptions)
     }
 
-    fun hasEveryoneVoted(eventId: Long): Boolean {
-        val eventJoins = eventJoinRepository.findAllByEventId(eventId)
-        val votedJoinCnt = voteRepository.countDistinctEventJoinIds()
+    @Transactional
+    fun markVoted(
+        userId: Long,
+        eventId: Long
+    ) {
+        val eventJoin = getEventJoinByUserIdAndEventId(userId, eventId)
+        eventJoin.voted = true
+    }
 
-        return eventJoins.size == votedJoinCnt
+    fun hasEveryoneVoted(eventId: Long): Boolean {
+        val eventJoins = getAllEventJoinByEventId(eventId)
+        return eventJoins.all { it.voted }
     }
 
     private fun validateEvent(eventId: Long) {
@@ -62,5 +69,9 @@ class VoteService(
         eventId: Long
     ): EventJoin {
         return eventJoinRepository.findByUserIdAndEventId(userId, eventId) ?: throw PicException.of(PicExceptionType.NOT_EXIST)
+    }
+
+    private fun getAllEventJoinByEventId(eventId: Long): List<EventJoin> {
+        return eventJoinRepository.findAllByEventId(eventId)
     }
 }

@@ -17,5 +17,9 @@ class EventJoin(
     @Column(nullable = false)
     val eventId: Long,
     @Column(nullable = false)
-    val isVisited: Boolean = false
+    var uploaded: Boolean = false,
+    @Column(nullable = false)
+    var voted: Boolean = false,
+    @Column(nullable = false)
+    var isVisited: Boolean = false
 ) : BaseEntity()

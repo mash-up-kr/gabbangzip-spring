@@ -90,6 +90,15 @@ class EventService(
         return events.map { it.toDto() }
     }
 
+    @Transactional
+    fun markVisited(
+        userId: Long,
+        eventId: Long
+    ) {
+        val eventJoin = getEventJoinByUserIdAndEventId(userId, eventId)
+        eventJoin.isVisited = true
+    }
+
     private fun createEventJoinsByGroup(
         eventId: Long,
         groupId: Long

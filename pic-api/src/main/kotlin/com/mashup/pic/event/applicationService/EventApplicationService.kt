@@ -3,8 +3,10 @@ package com.mashup.pic.event.applicationService
 import com.mashup.pic.domain.event.EventService
 import com.mashup.pic.domain.event.UploadService
 import com.mashup.pic.event.applicationService.dto.CreateEventServiceRequest
+import com.mashup.pic.event.applicationService.dto.MarkEventVisitedServiceRequest
 import com.mashup.pic.event.applicationService.dto.UploadImageServiceRequest
 import com.mashup.pic.event.controller.dto.CreateEventResponse
+import com.mashup.pic.event.controller.dto.MarkEventVisitedResponse
 import com.mashup.pic.event.controller.dto.UploadImageResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -45,5 +47,11 @@ class EventApplicationService(
         }
 
         return UploadImageResponse(request.eventId)
+    }
+
+    @Transactional
+    fun markEventVisit(request: MarkEventVisitedServiceRequest): MarkEventVisitedResponse {
+        eventService.markVisited(request.userId, request.eventId)
+        return MarkEventVisitedResponse(true)
     }
 }

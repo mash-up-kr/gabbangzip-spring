@@ -27,6 +27,8 @@ class VoteApplicationService(
             eventId = request.eventId,
             likedOptionIds = request.likedOptionIds
         )
+        voteService.markVoted(request.userId, request.eventId)
+
         if (voteService.hasEveryoneVoted(request.eventId)) {
             eventService.endEventVoting(request.eventId)
         }

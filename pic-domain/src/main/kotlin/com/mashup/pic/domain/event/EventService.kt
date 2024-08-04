@@ -60,27 +60,6 @@ class EventService(
     }
 
     @Transactional
-    fun addImageOptions(
-        userId: Long,
-        eventId: Long,
-        imageUrls: List<String>
-    ) {
-        val event = getEventById(eventId)
-        val eventJoin = getEventJoinByUserIdAndEventId(userId, eventId)
-        validateUserImageUpload(event, eventJoin.id)
-
-        val eventImageOptions = imageUrls.map { EventImageOption(eventJoin.id, it) }
-        eventImageOptionRepository.saveAll(eventImageOptions)
-    }
-
-    fun hasEveryoneUploadedImages(eventId: Long): Boolean {
-        val eventJoins = eventJoinRepository.findAllByEventId(eventId)
-        val uploadedJoinCnt = eventImageOptionRepository.countDistinctEventJoinIds()
-
-        return eventJoins.size == uploadedJoinCnt
-    }
-
-    @Transactional
     fun endEventUploading(eventId: Long) {
         val event = getEventById(eventId)
         if (event.eventStatus == EventStatus.UPLOADING) {
@@ -109,19 +88,6 @@ class EventService(
     fun getAllEventsAsc(groupId: Long): List<EventDto> {
         val events = eventRepository.findAllByGroupIdOrderByIdDesc(groupId)
         return events.map { it.toDto() }
-    }
-
-    private fun validateUserImageUpload(
-        event: Event,
-        evenJoinId: Long
-    ) {
-        if (event.eventStatus != EventStatus.UPLOADING) {
-            throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "업로드 기간이 아님")
-        }
-
-        if (eventImageOptionRepository.existsByEventJoinId(evenJoinId)) {
-            throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "이미 이미지 업로드한 사용자")
-        }
     }
 
     private fun createEventJoinsByGroup(

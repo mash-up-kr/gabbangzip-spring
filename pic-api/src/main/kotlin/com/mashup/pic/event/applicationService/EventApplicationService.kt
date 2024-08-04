@@ -1,6 +1,7 @@
 package com.mashup.pic.event.applicationService
 
 import com.mashup.pic.domain.event.EventService
+import com.mashup.pic.domain.event.UploadService
 import com.mashup.pic.event.applicationService.dto.CreateEventServiceRequest
 import com.mashup.pic.event.applicationService.dto.UploadImageServiceRequest
 import com.mashup.pic.event.controller.dto.CreateEventResponse
@@ -11,30 +12,35 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class EventApplicationService(
-    private val eventService: EventService
+    private val eventService: EventService,
+    private val uploadService: UploadService
 ) {
     @Transactional
     fun create(request: CreateEventServiceRequest): CreateEventResponse {
-        return CreateEventResponse(
-            eventService.create(
-                userId = request.userId,
-                groupId = request.groupId,
-                description = request.description,
-                date = request.date,
-                pictures = request.pictures
+        val savedEvent =
+            CreateEventResponse(
+                eventService.create(
+                    userId = request.userId,
+                    groupId = request.groupId,
+                    description = request.description,
+                    date = request.date,
+                    pictures = request.pictures
+                )
             )
-        )
+        uploadService.markUploaded(request.userId, savedEvent.id)
+        return savedEvent
     }
 
     @Transactional
     fun uploadImages(request: UploadImageServiceRequest): UploadImageResponse {
-        eventService.addImageOptions(
+        uploadService.addImageOptions(
             userId = request.userId,
             eventId = request.eventId,
             imageUrls = request.imageUrls
         )
+        uploadService.markUploaded(request.userId, request.eventId)
 
-        if (eventService.hasEveryoneUploadedImages(request.eventId)) {
+        if (uploadService.hasEveryoneUploadedImages(request.eventId)) {
             eventService.endEventUploading(request.eventId)
         }
 

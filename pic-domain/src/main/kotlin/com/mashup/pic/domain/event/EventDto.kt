@@ -9,7 +9,8 @@ data class EventDto(
     val date: LocalDateTime,
     val eventStatus: EventStatus,
     val uploadingEndDate: LocalDateTime?,
-    val votingEndDate: LocalDateTime?
+    val votingEndDate: LocalDateTime?,
+    val createdAt: LocalDateTime
 )
 
 fun Event.toDto(): EventDto {
@@ -20,6 +21,7 @@ fun Event.toDto(): EventDto {
         date = this.date,
         eventStatus = this.eventStatus,
         uploadingEndDate = this.uploadingEndDate,
-        votingEndDate = this.votingEndDate
+        votingEndDate = this.votingEndDate,
+        createdAt = this.createdAt
     )
 }

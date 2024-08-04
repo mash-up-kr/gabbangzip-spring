@@ -65,6 +65,6 @@ class GroupController(private val groupApplicationService: GroupApplicationServi
         @AuthenticationPrincipal userInfo: UserInfo,
         @PathVariable groupId: Long
     ): ApiResponse<ViewGroupDetailResponse> {
-        return ApiResponse.success(groupApplicationService.getGroup(userInfo.id, groupId))
+        return ApiResponse.success(groupApplicationService.getGroupDetail(userInfo.id, groupId))
     }
 }

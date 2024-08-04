@@ -16,14 +16,15 @@ data class ViewGroupDetailResponse(
 )
 
 data class RecentEventDetail(
-    val name: String,
-    val date: LocalDateTime,
-    val deadline: LocalDateTime
+    val id: Long = -1,
+    val name: String = "",
+    val date: LocalDateTime = LocalDateTime.now(),
+    val deadline: LocalDateTime = LocalDateTime.now()
 )
 
 data class HistoryItem(
     val id: Long,
     val name: String,
     val date: LocalDateTime,
-    val images: List<FramedImage>
+    val images: List<FramedImage>?
 )

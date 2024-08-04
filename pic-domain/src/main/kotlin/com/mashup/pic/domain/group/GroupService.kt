@@ -3,6 +3,7 @@ package com.mashup.pic.domain.group
 import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.domain.user.UserRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -39,6 +40,10 @@ class GroupService(
     fun getGroupsByUser(userId: Long): List<GroupDto> {
         val myGroupIds = groupJoinRepository.findAllByUserId(userId).map { it.groupId }
         return groupRepository.findAllById(myGroupIds).map { it.toDto() }
+    }
+
+    fun getGroupById(groupId: Long): GroupDto {
+        return groupRepository.findByIdOrNull(groupId)?.toDto() ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "없는 그룹 ID")
     }
 
     private fun validateUser(userId: Long) {

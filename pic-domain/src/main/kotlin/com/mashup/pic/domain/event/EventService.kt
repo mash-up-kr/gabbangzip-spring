@@ -49,7 +49,7 @@ class EventService(
     }
 
     fun getLastEvent(groupId: Long): EventDto? {
-        return eventRepository.findTopByGroupIdOrderByDateDesc(groupId)?.toDto()
+        return eventRepository.findTopByGroupIdOrderByDateAsc(groupId)?.toDto()
     }
 
     fun getRandomImageOptionFromEvent(eventId: Long): String {
@@ -97,6 +97,18 @@ class EventService(
             event.eventStatus = EventStatus.COMPLETE
             event.votingEndDate = LocalDateTime.now()
         }
+    }
+
+    fun hasVisitedEvent(
+        userId: Long,
+        eventId: Long
+    ): Boolean {
+        return getEventJoinByUserIdAndEventId(userId, eventId).isVisited
+    }
+
+    fun getAllEventsAsc(groupId: Long): List<EventDto> {
+        val events = eventRepository.findAllByGroupIdOrderByIdDesc(groupId)
+        return events.map { it.toDto() }
     }
 
     private fun validateUserImageUpload(

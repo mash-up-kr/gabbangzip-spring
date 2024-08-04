@@ -4,4 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface EventRepository : JpaRepository<Event, Long> {
     fun findTopByGroupIdOrderByDateDesc(groupId: Long): Event?
+
+    fun findTopByGroupIdOrderByDateAsc(groupId: Long): Event?
+
+    fun findAllByGroupIdOrderByIdDesc(groupId: Long): List<Event>
 }

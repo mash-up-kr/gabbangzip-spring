@@ -26,6 +26,7 @@ data class FramedImage(
 )
 
 data class RecentEvent(
+    var id: Long = -1,
     var name: String? = null,
     var date: LocalDateTime? = null
 )

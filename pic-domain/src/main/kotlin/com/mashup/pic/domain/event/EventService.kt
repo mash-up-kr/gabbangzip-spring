@@ -49,7 +49,7 @@ class EventService(
     }
 
     fun getLastEvent(groupId: Long): EventDto? {
-        return eventRepository.findTopByGroupIdOrderByDateAsc(groupId)?.toDto()
+        return eventRepository.findTopByGroupIdOrderByIdDesc(groupId)?.toDto()
     }
 
     fun getRandomImageOptionFromEvent(eventId: Long): String {

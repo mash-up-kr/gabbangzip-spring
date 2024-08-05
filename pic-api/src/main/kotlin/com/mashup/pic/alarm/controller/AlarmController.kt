@@ -1,6 +1,8 @@
 package com.mashup.pic.alarm.controller
 
 import com.mashup.pic.alarm.applicationservice.AlarmApplicationService
+import com.mashup.pic.alarm.applicationservice.dto.KookResponse
+import com.mashup.pic.alarm.controller.dto.KookRequest
 import com.mashup.pic.alarm.controller.dto.RegisterTokenRequest
 import com.mashup.pic.alarm.controller.dto.RegisterTokenResponse
 import com.mashup.pic.alarm.controller.dto.toServiceRequest
@@ -28,5 +30,14 @@ class AlarmController(
         @Valid @RequestBody request: RegisterTokenRequest
     ): ApiResponse<RegisterTokenResponse> {
         return ApiResponse.success(alarmApplicationService.registerAlarmToken(request.toServiceRequest(user.id)))
+    }
+
+    @Operation(summary = "쿡 찌르기")
+    @PostMapping("/kook")
+    fun kook(
+        @AuthenticationPrincipal user: UserInfo,
+        @Valid @RequestBody request: KookRequest
+    ): ApiResponse<KookResponse> {
+        return ApiResponse.success(alarmApplicationService.kook(request.toServiceRequest()))
     }
 }

@@ -2,6 +2,8 @@ package com.mashup.pic.domain.group
 
 import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
+import com.mashup.pic.domain.event.Event
+import com.mashup.pic.domain.event.EventRepository
 import com.mashup.pic.domain.user.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class GroupService(
     private val groupRepository: GroupRepository,
+    private val eventRepository: EventRepository,
     private val userRepository: UserRepository,
     private val groupJoinRepository: GroupJoinRepository
 ) {
@@ -44,6 +47,16 @@ class GroupService(
 
     fun getGroupById(groupId: Long): GroupDto {
         return groupRepository.findByIdOrNull(groupId)?.toDto() ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "없는 그룹 ID")
+    }
+
+    fun getGroupByEventId(eventId: Long): GroupKeyword {
+        val event = getEventById(eventId)
+        return getGroupById(event.groupId).keyword
+    }
+
+    private fun getEventById(eventId: Long): Event {
+        return eventRepository.findByIdOrNull(eventId)
+            ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "없는 이벤트")
     }
 
     private fun validateUser(userId: Long) {

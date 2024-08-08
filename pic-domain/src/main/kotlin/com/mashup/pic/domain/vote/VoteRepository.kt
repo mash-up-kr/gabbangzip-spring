@@ -10,4 +10,6 @@ interface VoteRepository : JpaRepository<Vote, Long> {
     fun countDistinctEventJoinIds(): Int
 
     fun findAllByEventImageOptionIdIn(imageOptionIds: List<Long>): List<Vote>
+
+    fun findAllByEventJoinId(eventJoinId: Long): List<Vote>
 }

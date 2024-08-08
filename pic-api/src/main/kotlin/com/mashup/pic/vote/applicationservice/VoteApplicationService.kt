@@ -1,6 +1,7 @@
 package com.mashup.pic.vote.applicationservice
 
 import com.mashup.pic.domain.event.EventService
+import com.mashup.pic.domain.group.GroupService
 import com.mashup.pic.domain.result.ResultService
 import com.mashup.pic.domain.vote.VoteService
 import com.mashup.pic.vote.applicationservice.dto.VoteServiceRequest
@@ -15,7 +16,8 @@ import org.springframework.transaction.annotation.Transactional
 class VoteApplicationService(
     private val voteService: VoteService,
     private val eventService: EventService,
-    private val resultService: ResultService
+    private val resultService: ResultService,
+    private val groupService: GroupService
 ) {
     fun getVoteOptions(eventId: Long): VoteOptionResponse {
         val options = voteService.getVoteOptions(eventId).map { VoteOptionItem(it.id, it.imageUrl) }
@@ -35,6 +37,13 @@ class VoteApplicationService(
             eventService.endEventVoting(request.eventId)
             resultService.generateResult(10)
         }
-        return VoteResponse(request.eventId)
+
+        val randomImageUrl = voteService.getVotedRandomImageUrl(request.userId, request.eventId)
+        val groupKeyword = groupService.getGroupByEventId(request.eventId)
+        return VoteResponse(
+            eventId = request.eventId,
+            randomImageUrl = randomImageUrl,
+            groupKeyword = groupKeyword
+        )
     }
 }

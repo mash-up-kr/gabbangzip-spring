@@ -4,6 +4,7 @@ import com.mashup.pic.common.ApiResponse
 import com.mashup.pic.group.applicationservice.GroupApplicationService
 import com.mashup.pic.group.applicationservice.dto.CreateGroupResponse
 import com.mashup.pic.group.controller.dto.CreateGroupRequest
+import com.mashup.pic.group.controller.dto.GroupMemberResponse
 import com.mashup.pic.group.controller.dto.JoinGroupRequest
 import com.mashup.pic.group.controller.dto.JoinGroupResponse
 import com.mashup.pic.group.controller.dto.ViewGroupDetailResponse
@@ -66,5 +67,13 @@ class GroupController(private val groupApplicationService: GroupApplicationServi
         @PathVariable groupId: Long
     ): ApiResponse<ViewGroupDetailResponse> {
         return ApiResponse.success(groupApplicationService.getGroupDetail(userInfo.id, groupId))
+    }
+
+    @GetMapping("/{groupId}/members")
+    @Operation(summary = "그룹 멤버 조회")
+    fun getGroupMembers(
+        @PathVariable groupId: Long
+    ): ApiResponse<GroupMemberResponse> {
+        return ApiResponse.success(groupApplicationService.getGroupMembers(groupId))
     }
 }

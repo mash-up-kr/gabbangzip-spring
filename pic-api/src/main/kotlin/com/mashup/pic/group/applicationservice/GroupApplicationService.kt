@@ -10,14 +10,17 @@ import com.mashup.pic.domain.group.GroupDto
 import com.mashup.pic.domain.group.GroupService
 import com.mashup.pic.domain.result.ResultDto
 import com.mashup.pic.domain.result.ResultService
+import com.mashup.pic.domain.user.UserService
 import com.mashup.pic.domain.vote.VoteService
 import com.mashup.pic.group.applicationservice.dto.CreateGroupResponse
 import com.mashup.pic.group.applicationservice.dto.CreateGroupServiceRequest
 import com.mashup.pic.group.applicationservice.dto.JoinGroupServiceRequest
 import com.mashup.pic.group.controller.dto.FramedImage
+import com.mashup.pic.group.controller.dto.GroupMemberResponse
 import com.mashup.pic.group.controller.dto.GroupViewStatus
 import com.mashup.pic.group.controller.dto.HistoryItem
 import com.mashup.pic.group.controller.dto.JoinGroupResponse
+import com.mashup.pic.group.controller.dto.Member
 import com.mashup.pic.group.controller.dto.RecentEvent
 import com.mashup.pic.group.controller.dto.RecentEventDetail
 import com.mashup.pic.group.controller.dto.ViewGroupDetailResponse
@@ -33,6 +36,7 @@ import java.time.LocalDateTime
 @Service
 @Transactional(readOnly = true)
 class GroupApplicationService(
+    private val userService: UserService,
     private val groupService: GroupService,
     private val eventService: EventService,
     private val uploadService: UploadService,
@@ -126,6 +130,17 @@ class GroupApplicationService(
             cardFrontImageUrl = cardFrontImageUrl,
             cardBackImages = convertResultDtoToFramedImages(cardBackImages),
             history = getHistoryItems(groupId)
+        )
+    }
+
+    fun getGroupMembers(groupId: Long): GroupMemberResponse {
+        val joinedUserIds = groupService.getJoinedUserIds(groupId)
+        val users = userService.getUsersByIds(joinedUserIds)
+
+        val invitationCode = InviteCodeUtil.generateInviteCode(groupId)
+        return GroupMemberResponse(
+            members = users.map { Member(it.id, it.nickname) },
+            invitationCode = invitationCode
         )
     }
 

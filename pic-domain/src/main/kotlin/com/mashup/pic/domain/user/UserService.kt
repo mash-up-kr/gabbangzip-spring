@@ -12,11 +12,11 @@ class UserService(
     private val userRepository: UserRepository
 ) {
     fun findUserByOAuthIdOrNull(oAuthId: Long): UserDto? {
-        return userRepository.findByOAuthId(oAuthId)?.toUserDto() ?: return null
+        return userRepository.findByOAuthId(oAuthId)?.toDto() ?: return null
     }
 
     fun findUserByUserId(userId: Long): UserDto {
-        return userRepository.findByIdOrNull(userId)?.toUserDto()
+        return userRepository.findByIdOrNull(userId)?.toDto()
             ?: throw PicException.of(PicExceptionType.AUTH_ERROR)
     }
 
@@ -32,11 +32,15 @@ class UserService(
                 nickname = nickname,
                 profileImage = profileImage
             )
-        ).toUserDto()
+        ).toDto()
     }
 
     @Transactional
     fun deleteUser(id: Long) {
         userRepository.deleteById(id)
+    }
+
+    fun getUsersByIds(ids: List<Long>): List<UserDto> {
+        return userRepository.findAllByIdIn(ids).map { it.toDto() }
     }
 }

@@ -54,6 +54,11 @@ class GroupService(
         return getGroupById(event.groupId).keyword
     }
 
+    fun getJoinedUserIds(groupId: Long): List<Long> {
+        val groupJoins = groupJoinRepository.findAllByGroupId(groupId)
+        return groupJoins.map { it.userId }
+    }
+
     private fun getEventById(eventId: Long): Event {
         return eventRepository.findByIdOrNull(eventId)
             ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "없는 이벤트")

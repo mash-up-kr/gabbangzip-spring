@@ -9,7 +9,7 @@ data class UserDto(
     val roles: Set<UserRole>
 )
 
-fun User.toUserDto(): UserDto {
+fun User.toDto(): UserDto {
     return UserDto(
         id = this.id,
         oAuthId = this.oAuthId,

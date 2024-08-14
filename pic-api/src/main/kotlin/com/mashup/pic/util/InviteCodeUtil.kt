@@ -1,18 +1,38 @@
 package com.mashup.pic.util
 
-import java.nio.charset.StandardCharsets
-import java.util.Base64
-
 object InviteCodeUtil {
+    private val charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
     fun generateInviteCode(id: Long): String {
-        val idString = String.format("%08d", id)
-        val encodedBytes = Base64.getUrlEncoder().withoutPadding().encode(idString.toByteArray(StandardCharsets.UTF_8))
-        return String(encodedBytes, StandardCharsets.UTF_8)
+        return encode(id)
     }
 
     fun getIdFromInviteCode(inviteCode: String): Long {
-        val decodedBytes = Base64.getUrlDecoder().decode(inviteCode)
-        val idString = String(decodedBytes, StandardCharsets.UTF_8)
-        return idString.toLong()
+        return decode(inviteCode)
+    }
+
+    private fun encode(id: Long): String {
+        val base = charset.length
+        var code = id
+        val result = StringBuilder(8)
+
+        for (i in 0 until 8) {
+            result.append(charset[(code % base).toInt()])
+            code /= base
+        }
+
+        return result.toString()
+    }
+
+    private fun decode(code: String): Long {
+        var id = 0L
+        val base = charset.length
+
+        for (char in code) {
+            id = id * base + charset.indexOf(char)
+        }
+
+        return id
     }
 }
+

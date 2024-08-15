@@ -99,6 +99,19 @@ class EventService(
         eventJoin.isVisited = true
     }
 
+    @Transactional
+    fun joinEvent(
+        userId: Long,
+        eventId: Long
+    ) {
+        eventJoinRepository.save(
+            EventJoin(
+                userId = userId,
+                eventId = eventId
+            )
+        )
+    }
+
     private fun createEventJoinsByGroup(
         eventId: Long,
         groupId: Long

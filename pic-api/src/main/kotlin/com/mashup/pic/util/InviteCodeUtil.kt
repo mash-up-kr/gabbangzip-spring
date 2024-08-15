@@ -35,4 +35,3 @@ object InviteCodeUtil {
         return id
     }
 }
-

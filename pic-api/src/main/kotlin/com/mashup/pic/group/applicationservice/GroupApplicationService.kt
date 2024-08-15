@@ -3,6 +3,7 @@ package com.mashup.pic.group.applicationservice
 import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.domain.event.EventDto
+import com.mashup.pic.domain.event.EventJoinRepository
 import com.mashup.pic.domain.event.EventService
 import com.mashup.pic.domain.event.EventStatus
 import com.mashup.pic.domain.event.UploadService
@@ -41,7 +42,8 @@ class GroupApplicationService(
     private val eventService: EventService,
     private val uploadService: UploadService,
     private val voteService: VoteService,
-    private val resultService: ResultService
+    private val resultService: ResultService,
+    private val join: EventJoinRepository
 ) {
     @Transactional
     fun create(request: CreateGroupServiceRequest): CreateGroupResponse {
@@ -59,6 +61,10 @@ class GroupApplicationService(
             userId = request.userId,
             groupId = groupId
         )
+        val event = eventService.getLastEvent(groupId)
+        if (event != null && event.eventStatus != EventStatus.COMPLETE) {
+            eventService.joinEvent(request.userId, event.id)
+        }
         return JoinGroupResponse(groupId)
     }
 

@@ -4,6 +4,7 @@ import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.domain.event.EventService
 import com.mashup.pic.domain.event.EventStatus
+import com.mashup.pic.domain.result.ResultService
 import org.springframework.data.redis.connection.Message
 import org.springframework.data.redis.connection.MessageListener
 import org.springframework.stereotype.Component
@@ -13,7 +14,8 @@ import org.springframework.stereotype.Component
  */
 @Component
 class RedisMessageListener(
-    private val eventService: EventService
+    private val eventService: EventService,
+    private val resultService: ResultService
 ) : MessageListener {
     override fun onMessage(
         message: Message,
@@ -22,7 +24,10 @@ class RedisMessageListener(
         val eventInfo = ExpiredEventInfo.parseMessage(message)
         when (ChannelTopic.from(eventInfo.topic)) {
             ChannelTopic.EVENT_OPEN -> eventService.endEventUploading(eventInfo.eventId)
-            ChannelTopic.VOTE_OPEN -> eventService.endEventVoting(eventInfo.eventId)
+            ChannelTopic.VOTE_OPEN -> {
+                eventService.endEventVoting(eventInfo.eventId)
+                resultService.generateResult(eventInfo.eventId)
+            }
         }
     }
 }

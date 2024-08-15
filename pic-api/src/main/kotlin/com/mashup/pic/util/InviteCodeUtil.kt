@@ -1,9 +1,8 @@
 package com.mashup.pic.util
 
-import java.util.*
-
 object InviteCodeUtil {
-    private const val BASE62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    private const val BASE62 =
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     private const val CODE_LENGTH = 8
 
     fun generateInviteCode(id: Long): String {

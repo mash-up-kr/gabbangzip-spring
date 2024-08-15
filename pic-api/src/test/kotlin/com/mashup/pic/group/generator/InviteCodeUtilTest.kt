@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class InviteCodeUtilTest {
-
     @Test
     fun testGenerateAndGetIdFromInviteCode() {
         val id = 12345434L
@@ -31,4 +30,3 @@ class InviteCodeUtilTest {
         assertEquals(id, decoded)
     }
 }
-

@@ -1,37 +1,31 @@
 package com.mashup.pic.util
 
+import java.util.*
+
 object InviteCodeUtil {
-    private val charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    private const val BASE62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    private const val CODE_LENGTH = 8
 
     fun generateInviteCode(id: Long): String {
-        return encode(id)
-    }
+        var number = id
+        val result = StringBuilder()
 
-    fun getIdFromInviteCode(inviteCode: String): Long {
-        return decode(inviteCode)
-    }
-
-    private fun encode(id: Long): String {
-        val base = charset.length
-        var code = id
-        val result = StringBuilder(8)
-
-        for (i in 0 until 8) {
-            result.append(charset[(code % base).toInt()])
-            code /= base
+        repeat(CODE_LENGTH) {
+            val index = (number % 62).toInt()
+            result.insert(0, BASE62[index])
+            number /= 62
         }
 
         return result.toString()
     }
 
-    private fun decode(code: String): Long {
-        var id = 0L
-        val base = charset.length
-
-        for (char in code) {
-            id = id * base + charset.indexOf(char)
+    fun getIdFromInviteCode(inviteCode: String): Long {
+        var result = 0L
+        for (char in inviteCode) {
+            val index = BASE62.indexOf(char)
+            result = result * 62 + index
         }
 
-        return id
+        return result
     }
 }

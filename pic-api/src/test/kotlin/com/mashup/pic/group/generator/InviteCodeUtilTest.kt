@@ -5,24 +5,30 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class InviteCodeUtilTest {
+
     @Test
-    fun testGenerateAndGetId() {
-        val originalId: Long = 12345678
-
-        val inviteCode = InviteCodeUtil.generateInviteCode(originalId)
+    fun testGenerateAndGetIdFromInviteCode() {
+        val id = 12345434L
+        val inviteCode = InviteCodeUtil.generateInviteCode(id)
         val decodedId = InviteCodeUtil.getIdFromInviteCode(inviteCode)
-
-        assertEquals(originalId, decodedId)
+        assertEquals(id, decodedId)
     }
 
     @Test
-    fun testGenerateInviteCodeWithDifferentIds() {
-        val ids = listOf(1L, 123L, 123456L, 99999999L)
+    fun testDifferentIds() {
+        val id1 = 1L
+        val id2 = 2L
+        val inviteCode1 = InviteCodeUtil.generateInviteCode(id1)
+        val inviteCode2 = InviteCodeUtil.generateInviteCode(id2)
+        assert(inviteCode1 != inviteCode2)
+    }
 
-        for (id in ids) {
-            val inviteCode = InviteCodeUtil.generateInviteCode(id)
-            val decodedId = InviteCodeUtil.getIdFromInviteCode(inviteCode)
-            assertEquals(id, decodedId)
-        }
+    @Test
+    fun testEncodeDecodeConsistency() {
+        val id = 9872441L
+        val encoded = InviteCodeUtil.generateInviteCode(id)
+        val decoded = InviteCodeUtil.getIdFromInviteCode(encoded)
+        assertEquals(id, decoded)
     }
 }
+

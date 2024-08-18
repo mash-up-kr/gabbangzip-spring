@@ -25,8 +25,8 @@ class RedisMessageListener(
         when (ChannelTopic.from(eventInfo.topic)) {
             ChannelTopic.EVENT_OPEN -> eventService.endEventUploading(eventInfo.eventId)
             ChannelTopic.VOTE_OPEN -> {
-                eventService.endEventVoting(eventInfo.eventId)
                 resultService.generateResult(eventInfo.eventId)
+                eventService.endEventVoting(eventInfo.eventId)
             }
         }
     }

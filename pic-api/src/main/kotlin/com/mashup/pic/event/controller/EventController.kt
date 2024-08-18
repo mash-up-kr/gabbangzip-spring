@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController
 class EventController(
     private val eventApplicationService: EventApplicationService
 ) {
-    @Operation(summary = "이벤트 생성")
+    @Operation(summary = "이벤트 생성 (최초 이미지 업로드 포함)")
     @PostMapping
     fun createEvent(
         @AuthenticationPrincipal user: UserInfo,
@@ -38,7 +38,7 @@ class EventController(
         )
     }
 
-    @Operation(summary = "이미지 업로드")
+    @Operation(summary = "이벤트 이미지 업로드")
     @PostMapping("/images")
     fun uploadImageOptions(
         @AuthenticationPrincipal user: UserInfo,

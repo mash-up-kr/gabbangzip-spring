@@ -1,6 +1,9 @@
 package com.mashup.pic.event.applicationService
 
+import com.mashup.pic.common.exception.PicException
+import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.domain.event.EventService
+import com.mashup.pic.domain.event.EventStatus
 import com.mashup.pic.domain.event.UploadService
 import com.mashup.pic.event.applicationService.dto.CreateEventServiceRequest
 import com.mashup.pic.event.applicationService.dto.MarkEventVisitedServiceRequest
@@ -19,6 +22,11 @@ class EventApplicationService(
 ) {
     @Transactional
     fun create(request: CreateEventServiceRequest): CreateEventResponse {
+        val lastEvent = eventService.getLastEvent(request.groupId)
+        if (lastEvent != null && lastEvent.eventStatus != EventStatus.COMPLETE) {
+            throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "이미 진행하고 있는 이벤트 존재")
+        }
+
         val savedEvent =
             CreateEventResponse(
                 eventService.create(

@@ -34,8 +34,8 @@ class VoteApplicationService(
         voteService.markVoted(request.userId, request.eventId)
 
         if (voteService.hasEveryoneVoted(request.eventId)) {
+            resultService.generateResult(request.eventId)
             eventService.endEventVoting(request.eventId)
-            resultService.generateResult(10)
         }
 
         val randomImageUrl = voteService.getVotedRandomImageUrl(request.userId, request.eventId)

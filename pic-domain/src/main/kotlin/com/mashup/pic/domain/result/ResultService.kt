@@ -59,6 +59,10 @@ class ResultService(
         )
     }
 
+    fun hasResult(eventId: Long): Boolean {
+        return resultRepository.findAllByEventId(eventId).isNotEmpty()
+    }
+
     private fun getImageOptionById(imageOptionId: Long): EventImageOption {
         return eventImageOptionRepository.findByIdOrNull(imageOptionId)
             ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "없는 이미지 항목")

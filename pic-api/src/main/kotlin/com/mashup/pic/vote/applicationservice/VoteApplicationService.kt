@@ -34,7 +34,9 @@ class VoteApplicationService(
         voteService.markVoted(request.userId, request.eventId)
 
         if (voteService.hasEveryoneVoted(request.eventId)) {
-            resultService.generateResult(request.eventId)
+            if (!resultService.hasResult(request.eventId)) {
+                resultService.generateResult(request.eventId)
+            }
             eventService.endEventVoting(request.eventId)
         }
 

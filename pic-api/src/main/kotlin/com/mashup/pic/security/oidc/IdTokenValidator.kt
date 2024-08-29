@@ -4,5 +4,5 @@ interface IdTokenValidator {
     fun validateAndGetId(
         idToken: String,
         nickname: String
-    ): Long
+    ): String
 }

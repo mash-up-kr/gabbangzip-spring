@@ -17,7 +17,7 @@ import java.util.Base64
 
 @Component
 @Profile("!test")
-class KakaoIdTokenValidator(
+class AppleIdTokenValidator(
     private val kakaoJwksClient: KakaoClient,
     private val objectMapper: ObjectMapper,
     @Value("\${kakao.issuer}") private val issuer: String,

@@ -2,7 +2,7 @@ package com.mashup.pic.domain.user
 
 data class UserDto(
     val id: Long,
-    val oAuthId: Long,
+    val oAuthId: String,
     val provider: String,
     val nickname: String,
     val profileImage: String,

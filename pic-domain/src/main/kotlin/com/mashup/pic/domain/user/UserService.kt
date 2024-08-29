@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional
 class UserService(
     private val userRepository: UserRepository
 ) {
-    fun findUserByOAuthIdOrNull(oAuthId: Long): UserDto? {
+    fun findUserByOAuthIdOrNull(oAuthId: String): UserDto? {
         return userRepository.findByOAuthId(oAuthId)?.toDto() ?: return null
     }
 
@@ -22,13 +22,15 @@ class UserService(
 
     @Transactional
     fun create(
-        oAuthId: Long,
+        oAuthId: String,
+        provider: LoginProvider,
         nickname: String,
         profileImage: String
     ): UserDto {
         return userRepository.save(
             User(
                 oAuthId = oAuthId,
+                provider = provider,
                 nickname = nickname,
                 profileImage = profileImage
             )

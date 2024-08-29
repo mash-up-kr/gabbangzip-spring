@@ -1,4 +1,4 @@
-package com.mashup.pic.external.kakao
+package com.mashup.pic.external.apple
 
 import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
@@ -21,7 +21,7 @@ import org.springframework.web.client.body
 
 @Component
 @Profile("!test")
-class KakaoClient(
+class AppleClient(
     private val restClient: RestClient,
     @Value("\${kakao.jwk-uri}") private val jwkUri: String,
     @Value("\${kakao.token-uri}") private val tokenUri: String,

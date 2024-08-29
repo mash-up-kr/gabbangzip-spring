@@ -7,5 +7,5 @@ interface JwksClient {
 
     fun refreshAndGetJwks(): JwksResponse
 
-    fun getOAuthId(code: String): Long
+    fun getOAuthId(code: String): String
 }

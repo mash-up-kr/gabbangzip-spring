@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface UserRepository : JpaRepository<User, Long> {
-    fun findByOAuthId(oauthId: Long): User?
+    fun findByOAuthId(oauthId: String): User?
 
     fun findAllByIdIn(ids: List<Long>): List<User>
 }

@@ -19,9 +19,9 @@ import org.hibernate.annotations.SQLRestriction
 @SQLRestriction("deleted_at is NULL")
 class User(
     @Column(name = "oauth_id", nullable = false)
-    val oAuthId: Long,
+    val oAuthId: String,
     @Column(name = "provider", nullable = false)
-    val provider: Provider = Provider.KAKAO,
+    val provider: LoginProvider,
     @Column(name = "nickname", nullable = false)
     val nickname: String,
     @Column(name = "profile_image", nullable = false)

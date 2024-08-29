@@ -2,6 +2,7 @@ package com.mashup.pic.group.applicationservice
 
 import com.mashup.pic.ApplicationServiceTestSupport
 import com.mashup.pic.domain.group.GroupKeyword
+import com.mashup.pic.domain.user.LoginProvider
 import com.mashup.pic.domain.user.User
 import com.mashup.pic.domain.user.UserRepository
 import com.mashup.pic.group.applicationservice.dto.CreateGroupResponse
@@ -47,11 +48,12 @@ class GroupApplicationServiceTest : ApplicationServiceTestSupport {
     }
 
     private fun createSampleUser(
-        oAuthId: Long = 1L,
+        oAuthId: String = "sampleid",
+        provider: LoginProvider = LoginProvider.KAKAO,
         nickname: String = "User",
         profileImage: String = "http://www.sample.com/profile-image.png"
     ): User {
-        val user = User(oAuthId, nickname = nickname, profileImage = profileImage)
+        val user = User(oAuthId = oAuthId, provider = provider, nickname = nickname, profileImage = profileImage)
         return userRepository.save(user)
     }
 }

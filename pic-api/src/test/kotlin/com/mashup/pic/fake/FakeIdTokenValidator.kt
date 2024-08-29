@@ -10,7 +10,7 @@ class FakeIdTokenValidator : IdTokenValidator {
     override fun validateAndGetId(
         idToken: String,
         nickname: String
-    ): Long {
+    ): String {
         TODO("Do Nothing in testing environment")
     }
 }

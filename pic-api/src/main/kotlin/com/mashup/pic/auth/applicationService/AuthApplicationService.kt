@@ -35,7 +35,7 @@ class AuthApplicationService(
     }
 
     @Transactional
-    fun appleLogin(request: AppleLoginServiceRequest): LoginResponse? {
+    fun appleLogin(request: AppleLoginServiceRequest): LoginResponse {
         val oAuthId = appleIdTokenValidator.validateAndGetId(request.idToken, request.user)
         val user = userService.findUserByOAuthIdOrNull(oAuthId) ?: createUser(oAuthId, request)
 

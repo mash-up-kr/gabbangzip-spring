@@ -8,7 +8,7 @@ data class LoginRequest(
     @NotBlank val idToken: String,
     @NotBlank val provider: LoginProvider,
     @NotBlank val nickname: String,
-    val profileImage: String?
+    @NotBlank val profileImage: String
 ) {
     fun toServiceRequest(): LoginServiceRequest {
         return LoginServiceRequest(

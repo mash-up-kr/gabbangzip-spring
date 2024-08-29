@@ -4,8 +4,8 @@ import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.external.common.JwksClient
 import com.mashup.pic.external.common.response.JwksResponse
-import com.mashup.pic.external.kakao.dto.AppleTokenInfoResponse
-import com.mashup.pic.external.kakao.dto.AppleTokenResponse
+import com.mashup.pic.external.kakao.dto.KakaoTokenInfoResponse
+import com.mashup.pic.external.kakao.dto.KakaoTokenResponse
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.CachePut
 import org.springframework.cache.annotation.Cacheable
@@ -39,12 +39,12 @@ class KakaoClient(
         return requestJwks()
     }
 
-    override fun getOAuthId(code: String): String {
+    fun getOAuthId(code: String): String {
         val tokenResponse = requestToken(code)
         return requestTokenInfo(tokenResponse.accessToken).id
     }
 
-    private fun requestTokenInfo(accessToken: String): AppleTokenInfoResponse {
+    private fun requestTokenInfo(accessToken: String): KakaoTokenInfoResponse {
         return restClient.get()
             .uri(infoUri)
             .header(HttpHeaders.AUTHORIZATION, TOKEN_BEARER + accessToken)
@@ -55,10 +55,10 @@ class KakaoClient(
                     "Error fetching JWKS: ${response.statusCode}"
                 )
             }
-            .body<AppleTokenInfoResponse>() ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID)
+            .body<KakaoTokenInfoResponse>() ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID)
     }
 
-    private fun requestToken(code: String): AppleTokenResponse {
+    private fun requestToken(code: String): KakaoTokenResponse {
         return restClient.post()
             .uri(tokenUri)
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -70,7 +70,7 @@ class KakaoClient(
                     "Error requesting access token: ${response.statusCode}"
                 )
             }
-            .body<AppleTokenResponse>() ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID)
+            .body<KakaoTokenResponse>() ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID)
     }
 
     private fun requestJwks(): JwksResponse {

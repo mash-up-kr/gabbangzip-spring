@@ -1,11 +1,11 @@
 package com.mashup.pic.auth.applicationService
 
+import com.mashup.pic.auth.applicationService.dto.AppleLoginServiceRequest
 import com.mashup.pic.auth.applicationService.dto.LoginServiceRequest
 import com.mashup.pic.auth.applicationService.dto.ReissueServiceRequest
 import com.mashup.pic.auth.controller.dto.LoginResponse
 import com.mashup.pic.auth.controller.dto.ReissueResponse
 import com.mashup.pic.domain.auth.RefreshTokenService
-import com.mashup.pic.domain.user.LoginProvider
 import com.mashup.pic.domain.user.UserDto
 import com.mashup.pic.domain.user.UserService
 import com.mashup.pic.security.authentication.UserInfo
@@ -26,13 +26,17 @@ class AuthApplicationService(
 ) {
     @Transactional
     fun login(request: LoginServiceRequest): LoginResponse {
-        val oAuthId =
-            if (request.provider == LoginProvider.KAKAO) {
-                kakaoIdTokenValidator.validateAndGetId(request.idToken, request.nickname)
-            } else {
-                appleIdTokenValidator.validateAndGetId(request.idToken, request.nickname)
-            }
+        val oAuthId = kakaoIdTokenValidator.validateAndGetId(request.idToken, request.nickname)
+        val user = userService.findUserByOAuthIdOrNull(oAuthId) ?: createUser(oAuthId, request)
 
+        val authToken = jwtManager.generateAuthToken(user.toUserInfo())
+        refreshTokenService.saveToken(user.id, authToken.refreshToken)
+        return LoginResponse.from(user, authToken)
+    }
+
+    @Transactional
+    fun appleLogin(request: AppleLoginServiceRequest): LoginResponse? {
+        val oAuthId = appleIdTokenValidator.validateAndGetId(request.idToken, request.user)
         val user = userService.findUserByOAuthIdOrNull(oAuthId) ?: createUser(oAuthId, request)
 
         val authToken = jwtManager.generateAuthToken(user.toUserInfo())
@@ -58,13 +62,23 @@ class AuthApplicationService(
         oAuthId: String,
         request: LoginServiceRequest
     ): UserDto {
-        val profileImage = request.profileImage ?: DEFAULT_PROFILE_IMAGE
-
         return userService.create(
             oAuthId = oAuthId,
             provider = request.provider,
             nickname = request.nickname,
-            profileImage = profileImage
+            profileImage = request.profileImage
+        )
+    }
+
+    private fun createUser(
+        oAuthId: String,
+        request: AppleLoginServiceRequest
+    ): UserDto {
+        return userService.create(
+            oAuthId = oAuthId,
+            provider = request.provider,
+            nickname = request.fullName,
+            profileImage = DEFAULT_PROFILE_IMAGE
         )
     }
 

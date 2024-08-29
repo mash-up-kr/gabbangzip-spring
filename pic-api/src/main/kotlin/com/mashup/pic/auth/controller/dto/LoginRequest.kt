@@ -1,7 +1,7 @@
 package com.mashup.pic.auth.controller.dto
 
-import com.mashup.pic.auth.applicationService.dto.LoginProvider
 import com.mashup.pic.auth.applicationService.dto.LoginServiceRequest
+import com.mashup.pic.domain.user.LoginProvider
 import jakarta.validation.constraints.NotBlank
 
 data class LoginRequest(

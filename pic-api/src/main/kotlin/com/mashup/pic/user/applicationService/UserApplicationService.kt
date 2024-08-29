@@ -1,7 +1,7 @@
 package com.mashup.pic.user.applicationService
 
 import com.mashup.pic.domain.user.UserService
-import com.mashup.pic.external.common.JwksClient
+import com.mashup.pic.external.kakao.KakaoClient
 import com.mashup.pic.security.authentication.UserInfo
 import com.mashup.pic.security.jwt.JwtManager
 import org.springframework.stereotype.Service
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class UserApplicationService(
     private val userService: UserService,
-    private val kakaoClient: JwksClient,
+    private val kakaoClient: KakaoClient,
     private val jwtManager: JwtManager
 ) {
     fun callbackPage(code: String): String? {

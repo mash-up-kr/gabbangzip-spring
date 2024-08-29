@@ -1,5 +1,6 @@
 package com.mashup.pic.auth.applicationService
 
+import com.mashup.pic.auth.applicationService.dto.AppleLoginServiceRequest
 import com.mashup.pic.auth.applicationService.dto.LoginServiceRequest
 import com.mashup.pic.auth.applicationService.dto.ReissueServiceRequest
 import com.mashup.pic.auth.controller.dto.LoginResponse
@@ -9,7 +10,8 @@ import com.mashup.pic.domain.user.UserDto
 import com.mashup.pic.domain.user.UserService
 import com.mashup.pic.security.authentication.UserInfo
 import com.mashup.pic.security.jwt.JwtManager
-import com.mashup.pic.security.oidc.IdTokenValidator
+import com.mashup.pic.security.oidc.AppleIdTokenValidator
+import com.mashup.pic.security.oidc.KakaoIdTokenValidator
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -19,11 +21,22 @@ class AuthApplicationService(
     private val userService: UserService,
     private val refreshTokenService: RefreshTokenService,
     private val jwtManager: JwtManager,
-    private val idTokenValidator: IdTokenValidator
+    private val kakaoIdTokenValidator: KakaoIdTokenValidator,
+    private val appleIdTokenValidator: AppleIdTokenValidator
 ) {
     @Transactional
     fun login(request: LoginServiceRequest): LoginResponse {
-        val oAuthId = idTokenValidator.validateAndGetId(request.idToken, request.nickname)
+        val oAuthId = kakaoIdTokenValidator.validateAndGetId(request.idToken, request.nickname)
+        val user = userService.findUserByOAuthIdOrNull(oAuthId) ?: createUser(oAuthId, request)
+
+        val authToken = jwtManager.generateAuthToken(user.toUserInfo())
+        refreshTokenService.saveToken(user.id, authToken.refreshToken)
+        return LoginResponse.from(user, authToken)
+    }
+
+    @Transactional
+    fun appleLogin(request: AppleLoginServiceRequest): LoginResponse {
+        val oAuthId = appleIdTokenValidator.validateAndGetId(request.idToken, request.user)
         val user = userService.findUserByOAuthIdOrNull(oAuthId) ?: createUser(oAuthId, request)
 
         val authToken = jwtManager.generateAuthToken(user.toUserInfo())
@@ -46,13 +59,26 @@ class AuthApplicationService(
     }
 
     private fun createUser(
-        oAuthId: Long,
+        oAuthId: String,
         request: LoginServiceRequest
     ): UserDto {
         return userService.create(
             oAuthId = oAuthId,
+            provider = request.provider,
             nickname = request.nickname,
             profileImage = request.profileImage
+        )
+    }
+
+    private fun createUser(
+        oAuthId: String,
+        request: AppleLoginServiceRequest
+    ): UserDto {
+        return userService.create(
+            oAuthId = oAuthId,
+            provider = request.provider,
+            nickname = request.fullName,
+            profileImage = DEFAULT_PROFILE_IMAGE
         )
     }
 
@@ -62,5 +88,9 @@ class AuthApplicationService(
             nickname = this.nickname,
             roles = this.roles
         )
+    }
+
+    companion object {
+        const val DEFAULT_PROFILE_IMAGE = "https://www.testhouse.net/wp-content/uploads/2021/11/default-avatar.jpg"
     }
 }

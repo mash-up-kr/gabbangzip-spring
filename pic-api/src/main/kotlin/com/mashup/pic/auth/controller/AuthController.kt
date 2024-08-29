@@ -1,6 +1,7 @@
 package com.mashup.pic.auth.controller
 
 import com.mashup.pic.auth.applicationService.AuthApplicationService
+import com.mashup.pic.auth.controller.dto.AppleLoginRequest
 import com.mashup.pic.auth.controller.dto.LoginRequest
 import com.mashup.pic.auth.controller.dto.LoginResponse
 import com.mashup.pic.auth.controller.dto.ReissueRequest
@@ -22,12 +23,21 @@ class AuthController(
     private val authApplicationService: AuthApplicationService
 ) {
     @SecurityRequirements(value = [])
-    @Operation(summary = "로그인", description = "OIDC의 ID토큰으로 로그인")
+    @Operation(summary = "카카오 로그인", description = "OIDC의 ID토큰으로 로그인")
     @PostMapping("/login")
-    fun login(
+    fun kakaoLogin(
         @Valid @RequestBody loginRequest: LoginRequest
     ): ApiResponse<LoginResponse> {
         return ApiResponse.success(authApplicationService.login(loginRequest.toServiceRequest()))
+    }
+
+    @SecurityRequirements(value = [])
+    @Operation(summary = "애플 로그인", description = "OIDC의 ID토큰으로 로그인")
+    @PostMapping("/apple-login")
+    fun appleLogin(
+        @Valid @RequestBody loginRequest: AppleLoginRequest
+    ): ApiResponse<LoginResponse> {
+        return ApiResponse.success(authApplicationService.appleLogin(loginRequest.toServiceRequest()))
     }
 
     @SecurityRequirements(value = [])

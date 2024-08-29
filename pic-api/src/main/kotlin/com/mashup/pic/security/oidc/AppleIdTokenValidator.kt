@@ -3,8 +3,8 @@ package com.mashup.pic.security.oidc
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
+import com.mashup.pic.external.apple.AppleClient
 import com.mashup.pic.external.common.response.JwkKey
-import com.mashup.pic.external.kakao.KakaoClient
 import io.jsonwebtoken.Jwts
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Profile
@@ -17,12 +17,11 @@ import java.util.Base64
 
 @Component
 @Profile("!test")
-class KakaoIdTokenValidator(
-    private val kakaoJwksClient: KakaoClient,
+class AppleIdTokenValidator(
+    private val appleJwksClient: AppleClient,
     private val objectMapper: ObjectMapper,
-    @Value("\${kakao.issuer}") private val issuer: String,
-    @Value("\${kakao.audience.rest}") private val restAudience: String,
-    @Value("\${kakao.audience.native}") private val nativeAudience: String
+    @Value("\${apple.issuer}") private val issuer: String,
+    @Value("\${apple.audience}") private val audience: String
 ) : IdTokenValidator {
     private val decoder = Base64.getUrlDecoder()
     private val keyFactory = KeyFactory.getInstance(SIGNING_ALGORITHM)
@@ -43,12 +42,12 @@ class KakaoIdTokenValidator(
 
     private fun verifyPayload(
         idToken: String,
-        nickname: String
+        sub: String
     ) {
         val payload = decodePayload(idToken)
         require(payload[ISSUER_KEY] == issuer) { "Invalid issuer" }
-        require(payload[AUDIENCE_KEY] == restAudience || payload[AUDIENCE_KEY] == nativeAudience) { "Invalid audience" }
-        require(payload[NICKNAME_KEY] == nickname) { "Invalid nickname" }
+        require(payload[AUDIENCE_KEY] == audience) { "Invalid audience" }
+        require(payload[SUB_KEY] == sub) { "Invalid nickname" }
     }
 
     private fun verifySignature(idToken: String) {
@@ -74,8 +73,8 @@ class KakaoIdTokenValidator(
     }
 
     private fun getJwkByKid(kid: String): JwkKey {
-        return kakaoJwksClient.getJwks().getJwkKeyByKid(kid)
-            ?: kakaoJwksClient.refreshAndGetJwks().getJwkKeyByKid(kid)
+        return appleJwksClient.getJwks().getJwkKeyByKid(kid)
+            ?: appleJwksClient.refreshAndGetJwks().getJwkKeyByKid(kid)
             ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "Can't find the Jwk matching the KID")
     }
 
@@ -94,7 +93,6 @@ class KakaoIdTokenValidator(
     companion object {
         private const val ISSUER_KEY = "iss"
         private const val AUDIENCE_KEY = "aud"
-        private const val NICKNAME_KEY = "nickname"
         private const val SUB_KEY = "sub"
         private const val KID_KEY = "kid"
         private const val SIGNING_ALGORITHM = "RSA"

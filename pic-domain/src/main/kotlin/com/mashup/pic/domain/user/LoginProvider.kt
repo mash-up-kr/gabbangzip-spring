@@ -1,7 +1,8 @@
 package com.mashup.pic.domain.user
 
-enum class Provider {
+enum class LoginProvider {
     KAKAO,
+    NAVER,
     GOOGLE,
     APPLE
 }

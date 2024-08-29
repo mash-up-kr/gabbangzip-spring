@@ -39,7 +39,7 @@ class KakaoClient(
         return requestJwks()
     }
 
-    override fun getOAuthId(code: String): Long {
+    fun getOAuthId(code: String): String {
         val tokenResponse = requestToken(code)
         return requestTokenInfo(tokenResponse.accessToken).id
     }

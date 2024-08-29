@@ -16,7 +16,7 @@ class FakeJwksClient : JwksClient {
         TODO("Do Nothing in testing environment")
     }
 
-    override fun getOAuthId(code: String): Long {
+    fun getOAuthId(code: String): Long {
         TODO("Do Nothing in testing environment")
     }
 }

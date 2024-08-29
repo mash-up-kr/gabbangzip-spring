@@ -12,6 +12,11 @@ kakao:
     token-uri: https://kauth.kakao.com/oauth/token
     info-uri: https://kapi.kakao.com/v1/user/access_token_info
 
+apple:
+    issuer: https://appleid.apple.com
+    audience: com.mashup.gabbangzip
+    jwk-uri: https://appleid.apple.com/auth/oauth2/v2/keys
+
 cloud:
     aws:
         credentials:

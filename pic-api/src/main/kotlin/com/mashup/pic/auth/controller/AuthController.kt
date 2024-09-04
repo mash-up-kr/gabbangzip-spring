@@ -32,7 +32,7 @@ class AuthController(
     }
 
     @SecurityRequirements(value = [])
-    @Operation(summary = "애플 로그인", description = "OIDC의 ID토큰으로 로그인")
+    @Operation(summary = "애플 로그인", description = "OIDC의 ID토큰으로 애플 로그인")
     @PostMapping("/apple-login")
     fun appleLogin(
         @Valid @RequestBody loginRequest: AppleLoginRequest

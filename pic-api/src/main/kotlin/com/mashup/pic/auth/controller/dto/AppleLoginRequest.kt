@@ -6,14 +6,14 @@ import jakarta.validation.constraints.NotBlank
 
 data class AppleLoginRequest(
     @NotBlank val idToken: String,
-    @NotBlank val fullName: String,
-    @NotBlank val user: String
+    @NotBlank val user: String,
+    val fullName: String?
 ) {
     fun toServiceRequest(): AppleLoginServiceRequest {
         return AppleLoginServiceRequest(
             idToken = idToken,
             provider = LoginProvider.APPLE,
-            fullName = fullName,
+            fullName = fullName?: "Pic User",
             user = user
         )
     }

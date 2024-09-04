@@ -15,6 +15,7 @@ kakao:
 apple:
     issuer: https://appleid.apple.com
     audience: com.mashup.gabbangzip
+    audience-dev: com.mashup.gabbangzip-dev
     jwk-uri: https://appleid.apple.com/auth/oauth2/v2/keys
 
 cloud:

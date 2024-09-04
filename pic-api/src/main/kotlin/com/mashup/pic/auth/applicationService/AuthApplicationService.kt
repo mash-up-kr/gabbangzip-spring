@@ -27,7 +27,7 @@ class AuthApplicationService(
     @Transactional
     fun login(request: LoginServiceRequest): LoginResponse {
         val oAuthId = kakaoIdTokenValidator.validateAndGetId(request.idToken, request.nickname)
-        val user = userService.findUserByOAuthIdOrNull(oAuthId) ?: createUser(oAuthId, request)
+        val user = userService.findUserByOAuthIdOrNull(oAuthId) ?: generateUserDto(oAuthId, request)
 
         val authToken = jwtManager.generateAuthToken(user.toUserInfo())
         refreshTokenService.saveToken(user.id, authToken.refreshToken)
@@ -37,7 +37,7 @@ class AuthApplicationService(
     @Transactional
     fun appleLogin(request: AppleLoginServiceRequest): LoginResponse {
         val oAuthId = appleIdTokenValidator.validateAndGetId(request.idToken, request.user)
-        val user = userService.findUserByOAuthIdOrNull(oAuthId) ?: createUser(oAuthId, request)
+        val user = userService.findUserByOAuthIdOrNull(oAuthId) ?: generateUserDto(oAuthId, request)
 
         val authToken = jwtManager.generateAuthToken(user.toUserInfo())
         refreshTokenService.saveToken(user.id, authToken.refreshToken)
@@ -58,7 +58,7 @@ class AuthApplicationService(
         return ReissueResponse.from(authToken)
     }
 
-    private fun createUser(
+    private fun generateUserDto(
         oAuthId: String,
         request: LoginServiceRequest
     ): UserDto {
@@ -70,7 +70,7 @@ class AuthApplicationService(
         )
     }
 
-    private fun createUser(
+    private fun generateUserDto(
         oAuthId: String,
         request: AppleLoginServiceRequest
     ): UserDto {

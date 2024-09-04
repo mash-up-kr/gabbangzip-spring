@@ -21,7 +21,8 @@ class AppleIdTokenValidator(
     private val appleJwksClient: AppleClient,
     private val objectMapper: ObjectMapper,
     @Value("\${apple.issuer}") private val issuer: String,
-    @Value("\${apple.audience}") private val audience: String
+    @Value("\${apple.audience}") private val audience: String,
+    @Value("\${apple.audience-dev}") private val audienceDev: String
 ) : IdTokenValidator {
     private val decoder = Base64.getUrlDecoder()
     private val keyFactory = KeyFactory.getInstance(SIGNING_ALGORITHM)
@@ -46,7 +47,7 @@ class AppleIdTokenValidator(
     ) {
         val payload = decodePayload(idToken)
         require(payload[ISSUER_KEY] == issuer) { "Invalid issuer" }
-        require(payload[AUDIENCE_KEY] == audience) { "Invalid audience" }
+        require(payload[AUDIENCE_KEY] == audience || payload[AUDIENCE_KEY] == audienceDev) { "Invalid audience" }
         require(payload[SUB_KEY] == sub) { "Invalid nickname" }
     }
 

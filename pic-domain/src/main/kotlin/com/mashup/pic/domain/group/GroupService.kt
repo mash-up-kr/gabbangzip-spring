@@ -60,7 +60,10 @@ class GroupService(
     }
 
     @Transactional
-    fun withdraw(userId: Long, groupId: Long) {
+    fun withdraw(
+        userId: Long,
+        groupId: Long
+    ) {
         if (!groupJoinRepository.existsByUserIdAndGroupId(userId, groupId)) {
             throw PicException.of(PicExceptionType.NOT_EXIST, "참여하고 있는 그룹이 아닙니다")
         }

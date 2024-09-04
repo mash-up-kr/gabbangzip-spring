@@ -3,7 +3,6 @@ package com.mashup.pic.group.applicationservice
 import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.domain.event.EventDto
-import com.mashup.pic.domain.event.EventJoinRepository
 import com.mashup.pic.domain.event.EventService
 import com.mashup.pic.domain.event.EventStatus
 import com.mashup.pic.domain.event.UploadService
@@ -34,7 +33,6 @@ import com.mashup.pic.group.util.GroupViewStatusUtil
 import com.mashup.pic.util.InviteCodeUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.io.PipedReader
 import java.time.LocalDateTime
 
 @Service

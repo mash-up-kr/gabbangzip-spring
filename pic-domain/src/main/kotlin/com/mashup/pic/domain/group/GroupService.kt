@@ -59,6 +59,18 @@ class GroupService(
         return groupJoins.map { it.userId }
     }
 
+    @Transactional
+    fun withdraw(
+        userId: Long,
+        groupId: Long
+    ) {
+        if (!groupJoinRepository.existsByUserIdAndGroupId(userId, groupId)) {
+            throw PicException.of(PicExceptionType.NOT_EXIST, "참여하고 있는 그룹이 아닙니다")
+        }
+
+        groupJoinRepository.deleteByUserIdAndGroupId(userId, groupId)
+    }
+
     private fun getEventById(eventId: Long): Event {
         return eventRepository.findByIdOrNull(eventId)
             ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "없는 이벤트")

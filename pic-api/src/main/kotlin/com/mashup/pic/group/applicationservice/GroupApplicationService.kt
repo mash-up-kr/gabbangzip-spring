@@ -3,7 +3,6 @@ package com.mashup.pic.group.applicationservice
 import com.mashup.pic.common.exception.PicException
 import com.mashup.pic.common.exception.PicExceptionType
 import com.mashup.pic.domain.event.EventDto
-import com.mashup.pic.domain.event.EventJoinRepository
 import com.mashup.pic.domain.event.EventService
 import com.mashup.pic.domain.event.EventStatus
 import com.mashup.pic.domain.event.UploadService
@@ -16,6 +15,7 @@ import com.mashup.pic.domain.vote.VoteService
 import com.mashup.pic.group.applicationservice.dto.CreateGroupResponse
 import com.mashup.pic.group.applicationservice.dto.CreateGroupServiceRequest
 import com.mashup.pic.group.applicationservice.dto.JoinGroupServiceRequest
+import com.mashup.pic.group.applicationservice.dto.WithdrawGroupServiceRequest
 import com.mashup.pic.group.controller.dto.FramedImage
 import com.mashup.pic.group.controller.dto.GroupMemberResponse
 import com.mashup.pic.group.controller.dto.GroupViewStatus
@@ -27,6 +27,7 @@ import com.mashup.pic.group.controller.dto.RecentEventDetail
 import com.mashup.pic.group.controller.dto.ViewGroupDetailResponse
 import com.mashup.pic.group.controller.dto.ViewGroupItem
 import com.mashup.pic.group.controller.dto.ViewGroupResponse
+import com.mashup.pic.group.controller.dto.WithdrawGroupResponse
 import com.mashup.pic.group.controller.dto.toViewGroupItem
 import com.mashup.pic.group.util.GroupViewStatusUtil
 import com.mashup.pic.util.InviteCodeUtil
@@ -42,8 +43,7 @@ class GroupApplicationService(
     private val eventService: EventService,
     private val uploadService: UploadService,
     private val voteService: VoteService,
-    private val resultService: ResultService,
-    private val join: EventJoinRepository
+    private val resultService: ResultService
 ) {
     @Transactional
     fun create(request: CreateGroupServiceRequest): CreateGroupResponse {
@@ -148,6 +148,18 @@ class GroupApplicationService(
             members = users.map { Member(it.id, it.nickname) },
             invitationCode = invitationCode
         )
+    }
+
+    @Transactional
+    fun withdrawGroup(request: WithdrawGroupServiceRequest): WithdrawGroupResponse {
+        val lastEvent = eventService.getLastEvent(request.groupId)
+        if (lastEvent != null && lastEvent.eventStatus != EventStatus.COMPLETE) {
+            throw PicException.of(PicExceptionType.BAD_REQUEST, "이벤트가 진행 중이면 탈퇴할 수 없습니다")
+        }
+
+        groupService.withdraw(request.userId, request.groupId)
+
+        return WithdrawGroupResponse(request.groupId)
     }
 
     private fun getViewGroupItem(

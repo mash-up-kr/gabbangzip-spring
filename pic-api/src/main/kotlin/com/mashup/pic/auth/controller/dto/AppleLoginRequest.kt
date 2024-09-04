@@ -13,7 +13,7 @@ data class AppleLoginRequest(
         return AppleLoginServiceRequest(
             idToken = idToken,
             provider = LoginProvider.APPLE,
-            fullName = fullName?: "Pic User",
+            fullName = fullName ?: "Pic User",
             user = user
         )
     }

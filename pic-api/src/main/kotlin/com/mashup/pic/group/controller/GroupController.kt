@@ -3,12 +3,14 @@ package com.mashup.pic.group.controller
 import com.mashup.pic.common.ApiResponse
 import com.mashup.pic.group.applicationservice.GroupApplicationService
 import com.mashup.pic.group.applicationservice.dto.CreateGroupResponse
+import com.mashup.pic.group.applicationservice.dto.WithdrawGroupServiceRequest
 import com.mashup.pic.group.controller.dto.CreateGroupRequest
 import com.mashup.pic.group.controller.dto.GroupMemberResponse
 import com.mashup.pic.group.controller.dto.JoinGroupRequest
 import com.mashup.pic.group.controller.dto.JoinGroupResponse
 import com.mashup.pic.group.controller.dto.ViewGroupDetailResponse
 import com.mashup.pic.group.controller.dto.ViewGroupResponse
+import com.mashup.pic.group.controller.dto.WithdrawGroupResponse
 import com.mashup.pic.group.controller.dto.toServiceRequest
 import com.mashup.pic.security.authentication.UserInfo
 import io.swagger.v3.oas.annotations.Operation
@@ -17,6 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -58,6 +61,15 @@ class GroupController(private val groupApplicationService: GroupApplicationServi
         @AuthenticationPrincipal userInfo: UserInfo
     ): ApiResponse<ViewGroupResponse> {
         return ApiResponse.success(groupApplicationService.getAllGroups(userInfo.id))
+    }
+
+    @DeleteMapping("/{groupId}/join")
+    @Operation(summary = "그룹 탈퇴")
+    fun withdrawGroup(
+        @AuthenticationPrincipal userInfo: UserInfo,
+        @PathVariable groupId: Long
+    ): ApiResponse<WithdrawGroupResponse> {
+        return ApiResponse.success(groupApplicationService.withdrawGroup(WithdrawGroupServiceRequest(userInfo.id, groupId)))
     }
 
     @GetMapping("/{groupId}")

@@ -11,4 +11,6 @@ interface GroupJoinRepository : JpaRepository<GroupJoin, Long> {
     fun findAllByGroupId(groupId: Long): List<GroupJoin>
 
     fun findAllByUserId(userId: Long): List<GroupJoin>
+
+    fun deleteByUserIdAndGroupId(userId: Long, groupId: Long)
 }

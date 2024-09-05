@@ -69,8 +69,8 @@ class GroupApplicationService(
     }
 
     fun getAllGroups(userId: Long): ViewGroupResponse {
-        val groups = groupService.getGroupsByUser(userId)
-        val groupItems = groups.map { group -> getViewGroupItem(userId, group) }
+        val groups = groupService.getGroupsByUser(userId).sortedByDescending { it.createdAt }
+        val groupItems = groups.map { group -> getViewGroupItem(userId, group) }.sortedByDescending { it.recentEvent.date }
         return ViewGroupResponse(groupItems)
     }
 

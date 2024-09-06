@@ -92,11 +92,13 @@ class GroupApplicationService(
             cardFrontImageUrl = group.imageUrl
         } else if (lastEvent.eventStatus == EventStatus.COMPLETE) { // 현 이벤트 X, 역대 이벤트 O
             status =
-                if (eventService.hasVisitedEvent(userId, lastEvent.id)) { // 방문했다면
-                    GroupViewStatus.NO_CURRENT_EVENT
-                } else {
-                    GroupViewStatus.EVENT_COMPLETED
-                }
+                runCatching {
+                    if (eventService.hasVisitedEvent(userId, lastEvent.id)) {
+                        GroupViewStatus.NO_CURRENT_EVENT
+                    } else {
+                        GroupViewStatus.EVENT_COMPLETED
+                    }
+                }.getOrDefault(GroupViewStatus.NO_CURRENT_EVENT)
             recentEventDetail = RecentEventDetail(lastEvent.id, lastEvent.description, lastEvent.date, getDeadline(lastEvent))
             cardBackImages = resultService.getResultOfEvent(lastEvent.id)
             cardFrontImageUrl = cardBackImages.resultImages[0].imageUrl
@@ -107,18 +109,22 @@ class GroupApplicationService(
             status =
                 when (lastEvent.eventStatus) {
                     EventStatus.UPLOADING ->
-                        if (uploadService.hasUserUploaded(userId, lastEvent.id)) {
-                            GroupViewStatus.AFTER_MY_UPLOAD
-                        } else {
-                            GroupViewStatus.BEFORE_MY_UPLOAD
-                        }
+                        runCatching {
+                            if (uploadService.hasUserUploaded(userId, lastEvent.id)) {
+                                GroupViewStatus.AFTER_MY_UPLOAD
+                            } else {
+                                GroupViewStatus.BEFORE_MY_UPLOAD
+                            }
+                        }.getOrDefault(GroupViewStatus.AFTER_MY_UPLOAD)
 
                     EventStatus.VOTING ->
-                        if (voteService.hasUserVoted(userId, lastEvent.id)) {
-                            GroupViewStatus.AFTER_MY_VOTE
-                        } else {
-                            GroupViewStatus.BEFORE_MY_VOTE
-                        }
+                        runCatching {
+                            if (voteService.hasUserVoted(userId, lastEvent.id)) {
+                                GroupViewStatus.AFTER_MY_VOTE
+                            } else {
+                                GroupViewStatus.BEFORE_MY_VOTE
+                            }
+                        }.getOrDefault(GroupViewStatus.AFTER_MY_VOTE)
 
                     else -> {
                         GroupViewStatus.NO_CURRENT_EVENT

@@ -123,7 +123,7 @@ class GroupApplicationService(
                                 GroupViewStatus.AFTER_MY_VOTE
                             } else {
                                 GroupViewStatus.BEFORE_MY_VOTE
-                            } 
+                            }
                         }.getOrDefault(GroupViewStatus.AFTER_MY_VOTE)
 
                     else -> {

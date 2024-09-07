@@ -26,14 +26,26 @@ class EventService(
         date: LocalDateTime,
         pictures: List<String>
     ): Long {
+        val groupJoinCount = groupJoinRepository.findAllByGroupId(groupId).size
         val event =
-            eventRepository.save(
-                Event(
-                    groupId = groupId,
-                    description = description,
-                    date = date
+            if (groupJoinCount == 1) {
+                eventRepository.save(
+                    Event(
+                        groupId = groupId,
+                        description = description,
+                        date = date,
+                        eventStatus = EventStatus.VOTING
+                    )
                 )
-            )
+            } else {
+                eventRepository.save(
+                    Event(
+                        groupId = groupId,
+                        description = description,
+                        date = date
+                    )
+                )
+            }
 
         createEventJoinsByGroup(event.id, groupId)
         val creatorEventJoin = getEventJoinByUserIdAndEventId(userId, event.id)
@@ -43,7 +55,10 @@ class EventService(
                 EventImageOption(creatorEventJoin.id, picture)
             }
         eventImageOptionRepository.saveAll(eventImageOptions)
-        eventRedisRepository.setEventStatusExpiredTime(currentEventStatus = EventStatus.UPLOADING, eventId = event.id)
+
+        if (groupJoinCount > 1) {
+            eventRedisRepository.setEventStatusExpiredTime(currentEventStatus = EventStatus.UPLOADING, eventId = event.id)
+        }
 
         return event.id
     }

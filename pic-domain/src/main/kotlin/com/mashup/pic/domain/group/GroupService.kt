@@ -65,7 +65,7 @@ class GroupService(
         groupId: Long
     ) {
         if (!groupJoinRepository.existsByUserIdAndGroupId(userId, groupId)) {
-            throw PicException.of(PicExceptionType.NOT_EXIST, "참여하고 있는 그룹이 아닙니다")
+            throw PicException.of(PicExceptionType.NOT_EXIST, "$groupId 는 참여하고 있는 그룹이 아닙니다")
         }
 
         groupJoinRepository.deleteByUserIdAndGroupId(userId, groupId)
@@ -73,7 +73,7 @@ class GroupService(
 
     private fun getEventById(eventId: Long): Event {
         return eventRepository.findByIdOrNull(eventId)
-            ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "없는 이벤트")
+            ?: throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "없는 이벤트 $eventId")
     }
 
     private fun validateUser(userId: Long) {
@@ -105,7 +105,7 @@ class GroupService(
         groupId: Long
     ) {
         if (hadAlreadyJoined(userId, groupId)) {
-            throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "이미 참여")
+            throw PicException.of(PicExceptionType.ARGUMENT_NOT_VALID, "이미 참여 중인 그룹 $groupId")
         }
     }
 
@@ -129,6 +129,6 @@ class GroupService(
     }
 
     companion object {
-        const val GROUP_MEMBER_MAX_COUNT = 4
+        const val GROUP_MEMBER_MAX_COUNT = 6
     }
 }

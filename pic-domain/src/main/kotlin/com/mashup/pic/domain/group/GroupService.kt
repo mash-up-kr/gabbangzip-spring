@@ -129,6 +129,6 @@ class GroupService(
     }
 
     companion object {
-        const val GROUP_MEMBER_MAX_COUNT = 4
+        const val GROUP_MEMBER_MAX_COUNT = 6
     }
 }

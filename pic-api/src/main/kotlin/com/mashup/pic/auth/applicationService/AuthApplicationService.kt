@@ -77,7 +77,7 @@ class AuthApplicationService(
         return userService.create(
             oAuthId = oAuthId,
             provider = request.provider,
-            nickname = request.fullName,
+            nickname = if (request.fullName == null || request.fullName == "") DEFAULT_USERNAME else request.fullName,
             profileImage = DEFAULT_PROFILE_IMAGE
         )
     }
@@ -92,5 +92,6 @@ class AuthApplicationService(
 
     companion object {
         const val DEFAULT_PROFILE_IMAGE = "https://www.testhouse.net/wp-content/uploads/2021/11/default-avatar.jpg"
+        const val DEFAULT_USERNAME = "Pic User"
     }
 }

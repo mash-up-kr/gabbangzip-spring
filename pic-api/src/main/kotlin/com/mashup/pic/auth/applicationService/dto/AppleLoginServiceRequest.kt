@@ -5,6 +5,6 @@ import com.mashup.pic.domain.user.LoginProvider
 data class AppleLoginServiceRequest(
     val idToken: String,
     val provider: LoginProvider,
-    val fullName: String,
+    val fullName: String?,
     val user: String
 )

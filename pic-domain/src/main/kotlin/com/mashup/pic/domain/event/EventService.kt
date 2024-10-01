@@ -34,8 +34,7 @@ class EventService(
                         groupId = groupId,
                         description = description,
                         date = date,
-                        eventStatus = EventStatus.VOTING,
-                        uploadingEndDate = LocalDateTime.now()
+                        eventStatus = EventStatus.VOTING
                     )
                 )
             } else {
@@ -59,6 +58,8 @@ class EventService(
 
         if (groupJoinCount > 1) {
             eventRedisRepository.setEventStatusExpiredTime(currentEventStatus = EventStatus.UPLOADING, eventId = event.id)
+        } else {
+            eventRedisRepository.setEventStatusExpiredTime(currentEventStatus = EventStatus.VOTING, eventId = event.id)
         }
 
         return event.id

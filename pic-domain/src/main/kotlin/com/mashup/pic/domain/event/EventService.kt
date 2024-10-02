@@ -35,7 +35,7 @@ class EventService(
                         description = description,
                         date = date,
                         eventStatus = EventStatus.VOTING,
-                        uploadingEndDate = LocalDateTime.now(),
+                        uploadingEndDate = LocalDateTime.now()
                     )
                 )
             } else {

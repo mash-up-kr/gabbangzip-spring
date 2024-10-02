@@ -34,7 +34,8 @@ class EventService(
                         groupId = groupId,
                         description = description,
                         date = date,
-                        eventStatus = EventStatus.VOTING
+                        eventStatus = EventStatus.VOTING,
+                        uploadingEndDate = LocalDateTime.now(),
                     )
                 )
             } else {
